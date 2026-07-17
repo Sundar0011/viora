@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "129801406213",
+    "project_id": "squadd-640af",
+    "storage_bucket": "squadd-640af.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129801406213:android:0bd1c2b8f648b0ccf7196c",
+        "android_client_info": {
+          "package_name": "com.company.squaDD"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129801406213-elk3mmker6li87chon056tberb23v9kr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4f7yYKG7460GEkf-5PpfuZK_kRJ5azDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129801406213-elk3mmker6li87chon056tberb23v9kr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "129801406213-8hcdqec01vuuiptod536clhsu5ralp48.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.company.squaDD",
+                "app_store_id": "6752684914"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
