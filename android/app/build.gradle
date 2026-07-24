@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.company.squaDD"
+    namespace "com.viora.app"
     compileSdkVersion 36
     ndkVersion "28.2.13676358"
 
@@ -57,8 +57,8 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.company.squaDD"
-        minSdkVersion 23
+        applicationId "com.viora.app"
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

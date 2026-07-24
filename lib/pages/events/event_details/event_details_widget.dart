@@ -1,6 +1,8 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/components/comp_no_data_found_widget.dart';
 import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -111,6 +113,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: FutureBuilder<List<EventPageRow>>(
             future: EventPageTable().querySingleRow(
               queryFn: (q) => q.eqOrNull(
@@ -206,7 +209,9 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                   ),
                                   Expanded(
                                     child: InkWell(
-                                      splashColor: Colors.transparent,
+                                      splashColor: FlutterFlowTheme.of(context)
+                                          .primary
+                                          .withAlpha(0x14),
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
@@ -224,7 +229,8 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                       child: Container(
                                         height: 36.0,
                                         decoration: BoxDecoration(
-                                          color: Color(0xFFF7F9FC),
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
                                           borderRadius:
                                               BorderRadius.circular(4.0),
                                         ),
@@ -275,7 +281,9 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                     ),
                                   ),
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
@@ -370,14 +378,14 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 4.0, 0.0, 0.0),
-                            child: ClipRRect(
+                            child: AppNetworkImage(
+                              url: containerEventPageRow!.coverImage,
+                              width: double.infinity,
+                              height: 280.0,
+                              fit: BoxFit.cover,
                               borderRadius: BorderRadius.circular(0.0),
-                              child: Image.network(
-                                containerEventPageRow!.coverImage,
-                                width: double.infinity,
-                                height: 280.0,
-                                fit: BoxFit.cover,
-                              ),
+                              semanticLabel:
+                                  'Cover photo for ${containerEventPageRow.name}',
                             ),
                           ),
                           Container(
@@ -553,6 +561,9 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                   icon: Icon(
                                                     Icons
                                                         .edit_calendar_outlined,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryD3,
                                                     size: 15.0,
                                                   ),
                                                   options: FFButtonOptions(
@@ -575,7 +586,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                             .titleSmall
                                                             .override(
                                                               font: GoogleFonts
-                                                                  .interTight(
+                                                                  .manrope(
                                                                 fontWeight: FlutterFlowTheme.of(
                                                                         context)
                                                                     .titleSmall
@@ -667,6 +678,10 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                     icon: Icon(
                                                       Icons
                                                           .edit_calendar_outlined,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryD3,
                                                       size: 15.0,
                                                     ),
                                                     options: FFButtonOptions(
@@ -696,7 +711,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 font: GoogleFonts
-                                                                    .interTight(
+                                                                    .manrope(
                                                                   fontWeight: FlutterFlowTheme.of(
                                                                           context)
                                                                       .titleSmall
@@ -788,6 +803,10 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                     icon: Icon(
                                                       Icons
                                                           .edit_calendar_outlined,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .greyL4,
                                                       size: 15.0,
                                                     ),
                                                     options: FFButtonOptions(
@@ -817,7 +836,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                               .titleSmall
                                                               .override(
                                                                 font: GoogleFonts
-                                                                    .interTight(
+                                                                    .manrope(
                                                                   fontWeight: FlutterFlowTheme.of(
                                                                           context)
                                                                       .titleSmall
@@ -1190,7 +1209,10 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                               alignment: AlignmentDirectional(
                                                   1.0, 0.0),
                                               child: InkWell(
-                                                splashColor: Colors.transparent,
+                                                splashColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary
+                                                        .withAlpha(0x14),
                                                 focusColor: Colors.transparent,
                                                 hoverColor: Colors.transparent,
                                                 highlightColor:
@@ -1237,7 +1259,10 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                               alignment: AlignmentDirectional(
                                                   1.0, 0.0),
                                               child: InkWell(
-                                                splashColor: Colors.transparent,
+                                                splashColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary
+                                                        .withAlpha(0x14),
                                                 focusColor: Colors.transparent,
                                                 hoverColor: Colors.transparent,
                                                 highlightColor:
@@ -1341,18 +1366,16 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
-                                            Container(
+                                            AppNetworkImage(
+                                              url:
+                                                  mainColumnPublicUserProfileRow
+                                                      ?.profilePicture,
                                               width: 32.0,
                                               height: 32.0,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Image.network(
-                                                mainColumnPublicUserProfileRow!
-                                                    .profilePicture!,
-                                                fit: BoxFit.cover,
-                                              ),
+                                              fit: BoxFit.cover,
+                                              isAvatar: true,
+                                              semanticLabel:
+                                                  'Profile photo of ${mainColumnPublicUserProfileRow?.name ?? 'the host'}',
                                             ),
                                             Column(
                                               mainAxisSize: MainAxisSize.max,
@@ -1423,7 +1446,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .greyL4,
-                                                                fontSize: 10.0,
+                                                                fontSize: 12.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1475,7 +1498,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                               color: FlutterFlowTheme
                                                                       .of(context)
                                                                   .greyL4,
-                                                              fontSize: 10.0,
+                                                              fontSize: 12.0,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:
@@ -2015,17 +2038,19 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                               MainAxisSize.max,
                                                                           children:
                                                                               [
-                                                                            ClipRRect(
-                                                                              borderRadius: BorderRadius.circular(24.0),
-                                                                              child: Image.network(
-                                                                                getJsonField(
-                                                                                  friendsItem,
-                                                                                  r'''$.profile_picture''',
-                                                                                ).toString(),
-                                                                                width: 32.0,
-                                                                                height: 32.0,
-                                                                                fit: BoxFit.cover,
-                                                                              ),
+                                                                            AppNetworkImage(
+                                                                              url: getJsonField(
+                                                                                friendsItem,
+                                                                                r'''$.profile_picture''',
+                                                                              ).toString(),
+                                                                              width: 32.0,
+                                                                              height: 32.0,
+                                                                              fit: BoxFit.cover,
+                                                                              isAvatar: true,
+                                                                              semanticLabel: 'Profile photo of ${getJsonField(
+                                                                                friendsItem,
+                                                                                r'''$.name''',
+                                                                              ).toString()}',
                                                                             ),
                                                                             Text(
                                                                               getJsonField(
@@ -2083,7 +2108,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                                 height: 32.0,
                                                                                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 6.0, 16.0, 6.0),
                                                                                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                color: Color(0xFFE9EDFF),
+                                                                                color: FlutterFlowTheme.of(context).primaryL1,
                                                                                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                                                                                       font: GoogleFonts.manrope(
                                                                                         fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
@@ -2103,9 +2128,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                             if ((containerEventAttendingRow?.id != null && containerEventAttendingRow?.id != '') &&
                                                                                 (containerEventAttendingRow?.isInvited == true))
                                                                               FFButtonWidget(
-                                                                                onPressed: () {
-                                                                                  print('InvitedButton pressed ...');
-                                                                                },
+                                                                                onPressed: () {},
                                                                                 text: 'invited',
                                                                                 options: FFButtonOptions(
                                                                                   height: 32.0,
@@ -2113,7 +2136,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                                   iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                                                                                   color: FlutterFlowTheme.of(context).greyL2,
                                                                                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                        font: GoogleFonts.interTight(
+                                                                                        font: GoogleFonts.manrope(
                                                                                           fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                           fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                         ),
@@ -2284,17 +2307,19 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                               MainAxisSize.max,
                                                                           children:
                                                                               [
-                                                                            ClipRRect(
-                                                                              borderRadius: BorderRadius.circular(24.0),
-                                                                              child: Image.network(
-                                                                                getJsonField(
-                                                                                  friendsItem,
-                                                                                  r'''$.profile_picture''',
-                                                                                ).toString(),
-                                                                                width: 32.0,
-                                                                                height: 32.0,
-                                                                                fit: BoxFit.cover,
-                                                                              ),
+                                                                            AppNetworkImage(
+                                                                              url: getJsonField(
+                                                                                friendsItem,
+                                                                                r'''$.profile_picture''',
+                                                                              ).toString(),
+                                                                              width: 32.0,
+                                                                              height: 32.0,
+                                                                              fit: BoxFit.cover,
+                                                                              isAvatar: true,
+                                                                              semanticLabel: 'Profile photo of ${getJsonField(
+                                                                                friendsItem,
+                                                                                r'''$.name''',
+                                                                              ).toString()}',
                                                                             ),
                                                                             Text(
                                                                               getJsonField(
@@ -2352,7 +2377,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                                 height: 32.0,
                                                                                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 6.0, 16.0, 6.0),
                                                                                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                color: Color(0xFFE9EDFF),
+                                                                                color: FlutterFlowTheme.of(context).primaryL1,
                                                                                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                                                                                       font: GoogleFonts.manrope(
                                                                                         fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
@@ -2373,9 +2398,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                                 (containerEventAttendingRow?.isInvited == true) &&
                                                                                 (containerEventAttendingRow?.invitedBy == currentUserUid))
                                                                               FFButtonWidget(
-                                                                                onPressed: () {
-                                                                                  print('InvitedButton pressed ...');
-                                                                                },
+                                                                                onPressed: () {},
                                                                                 text: 'invited',
                                                                                 options: FFButtonOptions(
                                                                                   height: 32.0,
@@ -2383,7 +2406,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                                   iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                                                                                   color: FlutterFlowTheme.of(context).greyL2,
                                                                                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                        font: GoogleFonts.interTight(
+                                                                                        font: GoogleFonts.manrope(
                                                                                           fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                           fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                         ),
@@ -2493,23 +2516,17 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                     lineHeight: 1.4,
                                                   ),
                                             ),
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
+                                            AppIconButton(
+                                              icon: Icons.arrow_forward,
+                                              iconSize: 24.0,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              semanticLabel: 'See all events',
+                                              onTap: () {
                                                 context.pushNamed(
                                                     AllEventsWidget.routeName);
                                               },
-                                              child: Icon(
-                                                Icons.arrow_forward,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 24.0,
-                                              ),
                                             ),
                                           ],
                                         ),
@@ -2559,7 +2576,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                         if (allEventsListViewEventPageRowList
                                             .isEmpty) {
                                           return CompNoDataFoundWidget(
-                                            pageName: 'no',
+                                            pageName: 'events',
                                             text1: 'No events to show',
                                             text2:
                                                 'Looks like no one has uploaded anything yet. Check back soon!',
@@ -2619,281 +2636,240 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                             .first
                                                         : null;
 
-                                                return InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    context.pushNamed(
-                                                      EventDetailsWidget
-                                                          .routeName,
-                                                      queryParameters: {
-                                                        'eventId':
-                                                            serializeParam(
-                                                          allEventsListViewEventPageRow
-                                                              .id,
-                                                          ParamType.String,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    height: 188.0,
-                                                    decoration: BoxDecoration(),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  8.0,
-                                                                  0.0,
-                                                                  8.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        2.0),
-                                                            child:
-                                                                Image.network(
-                                                              allEventsListViewEventPageRow
+                                                return Semantics(
+                                                  button: true,
+                                                  label:
+                                                      'Event: ${allEventsListViewEventPageRow.name}. Opens event details.',
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      context.pushNamed(
+                                                        EventDetailsWidget
+                                                            .routeName,
+                                                        queryParameters: {
+                                                          'eventId':
+                                                              serializeParam(
+                                                            allEventsListViewEventPageRow
+                                                                .id,
+                                                            ParamType.String,
+                                                          ),
+                                                        }.withoutNulls,
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 208.0,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    8.0,
+                                                                    0.0,
+                                                                    8.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            AppNetworkImage(
+                                                              url: allEventsListViewEventPageRow
                                                                   .coverImage,
                                                               width: 120.0,
                                                               height: 120.0,
                                                               fit: BoxFit.cover,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          2.0),
+                                                              semanticLabel:
+                                                                  'Cover photo for ${allEventsListViewEventPageRow.name}',
                                                             ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      if ((containerEventAttendingRow?.id != null &&
-                                                                              containerEventAttendingRow?.id !=
-                                                                                  '') &&
-                                                                          (containerEventAttendingRow?.isInvited ==
-                                                                              true) &&
-                                                                          (containerEventAttendingRow?.isAttending ==
-                                                                              false))
-                                                                        FutureBuilder<
-                                                                            List<PublicUserProfileRow>>(
-                                                                          future:
-                                                                              PublicUserProfileTable().querySingleRow(
-                                                                            queryFn: (q) =>
-                                                                                q.eqOrNull(
-                                                                              'id',
-                                                                              containerEventAttendingRow?.invitedBy,
+                                                            Expanded(
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        if ((containerEventAttendingRow?.id != null && containerEventAttendingRow?.id != '') &&
+                                                                            (containerEventAttendingRow?.isInvited ==
+                                                                                true) &&
+                                                                            (containerEventAttendingRow?.isAttending ==
+                                                                                false))
+                                                                          FutureBuilder<
+                                                                              List<PublicUserProfileRow>>(
+                                                                            future:
+                                                                                PublicUserProfileTable().querySingleRow(
+                                                                              queryFn: (q) => q.eqOrNull(
+                                                                                'id',
+                                                                                containerEventAttendingRow?.invitedBy,
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                          builder:
-                                                                              (context, snapshot) {
-                                                                            // Customize what your widget looks like when it's loading.
-                                                                            if (!snapshot.hasData) {
-                                                                              return CompLoadingWidget(
-                                                                                name: 'loadingInvite',
-                                                                              );
-                                                                            }
-                                                                            List<PublicUserProfileRow>
-                                                                                rowPublicUserProfileRowList =
-                                                                                snapshot.data!;
+                                                                            builder:
+                                                                                (context, snapshot) {
+                                                                              // Customize what your widget looks like when it's loading.
+                                                                              if (!snapshot.hasData) {
+                                                                                return CompLoadingWidget(
+                                                                                  name: 'loadingInvite',
+                                                                                );
+                                                                              }
+                                                                              List<PublicUserProfileRow> rowPublicUserProfileRowList = snapshot.data!;
 
-                                                                            // Return an empty Container when the item does not exist.
-                                                                            if (snapshot.data!.isEmpty) {
-                                                                              return Container();
-                                                                            }
-                                                                            final rowPublicUserProfileRow = rowPublicUserProfileRowList.isNotEmpty
-                                                                                ? rowPublicUserProfileRowList.first
-                                                                                : null;
+                                                                              // Return an empty Container when the item does not exist.
+                                                                              if (snapshot.data!.isEmpty) {
+                                                                                return Container();
+                                                                              }
+                                                                              final rowPublicUserProfileRow = rowPublicUserProfileRowList.isNotEmpty ? rowPublicUserProfileRowList.first : null;
 
-                                                                            return Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                Container(
-                                                                                  width: 12.0,
-                                                                                  height: 12.0,
-                                                                                  clipBehavior: Clip.antiAlias,
-                                                                                  decoration: BoxDecoration(
-                                                                                    shape: BoxShape.circle,
-                                                                                  ),
-                                                                                  child: Image.network(
-                                                                                    rowPublicUserProfileRow!.profilePicture!,
+                                                                              return Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                children: [
+                                                                                  AppNetworkImage(
+                                                                                    url: rowPublicUserProfileRow?.profilePicture,
+                                                                                    width: 12.0,
+                                                                                    height: 12.0,
                                                                                     fit: BoxFit.cover,
+                                                                                    isAvatar: true,
+                                                                                    semanticLabel: 'Profile photo of ${rowPublicUserProfileRow?.name ?? 'a neighbour'}',
                                                                                   ),
-                                                                                ),
-                                                                                Expanded(
-                                                                                  child: Row(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    children: [
-                                                                                      Text(
-                                                                                        valueOrDefault<String>(
-                                                                                          rowPublicUserProfileRow?.name,
-                                                                                          'name  jjhgjh jhjhjh jhjhjhj',
-                                                                                        ),
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                              font: GoogleFonts.manrope(
-                                                                                                fontWeight: FontWeight.w500,
-                                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                              ),
-                                                                                              color: FlutterFlowTheme.of(context).greyL4,
-                                                                                              fontSize: 10.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.w500,
-                                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                              lineHeight: 1.4,
-                                                                                            ),
-                                                                                      ),
-                                                                                      Expanded(
-                                                                                        child: Text(
-                                                                                          ' invited you to join this event',
-                                                                                          maxLines: 1,
+                                                                                  Expanded(
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          valueOrDefault<String>(
+                                                                                            rowPublicUserProfileRow?.name,
+                                                                                            'name  jjhgjh jhjhjh jhjhjhj',
+                                                                                          ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 font: GoogleFonts.manrope(
                                                                                                   fontWeight: FontWeight.w500,
                                                                                                   fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                                 ),
                                                                                                 color: FlutterFlowTheme.of(context).greyL4,
-                                                                                                fontSize: 10.0,
+                                                                                                fontSize: 12.0,
                                                                                                 letterSpacing: 0.0,
                                                                                                 fontWeight: FontWeight.w500,
                                                                                                 fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                                 lineHeight: 1.4,
                                                                                               ),
                                                                                         ),
-                                                                                      ),
-                                                                                    ],
+                                                                                        Expanded(
+                                                                                          child: Text(
+                                                                                            ' invited you to join this event',
+                                                                                            maxLines: 1,
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  font: GoogleFonts.manrope(
+                                                                                                    fontWeight: FontWeight.w500,
+                                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                  ),
+                                                                                                  color: FlutterFlowTheme.of(context).greyL4,
+                                                                                                  fontSize: 12.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.w500,
+                                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                                  lineHeight: 1.4,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                   ),
-                                                                                ),
-                                                                              ].divide(SizedBox(width: 10.0)),
-                                                                            );
-                                                                          },
-                                                                        ),
-                                                                      Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children:
-                                                                            [
-                                                                          Text(
-                                                                            allEventsListViewEventPageRow.name,
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  font: GoogleFonts.manrope(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  ),
-                                                                                  color: FlutterFlowTheme.of(context).extraBlack,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  lineHeight: 1.4,
-                                                                                ),
+                                                                                ].divide(SizedBox(width: 10.0)),
+                                                                              );
+                                                                            },
                                                                           ),
-                                                                          Text(
-                                                                            allEventsListViewEventPageRow.description,
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  font: GoogleFonts.manrope(
-                                                                                    fontWeight: FontWeight.w500,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  ),
-                                                                                  color: FlutterFlowTheme.of(context).greyL4,
-                                                                                  fontSize: 10.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  lineHeight: 1.4,
-                                                                                ),
-                                                                          ),
-                                                                        ].divide(SizedBox(height: 2.0)),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Column(
+                                                                        Column(
                                                                           mainAxisSize:
                                                                               MainAxisSize.max,
                                                                           crossAxisAlignment:
                                                                               CrossAxisAlignment.start,
                                                                           children:
                                                                               [
-                                                                            Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(0.0),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/calendar_clock.png',
-                                                                                    width: 16.0,
-                                                                                    height: 16.0,
-                                                                                    fit: BoxFit.cover,
+                                                                            Text(
+                                                                              allEventsListViewEventPageRow.name,
+                                                                              maxLines: 2,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    font: GoogleFonts.manrope(
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).extraBlack,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    lineHeight: 1.4,
                                                                                   ),
-                                                                                ),
-                                                                                Text(
-                                                                                  valueOrDefault<String>(
-                                                                                    functions.eventDate(allEventsListViewEventPageRow.startDateTime),
-                                                                                    'date',
-                                                                                  ),
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        font: GoogleFonts.manrope(
-                                                                                          fontWeight: FontWeight.w500,
-                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                        ),
-                                                                                        color: FlutterFlowTheme.of(context).greyL4,
-                                                                                        fontSize: 10.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w500,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                        lineHeight: 1.4,
-                                                                                      ),
-                                                                                ),
-                                                                              ].divide(SizedBox(width: 6.0)),
                                                                             ),
-                                                                            Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(0.0),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/explore.png',
-                                                                                    width: 16.0,
-                                                                                    height: 16.0,
-                                                                                    fit: BoxFit.cover,
+                                                                            Text(
+                                                                              allEventsListViewEventPageRow.description,
+                                                                              maxLines: 2,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    font: GoogleFonts.manrope(
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).greyL4,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    lineHeight: 1.4,
                                                                                   ),
-                                                                                ),
-                                                                                Expanded(
-                                                                                  child: Text(
+                                                                            ),
+                                                                          ].divide(SizedBox(height: 2.0)),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              4.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children:
+                                                                                [
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                children: [
+                                                                                  ClipRRect(
+                                                                                    borderRadius: BorderRadius.circular(0.0),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/calendar_clock.png',
+                                                                                      width: 16.0,
+                                                                                      height: 16.0,
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                  Text(
                                                                                     valueOrDefault<String>(
-                                                                                      allEventsListViewEventPageRow.address,
-                                                                                      'Address',
+                                                                                      functions.eventDate(allEventsListViewEventPageRow.startDateTime),
+                                                                                      'date',
                                                                                     ),
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           font: GoogleFonts.manrope(
@@ -2901,168 +2877,100 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                                             fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                           ),
                                                                                           color: FlutterFlowTheme.of(context).greyL4,
-                                                                                          fontSize: 10.0,
+                                                                                          fontSize: 12.0,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w500,
                                                                                           fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                           lineHeight: 1.4,
                                                                                         ),
                                                                                   ),
-                                                                                ),
-                                                                              ].divide(SizedBox(width: 6.0)),
-                                                                            ),
-                                                                            Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(0.0),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/crowdsource_(1).png',
-                                                                                    width: 16.0,
-                                                                                    height: 16.0,
-                                                                                    fit: BoxFit.cover,
+                                                                                ].divide(SizedBox(width: 6.0)),
+                                                                              ),
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                children: [
+                                                                                  ClipRRect(
+                                                                                    borderRadius: BorderRadius.circular(0.0),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/explore.png',
+                                                                                      width: 16.0,
+                                                                                      height: 16.0,
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
                                                                                   ),
-                                                                                ),
-                                                                                Text(
-                                                                                  '${allEventsListViewEventPageRow.attendeeCount.toString()} attending',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        font: GoogleFonts.manrope(
+                                                                                  Expanded(
+                                                                                    child: Text(
+                                                                                      valueOrDefault<String>(
+                                                                                        allEventsListViewEventPageRow.address,
+                                                                                        'Address',
+                                                                                      ),
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            font: GoogleFonts.manrope(
+                                                                                              fontWeight: FontWeight.w500,
+                                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                            ),
+                                                                                            color: FlutterFlowTheme.of(context).greyL4,
+                                                                                            fontSize: 12.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w500,
+                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                            lineHeight: 1.4,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ].divide(SizedBox(width: 6.0)),
+                                                                              ),
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                children: [
+                                                                                  ClipRRect(
+                                                                                    borderRadius: BorderRadius.circular(0.0),
+                                                                                    child: Image.asset(
+                                                                                      'assets/images/crowdsource_(1).png',
+                                                                                      width: 16.0,
+                                                                                      height: 16.0,
+                                                                                      fit: BoxFit.cover,
+                                                                                    ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    '${allEventsListViewEventPageRow.attendeeCount.toString()} attending',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          font: GoogleFonts.manrope(
+                                                                                            fontWeight: FontWeight.w500,
+                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                          ),
+                                                                                          color: FlutterFlowTheme.of(context).greyL4,
+                                                                                          fontSize: 12.0,
+                                                                                          letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w500,
                                                                                           fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                          lineHeight: 1.4,
                                                                                         ),
-                                                                                        color: FlutterFlowTheme.of(context).greyL4,
-                                                                                        fontSize: 10.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w500,
-                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                        lineHeight: 1.4,
-                                                                                      ),
-                                                                                ),
-                                                                              ].divide(SizedBox(width: 6.0)),
-                                                                            ),
-                                                                          ].divide(SizedBox(height: 4.0)),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                if (allEventsListViewEventPageRow
-                                                                        .adminUser !=
-                                                                    currentUserUid)
-                                                                  Stack(
-                                                                    children: [
-                                                                      FFButtonWidget(
-                                                                        onPressed:
-                                                                            () async {
-                                                                          await EventAttendingTable()
-                                                                              .insert({
-                                                                            'community_id':
-                                                                                FFAppState().communityId,
-                                                                            'event_id':
-                                                                                allEventsListViewEventPageRow.id,
-                                                                            'attending_id':
-                                                                                currentUserUid,
-                                                                            'is_invited':
-                                                                                false,
-                                                                            'is_attending':
-                                                                                true,
-                                                                          });
-                                                                          _model.apiResultryklop67 =
-                                                                              await UpdateEventAttendeeCountCall.call(
-                                                                            token:
-                                                                                currentJwtToken,
-                                                                            eventId:
-                                                                                allEventsListViewEventPageRow.id,
-                                                                          );
-
-                                                                          safeSetState(
-                                                                              () {});
-                                                                        },
-                                                                        text:
-                                                                            'Attend',
-                                                                        icon:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .edit_calendar_outlined,
-                                                                          size:
-                                                                              15.0,
-                                                                        ),
-                                                                        options:
-                                                                            FFButtonOptions(
-                                                                          width:
-                                                                              double.infinity,
-                                                                          height:
-                                                                              24.0,
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              16.0,
-                                                                              0.0,
-                                                                              16.0,
-                                                                              0.0),
-                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).white,
-                                                                          textStyle: FlutterFlowTheme.of(context)
-                                                                              .titleSmall
-                                                                              .override(
-                                                                                font: GoogleFonts.interTight(
-                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                ),
-                                                                                color: FlutterFlowTheme.of(context).primaryD3,
-                                                                                fontSize: 12.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                  ),
+                                                                                ].divide(SizedBox(width: 6.0)),
                                                                               ),
-                                                                          elevation:
-                                                                              0.0,
-                                                                          borderSide:
-                                                                              BorderSide(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryD3,
-                                                                            width:
-                                                                                1.0,
-                                                                          ),
-                                                                          borderRadius:
-                                                                              BorderRadius.only(
-                                                                            topLeft:
-                                                                                Radius.circular(100.0),
-                                                                            topRight:
-                                                                                Radius.circular(100.0),
-                                                                            bottomLeft:
-                                                                                Radius.circular(100.0),
-                                                                            bottomRight:
-                                                                                Radius.circular(100.0),
+                                                                            ].divide(SizedBox(height: 4.0)),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      if ((containerEventAttendingRow?.id != null &&
-                                                                              containerEventAttendingRow?.id !=
-                                                                                  '') &&
-                                                                          (containerEventAttendingRow?.isAttending ==
-                                                                              false))
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  if (allEventsListViewEventPageRow
+                                                                          .adminUser !=
+                                                                      currentUserUid)
+                                                                    Stack(
+                                                                      children: [
                                                                         FFButtonWidget(
                                                                           onPressed:
                                                                               () async {
-                                                                            await EventAttendingTable().update(
-                                                                              data: {
-                                                                                'is_attending': true,
-                                                                              },
-                                                                              matchingRows: (rows) => rows
-                                                                                  .eqOrNull(
-                                                                                    'event_id',
-                                                                                    allEventsListViewEventPageRow.id,
-                                                                                  )
-                                                                                  .eqOrNull(
-                                                                                    'attending_id',
-                                                                                    currentUserUid,
-                                                                                  ),
-                                                                            );
-                                                                            _model.apiResultryklop78 =
+                                                                            await EventAttendingTable().insert({
+                                                                              'community_id': FFAppState().communityId,
+                                                                              'event_id': allEventsListViewEventPageRow.id,
+                                                                              'attending_id': currentUserUid,
+                                                                              'is_invited': false,
+                                                                              'is_attending': true,
+                                                                            });
+                                                                            _model.apiResultryklop67 =
                                                                                 await UpdateEventAttendeeCountCall.call(
                                                                               token: currentJwtToken,
                                                                               eventId: allEventsListViewEventPageRow.id,
@@ -3075,6 +2983,8 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                           icon:
                                                                               Icon(
                                                                             Icons.edit_calendar_outlined,
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryD3,
                                                                             size:
                                                                                 15.0,
                                                                           ),
@@ -3097,7 +3007,7 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).white,
                                                                             textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                  font: GoogleFonts.interTight(
+                                                                                  font: GoogleFonts.manrope(
                                                                                     fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                     fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                   ),
@@ -3123,96 +3033,146 @@ class _EventDetailsWidgetState extends State<EventDetailsWidget> {
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                      if ((containerEventAttendingRow?.id != null &&
-                                                                              containerEventAttendingRow?.id !=
-                                                                                  '') &&
-                                                                          (containerEventAttendingRow?.isAttending ==
-                                                                              true))
-                                                                        FFButtonWidget(
-                                                                          onPressed:
-                                                                              () async {
-                                                                            await EventAttendingTable().update(
-                                                                              data: {
-                                                                                'is_attending': false,
-                                                                              },
-                                                                              matchingRows: (rows) => rows
-                                                                                  .eqOrNull(
-                                                                                    'event_id',
-                                                                                    allEventsListViewEventPageRow.id,
-                                                                                  )
-                                                                                  .eqOrNull(
-                                                                                    'attending_id',
-                                                                                    currentUserUid,
-                                                                                  ),
-                                                                            );
-                                                                            _model.apiResultryklop09 =
-                                                                                await UpdateEventAttendeeCountCall.call(
-                                                                              token: currentJwtToken,
-                                                                              eventId: allEventsListViewEventPageRow.id,
-                                                                            );
+                                                                        if ((containerEventAttendingRow?.id != null && containerEventAttendingRow?.id != '') &&
+                                                                            (containerEventAttendingRow?.isAttending ==
+                                                                                false))
+                                                                          FFButtonWidget(
+                                                                            onPressed:
+                                                                                () async {
+                                                                              await EventAttendingTable().update(
+                                                                                data: {
+                                                                                  'is_attending': true,
+                                                                                },
+                                                                                matchingRows: (rows) => rows
+                                                                                    .eqOrNull(
+                                                                                      'event_id',
+                                                                                      allEventsListViewEventPageRow.id,
+                                                                                    )
+                                                                                    .eqOrNull(
+                                                                                      'attending_id',
+                                                                                      currentUserUid,
+                                                                                    ),
+                                                                              );
+                                                                              _model.apiResultryklop78 = await UpdateEventAttendeeCountCall.call(
+                                                                                token: currentJwtToken,
+                                                                                eventId: allEventsListViewEventPageRow.id,
+                                                                              );
 
-                                                                            safeSetState(() {});
-                                                                          },
-                                                                          text:
-                                                                              'Attending',
-                                                                          icon:
-                                                                              Icon(
-                                                                            Icons.edit_calendar_outlined,
-                                                                            size:
-                                                                                15.0,
-                                                                          ),
-                                                                          options:
-                                                                              FFButtonOptions(
-                                                                            width:
-                                                                                double.infinity,
-                                                                            height:
-                                                                                24.0,
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                16.0,
-                                                                                0.0,
-                                                                                16.0,
-                                                                                0.0),
-                                                                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).white,
-                                                                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                  font: GoogleFonts.interTight(
+                                                                              safeSetState(() {});
+                                                                            },
+                                                                            text:
+                                                                                'Attend',
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.edit_calendar_outlined,
+                                                                              color: FlutterFlowTheme.of(context).primaryD3,
+                                                                              size: 15.0,
+                                                                            ),
+                                                                            options:
+                                                                                FFButtonOptions(
+                                                                              width: double.infinity,
+                                                                              height: 24.0,
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                              color: FlutterFlowTheme.of(context).white,
+                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                    font: GoogleFonts.manrope(
+                                                                                      fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).primaryD3,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.0,
                                                                                     fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                     fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                   ),
-                                                                                  color: FlutterFlowTheme.of(context).greyL4,
-                                                                                  fontSize: 12.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                                ),
-                                                                            elevation:
-                                                                                0.0,
-                                                                            borderSide:
-                                                                                BorderSide(
-                                                                              color: FlutterFlowTheme.of(context).greyL4,
-                                                                              width: 1.0,
-                                                                            ),
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
-                                                                              topLeft: Radius.circular(100.0),
-                                                                              topRight: Radius.circular(100.0),
-                                                                              bottomLeft: Radius.circular(100.0),
-                                                                              bottomRight: Radius.circular(100.0),
+                                                                              elevation: 0.0,
+                                                                              borderSide: BorderSide(
+                                                                                color: FlutterFlowTheme.of(context).primaryD3,
+                                                                                width: 1.0,
+                                                                              ),
+                                                                              borderRadius: BorderRadius.only(
+                                                                                topLeft: Radius.circular(100.0),
+                                                                                topRight: Radius.circular(100.0),
+                                                                                bottomLeft: Radius.circular(100.0),
+                                                                                bottomRight: Radius.circular(100.0),
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                    ],
-                                                                  ),
-                                                              ],
+                                                                        if ((containerEventAttendingRow?.id != null && containerEventAttendingRow?.id != '') &&
+                                                                            (containerEventAttendingRow?.isAttending ==
+                                                                                true))
+                                                                          FFButtonWidget(
+                                                                            onPressed:
+                                                                                () async {
+                                                                              await EventAttendingTable().update(
+                                                                                data: {
+                                                                                  'is_attending': false,
+                                                                                },
+                                                                                matchingRows: (rows) => rows
+                                                                                    .eqOrNull(
+                                                                                      'event_id',
+                                                                                      allEventsListViewEventPageRow.id,
+                                                                                    )
+                                                                                    .eqOrNull(
+                                                                                      'attending_id',
+                                                                                      currentUserUid,
+                                                                                    ),
+                                                                              );
+                                                                              _model.apiResultryklop09 = await UpdateEventAttendeeCountCall.call(
+                                                                                token: currentJwtToken,
+                                                                                eventId: allEventsListViewEventPageRow.id,
+                                                                              );
+
+                                                                              safeSetState(() {});
+                                                                            },
+                                                                            text:
+                                                                                'Attending',
+                                                                            icon:
+                                                                                Icon(
+                                                                              Icons.edit_calendar_outlined,
+                                                                              color: FlutterFlowTheme.of(context).greyL4,
+                                                                              size: 15.0,
+                                                                            ),
+                                                                            options:
+                                                                                FFButtonOptions(
+                                                                              width: double.infinity,
+                                                                              height: 24.0,
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                              color: FlutterFlowTheme.of(context).white,
+                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                    font: GoogleFonts.manrope(
+                                                                                      fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).greyL4,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                  ),
+                                                                              elevation: 0.0,
+                                                                              borderSide: BorderSide(
+                                                                                color: FlutterFlowTheme.of(context).greyL4,
+                                                                                width: 1.0,
+                                                                              ),
+                                                                              borderRadius: BorderRadius.only(
+                                                                                topLeft: Radius.circular(100.0),
+                                                                                topRight: Radius.circular(100.0),
+                                                                                bottomLeft: Radius.circular(100.0),
+                                                                                bottomRight: Radius.circular(100.0),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                      ],
+                                                                    ),
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ].divide(SizedBox(
-                                                            width: 8.0)),
+                                                          ].divide(SizedBox(
+                                                              width: 8.0)),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),

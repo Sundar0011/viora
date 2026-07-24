@@ -58,7 +58,7 @@ class _DummylikecomponentWidgetState extends State<DummylikecomponentWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             InkWell(
-              splashColor: Colors.transparent,
+              splashColor: FlutterFlowTheme.of(context).primary.withAlpha(0x14),
               focusColor: Colors.transparent,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
@@ -119,7 +119,8 @@ class _DummylikecomponentWidgetState extends State<DummylikecomponentWidget> {
                     : null;
 
                 return InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,

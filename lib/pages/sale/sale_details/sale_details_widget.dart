@@ -1,6 +1,9 @@
 import '/auth/supabase_auth/auth_util.dart';
+import '/app_constants.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -106,6 +109,7 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -133,21 +137,29 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  FlutterFlowIconButton(
-                                    borderRadius: 100.0,
-                                    icon: Icon(
-                                      Icons.arrow_back,
-                                      color: FlutterFlowTheme.of(context)
-                                          .extraBlack,
-                                      size: 24.0,
+                                  MergeSemantics(
+                                    child: Semantics(
+                                      button: true,
+                                      label: 'Back',
+                                      child: FlutterFlowIconButton(
+                                        borderRadius: 100.0,
+                                        icon: Icon(
+                                          Icons.arrow_back,
+                                          color: FlutterFlowTheme.of(context)
+                                              .extraBlack,
+                                          size: 24.0,
+                                        ),
+                                        onPressed: () async {
+                                          context.safePop();
+                                        },
+                                      ),
                                     ),
-                                    onPressed: () async {
-                                      context.safePop();
-                                    },
                                   ),
                                   Expanded(
                                     child: InkWell(
-                                      splashColor: Colors.transparent,
+                                      splashColor: FlutterFlowTheme.of(context)
+                                          .primary
+                                          .withAlpha(0x14),
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
@@ -165,7 +177,8 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                       child: Container(
                                         height: 36.0,
                                         decoration: BoxDecoration(
-                                          color: Color(0xFFF7F9FC),
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
                                           borderRadius:
                                               BorderRadius.circular(4.0),
                                         ),
@@ -215,11 +228,9 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                       ),
                                     ),
                                   ),
-                                  InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
+                                  AppIconButton(
+                                    semanticLabel: 'Listing options',
+                                    tooltip: 'Listing options',
                                     onTap: () async {
                                       await showModalBottomSheet(
                                         isScrollControlled: true,
@@ -257,18 +268,15 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                         },
                                       ).then((value) => safeSetState(() {}));
                                     },
-                                    child: Container(
+                                    // The 34dp grey disc is unchanged; the hit
+                                    // area alone grows out to 44dp.
+                                    iconWidget: Container(
                                       width: 34.0,
                                       height: 34.0,
                                       decoration: BoxDecoration(
                                         color:
                                             FlutterFlowTheme.of(context).greyL2,
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(100.0),
-                                          topRight: Radius.circular(100.0),
-                                          bottomLeft: Radius.circular(100.0),
-                                          bottomRight: Radius.circular(100.0),
-                                        ),
+                                        shape: BoxShape.circle,
                                       ),
                                       alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Transform.rotate(
@@ -332,15 +340,12 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                                 (context, imagesIndex) {
                                               final imagesItem =
                                                   images[imagesIndex];
-                                              return ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(0.0),
-                                                child: Image.network(
-                                                  imagesItem.toString(),
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                              return AppNetworkImage(
+                                                url: imagesItem.toString(),
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                fit: BoxFit.cover,
+                                                semanticLabel: 'Listing photo',
                                               );
                                             },
                                           ),
@@ -432,17 +437,15 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 4.0, 0.0, 0.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(0.0),
-                                child: Image.network(
-                                  getJsonField(
-                                    _model.saleData,
-                                    r'''$.images[0]''',
-                                  ).toString(),
-                                  width: double.infinity,
-                                  height: 320.0,
-                                  fit: BoxFit.cover,
-                                ),
+                              child: AppNetworkImage(
+                                url: getJsonField(
+                                  _model.saleData,
+                                  r'''$.images[0]''',
+                                ).toString(),
+                                width: double.infinity,
+                                height: 320.0,
+                                fit: BoxFit.cover,
+                                semanticLabel: 'Listing photo',
                               ),
                             ),
                           Container(
@@ -502,7 +505,7 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                           alignment:
                                               AlignmentDirectional(-1.0, 0.0),
                                           child: Text(
-                                            '£${getJsonField(
+                                            '$kCurrencySymbol${getJsonField(
                                               _model.saleData,
                                               r'''$.price''',
                                             ).toString()}',
@@ -1489,7 +1492,10 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                             alignment:
                                                 AlignmentDirectional(1.0, 0.0),
                                             child: InkWell(
-                                              splashColor: Colors.transparent,
+                                              splashColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary
+                                                      .withAlpha(0x14),
                                               focusColor: Colors.transparent,
                                               hoverColor: Colors.transparent,
                                               highlightColor:
@@ -1596,20 +1602,20 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
-                                            Container(
+                                            AppNetworkImage(
+                                              url: getJsonField(
+                                                _model.saleData,
+                                                r'''$.seller_profile.profile_picture''',
+                                              ).toString(),
                                               width: 32.0,
                                               height: 32.0,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Image.network(
-                                                getJsonField(
-                                                  _model.saleData,
-                                                  r'''$.seller_profile.profile_picture''',
-                                                ).toString(),
-                                                fit: BoxFit.cover,
-                                              ),
+                                              fit: BoxFit.cover,
+                                              isAvatar: true,
+                                              semanticLabel:
+                                                  'Profile photo of ${getJsonField(
+                                                _model.saleData,
+                                                r'''$.seller_profile.name''',
+                                              ).toString()}',
                                             ),
                                             Column(
                                               mainAxisSize: MainAxisSize.max,
@@ -1678,7 +1684,7 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .greyL4,
-                                                                fontSize: 10.0,
+                                                                fontSize: 12.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1727,7 +1733,7 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .greyL4,
-                                                                fontSize: 10.0,
+                                                                fontSize: 12.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -1760,7 +1766,10 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                                     currentUserUid)) ==
                                                 true)
                                               InkWell(
-                                                splashColor: Colors.transparent,
+                                                splashColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary
+                                                        .withAlpha(0x14),
                                                 focusColor: Colors.transparent,
                                                 hoverColor: Colors.transparent,
                                                 highlightColor:
@@ -2060,321 +2069,307 @@ class _SaleDetailsWidgetState extends State<SaleDetailsWidget> {
                                               (context, salesDataIndex) {
                                             final salesDataItem =
                                                 salesData[salesDataIndex];
-                                            return InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                context.pushNamed(
-                                                  SaleDetailsWidget.routeName,
-                                                  queryParameters: {
-                                                    'saleId': serializeParam(
-                                                      getJsonField(
-                                                        salesDataItem,
-                                                        r'''$.id''',
-                                                      ).toString(),
-                                                      ParamType.String,
-                                                    ),
-                                                  }.withoutNulls,
-                                                );
-                                              },
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                20.0,
-                                                                20.0,
-                                                                20.0,
-                                                                20.0),
-                                                    child: Container(
-                                                      width: double.infinity,
-                                                      height: 80.0,
-                                                      decoration: BoxDecoration(
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                      ),
-                                                      child: Row(
+                                            // One merged semantics node so the
+                                            // card announces as a single button.
+                                            return MergeSemantics(
+                                                child: Semantics(
+                                                    button: true,
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary
+                                                              .withAlpha(0x14),
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        context.pushNamed(
+                                                          SaleDetailsWidget
+                                                              .routeName,
+                                                          queryParameters: {
+                                                            'saleId':
+                                                                serializeParam(
+                                                              getJsonField(
+                                                                salesDataItem,
+                                                                r'''$.id''',
+                                                              ).toString(),
+                                                              ParamType.String,
+                                                            ),
+                                                          }.withoutNulls,
+                                                        );
+                                                      },
+                                                      child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
-                                                          Stack(
-                                                            alignment:
-                                                                AlignmentDirectional(
-                                                                    -1.0, 1.0),
-                                                            children: [
-                                                              if (((String
-                                                                      var1) {
-                                                                    return var1 !=
-                                                                        "null";
-                                                                  }(getJsonField(
-                                                                    salesDataItem,
-                                                                    r'''$.image''',
-                                                                  ).toString())) ==
-                                                                  true)
-                                                                ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              2.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    getJsonField(
-                                                                      salesDataItem,
-                                                                      r'''$.image''',
-                                                                    ).toString(),
-                                                                    width:
-                                                                        120.0,
-                                                                    height:
-                                                                        80.0,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
-                                                              if (((String
-                                                                      var1) {
-                                                                    return var1 !=
-                                                                        "null";
-                                                                  }(getJsonField(
-                                                                    salesDataItem,
-                                                                    r'''$.image''',
-                                                                  ).toString())) ==
-                                                                  false)
-                                                                Container(
-                                                                  width: 120.0,
-                                                                  height: 80.0,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryBackground,
-                                                                  ),
-                                                                ),
-                                                            ],
-                                                          ),
-                                                          Expanded(
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Text(
-                                                                            getJsonField(
-                                                                              salesDataItem,
-                                                                              r'''$.title''',
-                                                                            ).toString(),
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  font: GoogleFonts.manrope(
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  ),
-                                                                                  color: FlutterFlowTheme.of(context).extraBlack,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  lineHeight: 1.4,
-                                                                                ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20.0,
+                                                                        20.0,
+                                                                        20.0,
+                                                                        20.0),
+                                                            child: Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              // Min-height, not a hard 80,
+                                                              // so the row grows with the
+                                                              // system text scale.
+                                                              constraints:
+                                                                  const BoxConstraints(
+                                                                      minHeight:
+                                                                          80.0),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Stack(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            -1.0,
+                                                                            1.0),
+                                                                    children: [
+                                                                      if (((String
+                                                                              var1) {
+                                                                            return var1 !=
+                                                                                "null";
+                                                                          }(getJsonField(
+                                                                            salesDataItem,
+                                                                            r'''$.image''',
+                                                                          ).toString())) ==
+                                                                          true)
+                                                                        AppNetworkImage(
+                                                                          url:
+                                                                              getJsonField(
+                                                                            salesDataItem,
+                                                                            r'''$.image''',
+                                                                          ).toString(),
+                                                                          width:
+                                                                              120.0,
+                                                                          height:
+                                                                              80.0,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(2.0),
+                                                                        ),
+                                                                      if (((String
+                                                                              var1) {
+                                                                            return var1 !=
+                                                                                "null";
+                                                                          }(getJsonField(
+                                                                            salesDataItem,
+                                                                            r'''$.image''',
+                                                                          ).toString())) ==
+                                                                          false)
+                                                                        Container(
+                                                                          width:
+                                                                              120.0,
+                                                                          height:
+                                                                              80.0,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    if (false)
-                                                                      Icon(
-                                                                        Icons
-                                                                            .bookmark_border,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .extraBlack,
-                                                                        size:
-                                                                            24.0,
-                                                                      ),
-                                                                  ],
-                                                                ),
-                                                                Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Row(
+                                                                        ),
+                                                                    ],
+                                                                  ),
+                                                                  Expanded(
+                                                                    child:
+                                                                        Column(
                                                                       mainAxisSize:
                                                                           MainAxisSize
                                                                               .max,
-                                                                      children:
-                                                                          [
-                                                                        Text(
-                                                                          valueOrDefault<
-                                                                              String>(
-                                                                            functions.returnRelativeTIme(getJsonField(
-                                                                              salesDataItem,
-                                                                              r'''$.created_at''',
-                                                                            ).toString()),
-                                                                            'a moment ago',
-                                                                          ),
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                font: GoogleFonts.manrope(
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                ),
-                                                                                color: FlutterFlowTheme.of(context).greyL4,
-                                                                                fontSize: 10.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                lineHeight: 1.4,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Column(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    getJsonField(
+                                                                                      salesDataItem,
+                                                                                      r'''$.title''',
+                                                                                    ).toString(),
+                                                                                    maxLines: 2,
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          font: GoogleFonts.manrope(
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                            fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                          ),
+                                                                                          color: FlutterFlowTheme.of(context).extraBlack,
+                                                                                          fontSize: 16.0,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                          lineHeight: 1.4,
+                                                                                        ),
+                                                                                  ),
+                                                                                ],
                                                                               ),
-                                                                        ),
-                                                                        Container(
-                                                                          width:
-                                                                              2.0,
-                                                                          height:
-                                                                              2.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).greyL4,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(24.0),
-                                                                          ),
-                                                                        ),
-                                                                        Text(
-                                                                          '${getJsonField(
-                                                                            salesDataItem,
-                                                                            r'''$.distance_km''',
-                                                                          ).toString()} kms',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                font: GoogleFonts.manrope(
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                ),
-                                                                                color: FlutterFlowTheme.of(context).greyL4,
-                                                                                fontSize: 10.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                lineHeight: 1.4,
-                                                                              ),
-                                                                        ),
-                                                                        Container(
-                                                                          width:
-                                                                              2.0,
-                                                                          height:
-                                                                              2.0,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).greyL4,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(24.0),
-                                                                          ),
-                                                                        ),
-                                                                        Text(
-                                                                          getJsonField(
-                                                                            salesDataItem,
-                                                                            r'''$.city''',
-                                                                          ).toString(),
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                font: GoogleFonts.manrope(
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                ),
-                                                                                color: FlutterFlowTheme.of(context).greyL4,
-                                                                                fontSize: 10.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                lineHeight: 1.4,
-                                                                              ),
-                                                                        ),
-                                                                      ].divide(SizedBox(
-                                                                              width: 4.0)),
-                                                                    ),
-                                                                    if (((String
-                                                                            var1) {
-                                                                          return var1 !=
-                                                                              "null";
-                                                                        }(getJsonField(
-                                                                          salesDataItem,
-                                                                          r'''$.price''',
-                                                                        ).toString())) ==
-                                                                        true)
-                                                                      Text(
-                                                                        '£${getJsonField(
-                                                                          salesDataItem,
-                                                                          r'''$.price''',
-                                                                        ).toString()}',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              font: GoogleFonts.manrope(
-                                                                                fontWeight: FontWeight.w600,
-                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                              ),
-                                                                              color: FlutterFlowTheme.of(context).extraBlack,
-                                                                              fontSize: 12.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                              lineHeight: 1.4,
                                                                             ),
-                                                                      ),
-                                                                  ],
-                                                                ),
-                                                              ],
+                                                                            if (false)
+                                                                              Icon(
+                                                                                Icons.bookmark_border,
+                                                                                color: FlutterFlowTheme.of(context).extraBlack,
+                                                                                size: 24.0,
+                                                                              ),
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              children: [
+                                                                                Text(
+                                                                                  valueOrDefault<String>(
+                                                                                    functions.returnRelativeTIme(getJsonField(
+                                                                                      salesDataItem,
+                                                                                      r'''$.created_at''',
+                                                                                    ).toString()),
+                                                                                    'a moment ago',
+                                                                                  ),
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        font: GoogleFonts.manrope(
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        ),
+                                                                                        color: FlutterFlowTheme.of(context).greyL4,
+                                                                                        fontSize: 12.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        lineHeight: 1.4,
+                                                                                      ),
+                                                                                ),
+                                                                                Container(
+                                                                                  width: 2.0,
+                                                                                  height: 2.0,
+                                                                                  decoration: BoxDecoration(
+                                                                                    color: FlutterFlowTheme.of(context).greyL4,
+                                                                                    borderRadius: BorderRadius.circular(24.0),
+                                                                                  ),
+                                                                                ),
+                                                                                Text(
+                                                                                  '${getJsonField(
+                                                                                    salesDataItem,
+                                                                                    r'''$.distance_km''',
+                                                                                  ).toString()} kms',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        font: GoogleFonts.manrope(
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        ),
+                                                                                        color: FlutterFlowTheme.of(context).greyL4,
+                                                                                        fontSize: 12.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        lineHeight: 1.4,
+                                                                                      ),
+                                                                                ),
+                                                                                Container(
+                                                                                  width: 2.0,
+                                                                                  height: 2.0,
+                                                                                  decoration: BoxDecoration(
+                                                                                    color: FlutterFlowTheme.of(context).greyL4,
+                                                                                    borderRadius: BorderRadius.circular(24.0),
+                                                                                  ),
+                                                                                ),
+                                                                                Text(
+                                                                                  getJsonField(
+                                                                                    salesDataItem,
+                                                                                    r'''$.city''',
+                                                                                  ).toString(),
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        font: GoogleFonts.manrope(
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                          fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        ),
+                                                                                        color: FlutterFlowTheme.of(context).greyL4,
+                                                                                        fontSize: 12.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                        lineHeight: 1.4,
+                                                                                      ),
+                                                                                ),
+                                                                              ].divide(SizedBox(width: 4.0)),
+                                                                            ),
+                                                                            if (((String var1) {
+                                                                                  return var1 != "null";
+                                                                                }(getJsonField(
+                                                                                  salesDataItem,
+                                                                                  r'''$.price''',
+                                                                                ).toString())) ==
+                                                                                true)
+                                                                              Text(
+                                                                                '$kCurrencySymbol${getJsonField(
+                                                                                  salesDataItem,
+                                                                                  r'''$.price''',
+                                                                                ).toString()}',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      font: GoogleFonts.manrope(
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                        fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      ),
+                                                                                      color: FlutterFlowTheme.of(context).extraBlack,
+                                                                                      fontSize: 12.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                      lineHeight: 1.4,
+                                                                                    ),
+                                                                              ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        8.0)),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ].divide(SizedBox(
-                                                            width: 8.0)),
+                                                          Divider(
+                                                            height: 0.0,
+                                                            thickness: 2.0,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    height: 0.0,
-                                                    thickness: 2.0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                  ),
-                                                ],
-                                              ),
-                                            );
+                                                    )));
                                           },
                                         );
                                       },

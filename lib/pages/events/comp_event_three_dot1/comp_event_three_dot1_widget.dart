@@ -75,192 +75,207 @@ class _CompEventThreeDot1WidgetState extends State<CompEventThreeDot1Widget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    context.pushNamed(
-                      AboutGroupWidget.routeName,
-                      queryParameters: {
-                        'groupId': serializeParam(
-                          widget!.eventId,
-                          ParamType.String,
+                Semantics(
+                  button: true,
+                  label: 'Invite Friends',
+                  child: InkWell(
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      context.pushNamed(
+                        AboutGroupWidget.routeName,
+                        queryParameters: {
+                          'groupId': serializeParam(
+                            widget!.eventId,
+                            ParamType.String,
+                          ),
+                        }.withoutNulls,
+                      );
+
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 7.0, 16.0, 7.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/Icon.png',
+                                width: 20.0,
+                                height: 20.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              'Invite Friends',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.manrope(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context).greyD1,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                    lineHeight: 1.4,
+                                  ),
+                            ),
+                          ].divide(SizedBox(width: 8.0)),
                         ),
-                      }.withoutNulls,
-                    );
-
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 7.0, 16.0, 7.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/Icon.png',
-                              width: 20.0,
-                              height: 20.0,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            'Invite Friends',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.manrope(
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  color: FlutterFlowTheme.of(context).greyD1,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                  lineHeight: 1.4,
-                                ),
-                          ),
-                        ].divide(SizedBox(width: 8.0)),
                       ),
                     ),
                   ),
                 ),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    await showModalBottomSheet(
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: CompShareWidget(
-                            pagename: 'event',
-                            id: widget!.eventId!,
-                          ),
-                        );
-                      },
-                    ).then((value) => safeSetState(() {}));
-
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 7.0, 16.0, 7.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/share_(1).webp',
-                              width: 20.0,
-                              height: 20.0,
-                              fit: BoxFit.cover,
+                Semantics(
+                  button: true,
+                  label: 'Share event',
+                  child: InkWell(
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: CompShareWidget(
+                              pagename: 'event',
+                              id: widget!.eventId!,
                             ),
-                          ),
-                          Text(
-                            'Share',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.manrope(
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 7.0, 16.0, 7.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/share_(1).webp',
+                                width: 20.0,
+                                height: 20.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              'Share',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.manrope(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context).greyD1,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
+                                    lineHeight: 1.4,
                                   ),
-                                  color: FlutterFlowTheme.of(context).greyD1,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                  lineHeight: 1.4,
-                                ),
-                          ),
-                        ].divide(SizedBox(width: 8.0)),
+                            ),
+                          ].divide(SizedBox(width: 8.0)),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    await showModalBottomSheet(
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: CompReportEventWidget(
-                            eventId: widget!.eventId!,
-                            userId: widget!.userId!,
-                          ),
-                        );
-                      },
-                    ).then((value) => safeSetState(() {}));
-
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 7.0, 16.0, 7.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/flag_2.webp',
-                              width: 20.0,
-                              height: 20.0,
-                              fit: BoxFit.cover,
+                Semantics(
+                  button: true,
+                  label: 'Report this event',
+                  child: InkWell(
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: CompReportEventWidget(
+                              eventId: widget!.eventId!,
+                              userId: widget!.userId!,
                             ),
-                          ),
-                          Text(
-                            'Report this event',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.manrope(
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 7.0, 16.0, 7.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/flag_2.webp',
+                                width: 20.0,
+                                height: 20.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              'Report this event',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.manrope(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: FlutterFlowTheme.of(context).greyD1,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
+                                    lineHeight: 1.4,
                                   ),
-                                  color: FlutterFlowTheme.of(context).greyD1,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                  lineHeight: 1.4,
-                                ),
-                          ),
-                        ].divide(SizedBox(width: 8.0)),
+                            ),
+                          ].divide(SizedBox(width: 8.0)),
+                        ),
                       ),
                     ),
                   ),

@@ -179,7 +179,7 @@ class _CompReportAccountWidgetState extends State<CompReportAccountWidget> {
                                 textStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      font: GoogleFonts.inter(
+                                      font: GoogleFonts.manrope(
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .fontWeight,
@@ -316,7 +316,8 @@ class _CompReportAccountWidgetState extends State<CompReportAccountWidget> {
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),

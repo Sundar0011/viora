@@ -180,7 +180,7 @@ class _CompReportPostWidgetState extends State<CompReportPostWidget> {
                                 textStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      font: GoogleFonts.inter(
+                                      font: GoogleFonts.manrope(
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .fontWeight,
@@ -317,7 +317,8 @@ class _CompReportPostWidgetState extends State<CompReportPostWidget> {
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),

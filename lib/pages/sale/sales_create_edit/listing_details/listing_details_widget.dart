@@ -1,6 +1,7 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/custom_code/widgets/index.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
@@ -127,6 +128,7 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
             backgroundColor: FlutterFlowTheme.of(context).white,
             body: SafeArea(
               top: true,
+              bottom: true,
               child: Container(
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).pageBack,
@@ -346,7 +348,9 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                           BorderRadius.circular(100.0),
                                     ),
                                     child: InkWell(
-                                      splashColor: Colors.transparent,
+                                      splashColor: FlutterFlowTheme.of(context)
+                                          .primary
+                                          .withAlpha(0x14),
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
@@ -577,7 +581,9 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 12.0, 16.0),
@@ -756,7 +762,9 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 12.0, 16.0),
@@ -878,7 +886,8 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                           .secondaryText,
                                       size: 24.0,
                                     ),
-                                    fillColor: Color(0xFFF7F9FC),
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     elevation: 2.0,
                                     borderColor:
                                         FlutterFlowTheme.of(context).greyL2,
@@ -973,7 +982,7 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
@@ -1146,7 +1155,9 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                                   BorderRadius.circular(4.0),
                                             ),
                                             filled: true,
-                                            fillColor: Color(0xFFF7F9FC),
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .alternate,
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 16.0, 12.0, 16.0),
@@ -1383,7 +1394,9 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -1466,7 +1479,10 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                                                         searchplacesIndex];
                                                 return InkWell(
                                                   splashColor:
-                                                      Colors.transparent,
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary
+                                                          .withAlpha(0x14),
                                                   focusColor:
                                                       Colors.transparent,
                                                   hoverColor:
@@ -1627,7 +1643,8 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 8.0, 0.0, 0.0),
-                                child: FFButtonWidget(
+                                child: GradientPrimaryButton(
+                                  text: 'Create',
                                   onPressed: () async {
                                     _model.titleform1 = true;
                                     if (_model.formKey2.currentState == null ||
@@ -1971,43 +1988,6 @@ class _ListingDetailsWidgetState extends State<ListingDetailsWidget> {
 
                                     safeSetState(() {});
                                   },
-                                  text: 'Create',
-                                  options: FFButtonOptions(
-                                    width: double.infinity,
-                                    height: 46.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 12.0, 16.0, 12.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          font: GoogleFonts.manrope(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .fontStyle,
-                                          ),
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontStyle,
-                                          lineHeight: 1.4,
-                                        ),
-                                    elevation: 0.0,
-                                    borderRadius: BorderRadius.circular(24.0),
-                                  ),
                                 ),
                               ),
                             ]

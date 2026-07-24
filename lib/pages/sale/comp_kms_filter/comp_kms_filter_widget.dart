@@ -5,6 +5,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comp_kms_filter_model.dart';
@@ -87,11 +89,14 @@ class _CompKmsFilterWidgetState extends State<CompKmsFilterWidget> {
                           itemBuilder: (context, kmsListIndex) {
                             final kmsListItem = kmsList[kmsListIndex];
                             return InkWell(
-                              splashColor: Colors.transparent,
+                              splashColor: FlutterFlowTheme.of(context)
+                                  .primary
+                                  .withAlpha(0x14),
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
+                                HapticFeedback.lightImpact();
                                 FFAppState().SalesKmFilter = kmsListItem;
                                 safeSetState(() {});
                                 _model.customActionOutput1 =
@@ -197,14 +202,24 @@ class _CompKmsFilterWidgetState extends State<CompKmsFilterWidget> {
                                         Icon(
                                           Icons.check,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryText,
+                                              .primary,
                                           size: 24.0,
                                         ),
                                     ].divide(SizedBox(width: 16.0)),
                                   ),
                                 ),
                               ),
-                            );
+                            )
+                                .animate()
+                                .fadeIn(
+                                  duration: 260.ms,
+                                  delay: (40 * (kmsListIndex % 8)).ms,
+                                )
+                                .slideY(
+                                  begin: 0.06,
+                                  end: 0,
+                                  curve: Curves.easeOutCubic,
+                                );
                           },
                         );
                       },

@@ -121,9 +121,7 @@ class _CompMuteConfirmationWidgetState
                       children: [
                         Expanded(
                           child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
+                            onPressed: () {},
                             text: 'Undo',
                             options: FFButtonOptions(
                               width: double.infinity,
@@ -162,9 +160,7 @@ class _CompMuteConfirmationWidgetState
                         ),
                         Expanded(
                           child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
+                            onPressed: () {},
                             text: 'Okay',
                             options: FFButtonOptions(
                               width: double.infinity,

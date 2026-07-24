@@ -11,6 +11,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'location_page_model.dart';
@@ -73,86 +74,109 @@ class _LocationPageWidgetState extends State<LocationPageWidget> {
                   width: double.infinity,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: Image.asset(
-                        'assets/images/image_(1).webp',
-                      ).image,
-                    ),
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    // Light-mode dotted-map backdrop only; in dark mode it
+                    // reads as noise, so fall back to a clean dark background.
+                    image: MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark
+                        ? null
+                        : DecorationImage(
+                            fit: BoxFit.cover,
+                            image: Image.asset(
+                              'assets/images/image_(1).webp',
+                            ).image,
+                          ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-1.0, 0.0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 0.0, 12.0),
-                          child: FlutterFlowIconButton(
-                            borderRadius: 100.0,
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: FlutterFlowTheme.of(context).extraBlack,
-                              size: 24.0,
+                  child: SafeArea(
+                    top: true,
+                    bottom: true,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                10.0, 0.0, 0.0, 12.0),
+                            child: FlutterFlowIconButton(
+                              borderRadius: 100.0,
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: FlutterFlowTheme.of(context).extraBlack,
+                                size: 24.0,
+                              ),
+                              onPressed: () async {
+                                context.safePop();
+                              },
                             ),
-                            onPressed: () async {
-                              context.safePop();
-                            },
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 20.0, 0.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(0.0),
-                                child: Image.asset(
-                                  'assets/images/_https___app.lottiefiles.com_animation_9579b23c-d344-48bf-9c62-d6eac9f62f09.gif',
-                                  width: 140.0,
-                                  height: 140.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    'WHAT IS YOUR LOCATON?',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.manrope(
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 0.0, 20.0, 0.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(0.0),
+                                  child: Image.asset(
+                                    'assets/images/_https___app.lottiefiles.com_animation_9579b23c-d344-48bf-9c62-d6eac9f62f09.gif',
+                                    width: 140.0,
+                                    height: 140.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ).animate().fadeIn(duration: 400.ms).scale(
+                                      begin: Offset(0.92, 0.92),
+                                      end: Offset(1, 1),
+                                      curve: Curves.easeOutBack,
+                                    ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      'WHAT IS YOUR LOCATION?',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.manrope(
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .extraBlack,
+                                            fontSize: 24.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.bold,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
+                                            lineHeight: 1.4,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .extraBlack,
-                                          fontSize: 24.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                          lineHeight: 1.4,
-                                        ),
-                                  ),
-                                  Text(
-                                    'Your home address is used to place you in the right neighbourhood. We won\'t share it without your permission.',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
+                                    ),
+                                    Text(
+                                      'Your home address is used to place you in the right neighbourhood. We won\'t share it without your permission.',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.manrope(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -162,167 +186,168 @@ class _LocationPageWidgetState extends State<LocationPageWidget> {
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
+                                    ),
+                                  ].divide(SizedBox(height: 12.0)),
+                                ),
+                                FFButtonWidget(
+                                  onPressed: () async {
+                                    HapticFeedback.lightImpact();
+                                    _model.userGiveAccess =
+                                        await actions.userLocation();
+                                    if (_model.userGiveAccess == true) {
+                                      if (widget!.pageName == 'google') {
+                                        _model.locationResult =
+                                            await InsertUserLocationCall.call(
+                                          lat: FFAppState()
+                                              .AsLatitude
+                                              .toString(),
+                                          lng: FFAppState()
+                                              .AsLongitude
+                                              .toString(),
+                                          placeName: FFAppState().AsCity,
+                                          apikey:
+                                              FFDevEnvironmentValues().AnonKey,
+                                          token: currentJwtToken,
+                                          pType: 'create',
+                                        );
+
+                                        await UserTable().update(
+                                          data: {
+                                            'address': FFAppState().AsAddress,
+                                            'city': FFAppState().AsCity,
+                                            'flat': FFAppState().AsFlat,
+                                          },
+                                          matchingRows: (rows) => rows.eqOrNull(
+                                            'id',
+                                            currentUserUid,
+                                          ),
+                                        );
+                                        await PublicUserProfileTable().update(
+                                          data: {
+                                            'city': FFAppState().AsCity,
+                                          },
+                                          matchingRows: (rows) => rows.eqOrNull(
+                                            'id',
+                                            currentUserUid,
+                                          ),
+                                        );
+
+                                        context.pushNamed(
+                                            LoadingPageWidget.routeName);
+                                      } else {
+                                        context.pushNamed(
+                                            FinalStepsPhonePageWidget
+                                                .routeName);
+                                      }
+                                    }
+
+                                    safeSetState(() {});
+                                  },
+                                  text: 'Allow Location Access',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 46.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 12.0, 16.0, 12.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          font: GoogleFonts.manrope(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .fontStyle,
+                                          ),
+                                          color: Colors.white,
                                           letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyMedium
+                                                  .titleSmall
                                                   .fontWeight,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyMedium
+                                                  .titleSmall
                                                   .fontStyle,
+                                          lineHeight: 1.4,
                                         ),
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(24.0),
                                   ),
-                                ].divide(SizedBox(height: 12.0)),
-                              ),
-                              FFButtonWidget(
-                                onPressed: () async {
-                                  HapticFeedback.lightImpact();
-                                  _model.userGiveAccess =
-                                      await actions.userLocation();
-                                  if (_model.userGiveAccess == true) {
-                                    if (widget!.pageName == 'google') {
-                                      _model.locationResult =
-                                          await InsertUserLocationCall.call(
-                                        lat: FFAppState().AsLatitude.toString(),
-                                        lng:
-                                            FFAppState().AsLongitude.toString(),
-                                        placeName: FFAppState().AsCity,
-                                        apikey:
-                                            FFDevEnvironmentValues().AnonKey,
-                                        token: currentJwtToken,
-                                        pType: 'create',
-                                      );
-
-                                      await UserTable().update(
-                                        data: {
-                                          'address': FFAppState().AsAddress,
-                                          'city': FFAppState().AsCity,
-                                          'flat': FFAppState().AsFlat,
-                                        },
-                                        matchingRows: (rows) => rows.eqOrNull(
-                                          'id',
-                                          currentUserUid,
-                                        ),
-                                      );
-                                      await PublicUserProfileTable().update(
-                                        data: {
-                                          'city': FFAppState().AsCity,
-                                        },
-                                        matchingRows: (rows) => rows.eqOrNull(
-                                          'id',
-                                          currentUserUid,
-                                        ),
-                                      );
-
-                                      context.pushNamed(
-                                          LoadingPageWidget.routeName);
-                                    } else {
-                                      context.pushNamed(
-                                          FinalStepsPhonePageWidget.routeName);
-                                    }
-                                  }
-
-                                  safeSetState(() {});
-                                },
-                                text: 'Allow Location Access',
-                                options: FFButtonOptions(
-                                  width: double.infinity,
-                                  height: 46.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 12.0, 16.0, 12.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        font: GoogleFonts.manrope(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontStyle,
-                                        ),
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
-                                        lineHeight: 1.4,
-                                      ),
-                                  elevation: 0.0,
-                                  borderRadius: BorderRadius.circular(24.0),
                                 ),
-                              ),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    context: context,
-                                    builder: (context) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          FocusScope.of(context).unfocus();
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                        },
-                                        child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: CompNeighbourLocationWidget(
-                                            pageName: widget!.pageName!,
+                                InkWell(
+                                  splashColor: FlutterFlowTheme.of(context)
+                                      .primary
+                                      .withAlpha(0x14),
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    HapticFeedback.lightImpact();
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(context).unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: CompNeighbourLocationWidget(
+                                              pageName: widget!.pageName!,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => safeSetState(() {}));
-                                },
-                                child: Text(
-                                  'Enter Location Manually',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.manrope(
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+                                  },
+                                  child: Text(
+                                    'Enter Location Manually',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.manrope(
+                                            fontWeight: FontWeight.w600,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: FlutterFlowTheme.of(context)
+                                              .extraBlack,
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
                                                   .fontStyle,
+                                          decoration: TextDecoration.underline,
+                                          lineHeight: 1.4,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .extraBlack,
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                        decoration: TextDecoration.underline,
-                                        lineHeight: 1.4,
-                                      ),
+                                  ),
                                 ),
-                              ),
-                            ].divide(SizedBox(height: 36.0)),
+                              ].divide(SizedBox(height: 36.0)),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ].addToStart(SizedBox(height: 50.0)),
+            ],
           ),
         ),
       ),

@@ -66,6 +66,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -87,16 +88,20 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          FlutterFlowIconButton(
-                            borderRadius: 100.0,
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: FlutterFlowTheme.of(context).extraBlack,
-                              size: 24.0,
+                          Semantics(
+                            button: true,
+                            label: 'Back',
+                            child: FlutterFlowIconButton(
+                              borderRadius: 100.0,
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: FlutterFlowTheme.of(context).extraBlack,
+                                size: 24.0,
+                              ),
+                              onPressed: () async {
+                                context.safePop();
+                              },
                             ),
-                            onPressed: () async {
-                              context.safePop();
-                            },
                           ),
                           Text(
                             'Create Group',
@@ -137,7 +142,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(0.0),
                               child: Image.asset(
-                                'assets/images/Header_(1).webp',
+                                'assets/images/group_cover_placeholder.png',
                                 width: double.infinity,
                                 height: 240.0,
                                 fit: BoxFit.cover,
@@ -165,7 +170,9 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 16.0, 16.0),
                         child: InkWell(
-                          splashColor: Colors.transparent,
+                          splashColor: FlutterFlowTheme.of(context)
+                              .primary
+                              .withAlpha(0x14),
                           focusColor: Colors.transparent,
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
@@ -370,7 +377,8 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                               BorderRadius.circular(4.0),
                                         ),
                                         filled: true,
-                                        fillColor: Color(0xFFF7F9FC),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .alternate,
                                         contentPadding:
                                             EdgeInsetsDirectional.fromSTEB(
                                                 12.0, 16.0, 12.0, 16.0),
@@ -537,7 +545,8 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                               BorderRadius.circular(4.0),
                                         ),
                                         filled: true,
-                                        fillColor: Color(0xFFF7F9FC),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .alternate,
                                         contentPadding:
                                             EdgeInsetsDirectional.fromSTEB(
                                                 12.0, 16.0, 12.0, 16.0),
@@ -648,7 +657,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                       'Very Local (within 5 miles)',
                                       'Local Area (within 30 miles)',
                                       'Wider Region (within 300 miles)',
-                                      'All SquaDD Members'
+                                      'All Flock Members'
                                     ].toList(),
                                     onChanged: (val) => safeSetState(() {}),
                                     controller: _model
@@ -658,7 +667,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
@@ -819,7 +828,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
@@ -882,7 +891,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                     ),
                                     alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Text(
-                                      'Groups visible on member profiles are listed. If they’re not visible, they’re unlisted.',
+                                      'Anyone can join an open group instantly. Private groups need admin approval.',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -1015,7 +1024,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
@@ -1211,7 +1220,7 @@ class _CreateGroupWidgetState extends State<CreateGroupWidget> {
                                                       functions
                                                           .getCurrentUtcTime()),
                                               'profile_picture':
-                                                  'https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_group_image/default_group_image.png',
+                                                  'https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_group_image/default_group_image.png',
                                               'total_members': 1,
                                               'location': _model
                                                   .locationRadioButtonValue,

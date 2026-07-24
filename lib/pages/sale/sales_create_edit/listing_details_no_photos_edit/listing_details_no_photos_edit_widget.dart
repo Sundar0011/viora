@@ -132,6 +132,7 @@ class _ListingDetailsNoPhotosEditWidgetState
             backgroundColor: FlutterFlowTheme.of(context).white,
             body: SafeArea(
               top: true,
+              bottom: true,
               child: Container(
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).pageBack,
@@ -414,7 +415,9 @@ class _ListingDetailsNoPhotosEditWidgetState
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -610,7 +613,9 @@ class _ListingDetailsNoPhotosEditWidgetState
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -740,7 +745,8 @@ class _ListingDetailsNoPhotosEditWidgetState
                                               .secondaryText,
                                           size: 24.0,
                                         ),
-                                        fillColor: Color(0xFFF7F9FC),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .alternate,
                                         elevation: 2.0,
                                         borderColor:
                                             FlutterFlowTheme.of(context).greyL2,
@@ -836,7 +842,7 @@ class _ListingDetailsNoPhotosEditWidgetState
                                         textStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              font: GoogleFonts.inter(
+                                              font: GoogleFonts.manrope(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -1030,7 +1036,9 @@ class _ListingDetailsNoPhotosEditWidgetState
                                                           4.0),
                                                 ),
                                                 filled: true,
-                                                fillColor: Color(0xFFF7F9FC),
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
                                                 contentPadding:
                                                     EdgeInsetsDirectional
                                                         .fromSTEB(12.0, 16.0,
@@ -1297,7 +1305,10 @@ class _ListingDetailsNoPhotosEditWidgetState
                                                             4.0),
                                                   ),
                                                   filled: true,
-                                                  fillColor: Color(0xFFF7F9FC),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
                                                   contentPadding:
                                                       EdgeInsetsDirectional
                                                           .fromSTEB(12.0, 16.0,
@@ -1388,7 +1399,10 @@ class _ListingDetailsNoPhotosEditWidgetState
                                                             searchplacesIndex];
                                                     return InkWell(
                                                       splashColor:
-                                                          Colors.transparent,
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary
+                                                              .withAlpha(0x14),
                                                       focusColor:
                                                           Colors.transparent,
                                                       hoverColor:

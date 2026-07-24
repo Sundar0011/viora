@@ -10,6 +10,7 @@ import 'google_auth.dart';
 import 'supabase_user_provider.dart';
 
 export '/auth/base_auth_user_provider.dart';
+import '/flutter_flow/app_log.dart';
 
 class SupabaseAuthManager extends AuthManager
     with EmailSignInManager, GoogleSignInManager {
@@ -22,7 +23,7 @@ class SupabaseAuthManager extends AuthManager
   Future deleteUser(BuildContext context) async {
     try {
       if (!loggedIn) {
-        print('Error: delete user attempted with no logged in user!');
+        appLog('Error: delete user attempted with no logged in user!');
         return;
       }
       await currentUser?.delete();
@@ -41,7 +42,7 @@ class SupabaseAuthManager extends AuthManager
   }) async {
     try {
       if (!loggedIn) {
-        print('Error: update email attempted with no logged in user!');
+        appLog('Error: update email attempted with no logged in user!');
         return;
       }
       await currentUser?.updateEmail(email);
@@ -64,7 +65,7 @@ class SupabaseAuthManager extends AuthManager
   }) async {
     try {
       if (!loggedIn) {
-        print('Error: update password attempted with no logged in user!');
+        appLog('Error: update password attempted with no logged in user!');
         return;
       }
       await currentUser?.updatePassword(newPassword);

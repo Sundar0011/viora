@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -46,6 +47,12 @@ class FinalStepsMailPageModel
 
   // Stores action output result for [Backend Call - API (CheckUserExist)] action in TextField widget.
   ApiCallResponse? apiResultmmq;
+  // OTP BYPASS (2026-07-21): account-creation results, moved here from verify_page
+  // because signup now completes on this page instead of after an OTP step.
+  UserRow? userTable;
+  UserRolesRow? userRole;
+  PublicUserProfileRow? publicProfile;
+  ApiCallResponse? locationResult;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;

@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -17,10 +18,10 @@ Future fetchUserLocations() async {
         .order('id');
 
     // Print the data to verify
-    print('Fetched user_locations: $data');
+    appLog('Fetched user_locations: $data');
 
     FFAppState().userLocationsList = data;
   } catch (error) {
-    print('Error fetching user_locations: $error');
+    appLog('Error fetching user_locations: $error');
   }
 }

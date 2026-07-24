@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -14,25 +15,25 @@ Future initRealtimeChatUpdates() async {
   final currentUserId = client.auth.currentUser?.id;
 
   if (currentUserId == null) {
-    print('❌ No authenticated user found');
+    appLog('❌ No authenticated user found');
     return;
   }
 
-  print('🔧 Current user ID: $currentUserId');
+  appLog('🔧 Current user ID: $currentUserId');
 
   // Test messages table accessibility
-  print('🧪 Testing messages table subscription...');
-  final testChannel = client.channel('test_messages_channel');
+  appLog('🧪 Testing messages table subscription...');
+  final testChannel = freshRealtimeChannel(client, 'test_messages_channel');
   testChannel
       .onPostgresChanges(
         event: PostgresChangeEvent.all,
         schema: 'public',
         table: 'messages',
         callback: (payload) {
-          print('🧪 TEST: Messages table event detected!');
-          print('🧪 TEST Event: ${payload.eventType}');
-          print('🧪 TEST New: ${payload.newRecord}');
-          print('🧪 TEST Old: ${payload.oldRecord}');
+          appLog('🧪 TEST: Messages table event detected!');
+          appLog('🧪 TEST Event: ${payload.eventType}');
+          appLog('🧪 TEST New: ${payload.newRecord}');
+          appLog('🧪 TEST Old: ${payload.oldRecord}');
         },
       )
       .subscribe();
@@ -56,9 +57,11 @@ Future initRealtimeChatUpdates() async {
   }
 
   // Use separate channels for each table to avoid conflicts
-  final chatChannel = client.channel('chat_table_realtime');
-  final chatUsersChannel = client.channel('chat_users_table_realtime');
-  final messagesChannel = client.channel('messages_table_realtime');
+  final chatChannel = freshRealtimeChannel(client, 'chat_table_realtime');
+  final chatUsersChannel =
+      freshRealtimeChannel(client, 'chat_users_table_realtime');
+  final messagesChannel =
+      freshRealtimeChannel(client, 'messages_table_realtime');
 
   // Subscribe to chat table changes
   chatChannel
@@ -72,21 +75,21 @@ Future initRealtimeChatUpdates() async {
             final newRow = payload.newRecord;
             final oldRow = payload.oldRecord;
 
-            print('📡 Realtime Event Type: ${eventType} on table: chat');
-            print('🆕 New record: $newRow');
-            print('🗑️ Old record: $oldRow');
+            appLog('📡 Realtime Event Type: ${eventType} on table: chat');
+            appLog('🆕 New record: $newRow');
+            appLog('🗑️ Old record: $oldRow');
 
             // Check if newRow is valid for INSERT/UPDATE
             if (eventType != PostgresChangeEvent.delete &&
                 (newRow == null || newRow['id'] == null)) {
-              print('❌ Invalid payload: newRow or ID is null');
+              appLog('❌ Invalid payload: newRow or ID is null');
               return;
             }
 
             // Check if oldRow is valid for DELETE
             if (eventType == PostgresChangeEvent.delete &&
                 (oldRow == null || oldRow['id'] == null)) {
-              print('❌ Invalid DELETE payload: oldRow or ID is null');
+              appLog('❌ Invalid DELETE payload: oldRow or ID is null');
               return;
             }
 
@@ -98,7 +101,7 @@ Future initRealtimeChatUpdates() async {
 
               if (eventType == PostgresChangeEvent.insert ||
                   eventType == PostgresChangeEvent.update) {
-                print(
+                appLog(
                     '🔄 Processing ${eventType.name.toUpperCase()} for chat ID: $chatId');
 
                 final existingIndex =
@@ -115,7 +118,7 @@ Future initRealtimeChatUpdates() async {
 
                     // Skip null values to preserve existing enriched data
                     if (newValue == null) {
-                      print('⏭️ Skipping null value for key: $key');
+                      appLog('⏭️ Skipping null value for key: $key');
                       continue;
                     }
 
@@ -126,7 +129,7 @@ Future initRealtimeChatUpdates() async {
 
                       // Don't overwrite positive counts with 0 (prevents race conditions)
                       if (newCount == 0 && existingCount > 0) {
-                        print(
+                        appLog(
                             '⏭️ Preserving existing count for $key: $existingCount (new was 0)');
                         continue;
                       }
@@ -153,32 +156,32 @@ Future initRealtimeChatUpdates() async {
                   }
 
                   chats[existingIndex] = existingChat;
-                  print('✅ Merged data for existing chat: $chatId');
+                  appLog('✅ Merged data for existing chat: $chatId');
                 } else {
                   // Chat not found in app state - ignore the update
-                  print(
+                  appLog(
                       '⏭️ Chat $chatId not found in app state, ignoring ${eventType.name.toUpperCase()}');
                 }
               } else if (eventType == PostgresChangeEvent.delete) {
                 // Delete the entire chat
-                print('🗑️ Deleting chat with ID: $chatId');
+                appLog('🗑️ Deleting chat with ID: $chatId');
 
                 final existingIndex =
                     chats.indexWhere((c) => c['chat_id'] == chatId);
 
                 if (existingIndex != -1) {
                   chats.removeAt(existingIndex);
-                  print('✅ Deleted chat: $chatId');
+                  appLog('✅ Deleted chat: $chatId');
                 } else {
-                  print('⚠️ Chat $chatId not found for deletion');
+                  appLog('⚠️ Chat $chatId not found for deletion');
                 }
               }
 
               FFAppState().matchedUsers = chats;
-              print('✅ Updated matchedUsers with ${chats.length} chats');
+              appLog('✅ Updated matchedUsers with ${chats.length} chats');
             });
           } catch (e) {
-            print('❌ Error in chat table callback: $e');
+            appLog('❌ Error in chat table callback: $e');
           }
         },
       )
@@ -196,18 +199,18 @@ Future initRealtimeChatUpdates() async {
             final newRow = payload.newRecord;
             final oldRow = payload.oldRecord;
 
-            print('📡 Realtime Event Type: ${eventType} on table: chat_users');
+            appLog('📡 Realtime Event Type: ${eventType} on table: chat_users');
 
             // Only process if this affects the current user
             final affectedUserId = newRow?['user_id'] ?? oldRow?['user_id'];
             final chatId = newRow?['chat_id'] ?? oldRow?['chat_id'];
 
             if (chatId == null) {
-              print('❌ No chat_id found in payload');
+              appLog('❌ No chat_id found in payload');
               return;
             }
 
-            print(
+            appLog(
                 '🔄 Processing chat_users change for chat: $chatId, user: $affectedUserId');
 
             FFAppState().update(() {
@@ -221,7 +224,7 @@ Future initRealtimeChatUpdates() async {
                       chats.indexWhere((c) => c['chat_id'] == chatId);
                   if (existingIndex != -1) {
                     chats.removeAt(existingIndex);
-                    print('✅ Removed chat from app state: $chatId');
+                    appLog('✅ Removed chat from app state: $chatId');
                   }
                 }
               } else if (eventType == PostgresChangeEvent.update) {
@@ -232,7 +235,7 @@ Future initRealtimeChatUpdates() async {
                       chats.indexWhere((c) => c['chat_id'] == chatId);
                   if (existingIndex != -1) {
                     chats.removeAt(existingIndex);
-                    print(
+                    appLog(
                         '✅ Chat marked as deleted, removed from app state: $chatId');
                   }
                 }
@@ -241,7 +244,7 @@ Future initRealtimeChatUpdates() async {
               FFAppState().matchedUsers = chats;
             });
           } catch (e) {
-            print('❌ Error in chat_users callback: $e');
+            appLog('❌ Error in chat_users callback: $e');
           }
         },
       )
@@ -259,17 +262,17 @@ Future initRealtimeChatUpdates() async {
             final newRow = payload.newRecord;
             final oldRow = payload.oldRecord;
 
-            print('📡 Realtime Event Type: ${eventType} on table: messages');
-            print('🆕 Message New record: $newRow');
-            print('🗑️ Message Old record: $oldRow');
+            appLog('📡 Realtime Event Type: ${eventType} on table: messages');
+            appLog('🆕 Message New record: $newRow');
+            appLog('🗑️ Message Old record: $oldRow');
 
             final chatId = newRow?['chat_id'] ?? oldRow?['chat_id'];
             if (chatId == null) {
-              print('❌ No chat_id found in message payload');
+              appLog('❌ No chat_id found in message payload');
               return;
             }
 
-            print('🔄 Processing message event for chat: $chatId');
+            appLog('🔄 Processing message event for chat: $chatId');
 
             // Only process if this affects a chat the user is part of
             FFAppState().update(() {
@@ -281,7 +284,8 @@ Future initRealtimeChatUpdates() async {
               if (existingIndex != -1) {
                 final existingChat =
                     Map<String, dynamic>.from(chats[existingIndex]);
-                print('📍 Found chat in app state: ${existingChat['chat_id']}');
+                appLog(
+                    '📍 Found chat in app state: ${existingChat['chat_id']}');
 
                 if (eventType == PostgresChangeEvent.insert) {
                   // New message - update last message info and potentially unread count
@@ -291,7 +295,7 @@ Future initRealtimeChatUpdates() async {
                     final createdAt = newRow['created_at'];
                     final isRead = newRow['is_read'] ?? false;
 
-                    print(
+                    appLog(
                         '📨 New message from $senderId, isRead: $isRead, currentUser: $currentUserId');
 
                     // Update last message info (this might be redundant with chat table updates, but ensures consistency)
@@ -307,7 +311,7 @@ Future initRealtimeChatUpdates() async {
                       final newUnreadCount = currentUnread + 1;
                       existingChat['unread_message_count'] = newUnreadCount;
 
-                      print(
+                      appLog(
                           '📈 Unread count increased from $currentUnread to $newUnreadCount for chat $chatId');
 
                       // Update total unread count across all chats
@@ -323,14 +327,14 @@ Future initRealtimeChatUpdates() async {
                         chats[i] = otherChat;
                       }
 
-                      print(
+                      appLog(
                           '📊 Total unread count updated from $currentTotalUnread to $newTotalUnread');
                     } else {
-                      print(
+                      appLog(
                           '📝 Message is read or from current user, no unread count change');
                     }
 
-                    print(
+                    appLog(
                         '✅ Updated chat with new message: $chatId, unread: ${existingChat['unread_message_count']}');
                   }
                 } else if (eventType == PostgresChangeEvent.update) {
@@ -340,7 +344,7 @@ Future initRealtimeChatUpdates() async {
                     final oldIsRead = oldRow['is_read'] ?? false;
                     final newIsRead = newRow['is_read'] ?? false;
 
-                    print(
+                    appLog(
                         '📖 Message read status change: $oldIsRead -> $newIsRead, sender: $senderId');
 
                     // If message was marked as read and it's from other user to current user
@@ -351,7 +355,7 @@ Future initRealtimeChatUpdates() async {
                         final newUnreadCount = currentUnread - 1;
                         existingChat['unread_message_count'] = newUnreadCount;
 
-                        print(
+                        appLog(
                             '📉 Unread count decreased from $currentUnread to $newUnreadCount for chat $chatId');
 
                         // Update total unread count across all chats
@@ -369,16 +373,16 @@ Future initRealtimeChatUpdates() async {
                             chats[i] = otherChat;
                           }
 
-                          print(
+                          appLog(
                               '📊 Total unread count updated from $currentTotalUnread to $newTotalUnread');
                         }
                       }
                     } else {
-                      print(
+                      appLog(
                           '📝 No unread count change needed for this read status update');
                     }
 
-                    print(
+                    appLog(
                         '✅ Updated message read status for chat: $chatId, unread: ${existingChat['unread_message_count']}');
                   }
                 } else if (eventType == PostgresChangeEvent.delete) {
@@ -387,7 +391,7 @@ Future initRealtimeChatUpdates() async {
                     final senderId = oldRow['sender_id'];
                     final wasRead = oldRow['is_read'] ?? false;
 
-                    print(
+                    appLog(
                         '🗑️ Message deleted, was read: $wasRead, sender: $senderId');
 
                     // If deleted message was unread and from other user to current user
@@ -398,7 +402,7 @@ Future initRealtimeChatUpdates() async {
                         final newUnreadCount = currentUnread - 1;
                         existingChat['unread_message_count'] = newUnreadCount;
 
-                        print(
+                        appLog(
                             '📉 Unread count decreased from $currentUnread to $newUnreadCount after deletion');
 
                         // Update total unread count across all chats
@@ -416,38 +420,38 @@ Future initRealtimeChatUpdates() async {
                             chats[i] = otherChat;
                           }
 
-                          print(
+                          appLog(
                               '📊 Total unread count updated from $currentTotalUnread to $newTotalUnread');
                         }
                       }
                     } else {
-                      print(
+                      appLog(
                           '📝 Deleted message was read or from current user, no count change');
                     }
 
-                    print(
+                    appLog(
                         '✅ Updated counts after message deletion: $chatId, unread: ${existingChat['unread_message_count']}');
                   }
                 }
 
                 chats[existingIndex] = existingChat;
               } else {
-                print(
+                appLog(
                     '⚠️ Chat $chatId not found in app state for message update');
               }
 
               FFAppState().matchedUsers = chats;
-              print('✅ Updated matchedUsers after message event');
+              appLog('✅ Updated matchedUsers after message event');
             });
           } catch (e) {
-            print('❌ Error in messages callback: $e');
+            appLog('❌ Error in messages callback: $e');
           }
         },
       )
       .subscribe();
 
-  print('🎧 Realtime subscriptions initialized for chat tables:');
-  print('   - Chat table: chat_table_realtime');
-  print('   - Chat users table: chat_users_table_realtime');
-  print('   - Messages table: messages_table_realtime');
+  appLog('🎧 Realtime subscriptions initialized for chat tables:');
+  appLog('   - Chat table: chat_table_realtime');
+  appLog('   - Chat users table: chat_users_table_realtime');
+  appLog('   - Messages table: messages_table_realtime');
 }

@@ -11,6 +11,7 @@ import 'uploaded_file.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/auth/supabase_auth/auth_util.dart';
+import '/flutter_flow/app_log.dart';
 
 DateTime? getCurrentUtcTime() {
   return DateTime.now().toUtc();
@@ -234,13 +235,13 @@ List<dynamic> addSampleUserData() {
       "userid": "1a14873d-b1e5-4d71-85ee-ab20d18939c5",
       "username": "Harikishore S",
       "profile":
-          "https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_profile/file_0000000035b061f896bf60c815a83ceb.png.d3060943-fe07-4031-9bbb-3fc0b4608b06",
+          "https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_profile/default_profile.png",
     },
     {
       "userid": "d3060943-fe07-4031-9bbb-3fc0b4608b06",
       "username": "Sundaravel S",
       "profile":
-          "https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/profile-images/d3060943-fe07-4031-9bbb-3fc0b4608b06/1752467834364978.jpg",
+          "https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/profile-images/d3060943-fe07-4031-9bbb-3fc0b4608b06/1752467834364978.jpg",
     },
   ];
 }
@@ -412,7 +413,7 @@ List<String> returnIdsSearch(
           .where((id) => id != null && id is String),
     );
   } catch (e) {
-    print('Error parsing IDs from search response: $e');
+    appLog('Error parsing IDs from search response: $e');
     return [];
   }
 }

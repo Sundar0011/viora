@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comp_leave_group_model.dart';
@@ -76,16 +77,20 @@ class _CompLeaveGroupWidgetState extends State<CompLeaveGroupWidget> {
                 children: [
                   Align(
                     alignment: AlignmentDirectional(-1.0, 0.0),
-                    child: FlutterFlowIconButton(
-                      borderRadius: 100.0,
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: FlutterFlowTheme.of(context).extraBlack,
-                        size: 24.0,
+                    child: Semantics(
+                      button: true,
+                      label: 'Back',
+                      child: FlutterFlowIconButton(
+                        borderRadius: 100.0,
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: FlutterFlowTheme.of(context).extraBlack,
+                          size: 24.0,
+                        ),
+                        onPressed: () async {
+                          context.safePop();
+                        },
                       ),
-                      onPressed: () async {
-                        context.safePop();
-                      },
                     ),
                   ),
                   Text(
@@ -147,6 +152,7 @@ class _CompLeaveGroupWidgetState extends State<CompLeaveGroupWidget> {
                         Expanded(
                           child: FFButtonWidget(
                             onPressed: () async {
+                              HapticFeedback.lightImpact();
                               await GroupMembersTable().delete(
                                 matchingRows: (rows) => rows
                                     .eqOrNull(

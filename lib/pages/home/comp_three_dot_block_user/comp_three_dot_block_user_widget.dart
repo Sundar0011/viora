@@ -119,7 +119,9 @@ class _CompThreeDotBlockUserWidgetState
                               : null;
 
                       return InkWell(
-                        splashColor: Colors.transparent,
+                        splashColor: FlutterFlowTheme.of(context)
+                            .primary
+                            .withAlpha(0x14),
                         focusColor: Colors.transparent,
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
@@ -209,7 +211,8 @@ class _CompThreeDotBlockUserWidgetState
                     },
                   ),
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,

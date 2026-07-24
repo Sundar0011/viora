@@ -1,6 +1,8 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -85,6 +87,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -127,19 +130,21 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                         safeSetState(() {});
                                       },
                                     ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(24.0),
-                                      child: Image.network(
-                                        FFAppState().AsProfilePicture,
-                                        width: 40.0,
-                                        height: 40.0,
-                                        fit: BoxFit.fill,
-                                      ),
+                                    AppNetworkImage(
+                                      url: FFAppState().AsProfilePicture,
+                                      width: 40.0,
+                                      height: 40.0,
+                                      fit: BoxFit.cover,
+                                      isAvatar: true,
+                                      semanticLabel: 'Your profile photo',
                                     ),
                                     if (widget!.groupId == null ||
                                         widget!.groupId == '')
                                       InkWell(
-                                        splashColor: Colors.transparent,
+                                        splashColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary
+                                                .withAlpha(0x14),
                                         focusColor: Colors.transparent,
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
@@ -383,7 +388,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
-                                          font: GoogleFonts.interTight(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .titleSmall
@@ -393,8 +398,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                     .titleSmall
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .white,
+                                          color: Colors.white,
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight:
@@ -492,14 +496,14 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0x00000000),
+                                      color: Colors.transparent,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0x00000000),
+                                      color: Colors.transparent,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(8.0),
@@ -574,7 +578,9 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                     final suggestionsItem =
                                         suggestions[suggestionsIndex];
                                     return InkWell(
-                                      splashColor: Colors.transparent,
+                                      splashColor: FlutterFlowTheme.of(context)
+                                          .primary
+                                          .withAlpha(0x14),
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
@@ -601,20 +607,21 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Container(
+                                              AppNetworkImage(
+                                                url: getJsonField(
+                                                  suggestionsItem,
+                                                  r'''$.profile''',
+                                                ).toString(),
                                                 width: 32.0,
                                                 height: 32.0,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Image.network(
-                                                  getJsonField(
-                                                    suggestionsItem,
-                                                    r'''$.profile''',
-                                                  ).toString(),
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                fit: BoxFit.cover,
+                                                isAvatar: true,
+                                                semanticLabel:
+                                                    'Profile photo of ' +
+                                                        getJsonField(
+                                                                suggestionsItem,
+                                                                r'''$.name''')
+                                                            .toString(),
                                               ),
                                               Text(
                                                 getJsonField(
@@ -669,41 +676,40 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                if (false)
-                                  Align(
-                                    alignment: AlignmentDirectional(1.0, -1.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        safeSetState(() {
-                                          _model.isDataUploading_uploadDataValue =
-                                              false;
-                                          _model.uploadedLocalFiles_uploadDataValue =
-                                              [];
-                                        });
+                                // Removes the attached photo(s) before posting.
+                                // Enabled 2026-07-21 (if-false quick win #1) —
+                                // without it a user who picks the wrong photo
+                                // has no way to drop it.
+                                Align(
+                                  alignment: AlignmentDirectional(1.0, -1.0),
+                                  child: AppIconButton(
+                                    icon: Icons.close,
+                                    iconSize: 24.0,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    semanticLabel: 'Remove attached photo',
+                                    tooltip: 'Remove photo',
+                                    onTap: () async {
+                                      safeSetState(() {
+                                        _model.isDataUploading_uploadDataValue =
+                                            false;
+                                        _model.uploadedLocalFiles_uploadDataValue =
+                                            [];
+                                      });
 
-                                        if ((String var1) {
-                                          return var1.length != 0;
-                                        }(_model.inputTextFieldTextController
-                                            .text)) {
-                                          _model.datapresent = true;
-                                          safeSetState(() {});
-                                        } else {
-                                          _model.datapresent = false;
-                                          safeSetState(() {});
-                                        }
-                                      },
-                                      child: Icon(
-                                        Icons.close,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 24.0,
-                                      ),
-                                    ),
+                                      if ((String var1) {
+                                        return var1.length != 0;
+                                      }(_model
+                                          .inputTextFieldTextController.text)) {
+                                        _model.datapresent = true;
+                                        safeSetState(() {});
+                                      } else {
+                                        _model.datapresent = false;
+                                        safeSetState(() {});
+                                      }
+                                    },
                                   ),
+                                ),
                                 if (_model.uploadedImage.length > 1)
                                   Stack(
                                     alignment: AlignmentDirectional(-1.0, 1.0),
@@ -779,17 +785,14 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                                         0.0,
                                                                         0.0,
                                                                         15.0),
-                                                                child: InkWell(
-                                                                  splashColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  focusColor: Colors
-                                                                      .transparent,
-                                                                  hoverColor: Colors
-                                                                      .transparent,
-                                                                  highlightColor:
-                                                                      Colors
-                                                                          .transparent,
+                                                                child:
+                                                                    AppIconButton(
+                                                                  semanticLabel:
+                                                                      'Remove this photo',
+                                                                  minTapTarget:
+                                                                      44.0,
+                                                                  enableHaptic:
+                                                                      false,
                                                                   onTap:
                                                                       () async {
                                                                     _model.removeAtIndexFromUploadedImage(
@@ -815,20 +818,23 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                                           () {});
                                                                     }
                                                                   },
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            100.0),
-                                                                    child: Image
-                                                                        .asset(
-                                                                      'assets/images/Icon.webp',
-                                                                      width:
-                                                                          24.0,
-                                                                      height:
-                                                                          24.0,
-                                                                      fit: BoxFit
-                                                                          .cover,
+                                                                  iconWidget:
+                                                                      ExcludeSemantics(
+                                                                    child:
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              100.0),
+                                                                      child: Image
+                                                                          .asset(
+                                                                        'assets/images/Icon.webp',
+                                                                        width:
+                                                                            24.0,
+                                                                        height:
+                                                                            24.0,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -928,11 +934,10 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   15.0, 0.0, 0.0, 15.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
+                                          child: AppIconButton(
+                                            semanticLabel: 'Remove this photo',
+                                            minTapTarget: 44.0,
+                                            enableHaptic: false,
                                             onTap: () async {
                                               _model.uploadedImage = [];
                                               safeSetState(() {});
@@ -948,14 +953,17 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                 safeSetState(() {});
                                               }
                                             },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0),
-                                              child: Image.asset(
-                                                'assets/images/Icon.webp',
-                                                width: 24.0,
-                                                height: 24.0,
-                                                fit: BoxFit.cover,
+                                            iconWidget: ExcludeSemantics(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.0),
+                                                child: Image.asset(
+                                                  'assets/images/Icon.webp',
+                                                  width: 24.0,
+                                                  height: 24.0,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -987,11 +995,10 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       if ((_model.uploadedImage.isNotEmpty) == false)
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
+                        AppIconButton(
+                          semanticLabel: 'Add photos',
+                          minTapTarget: 44.0,
+                          enableHaptic: false,
                           onTap: () async {
                             final selectedMedia = await selectMedia(
                               mediaSource: MediaSource.photoGallery,
@@ -1040,13 +1047,15 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                               safeSetState(() {});
                             }
                           },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/add_photo_alternate_(1).png',
-                              width: 32.0,
-                              height: 32.0,
-                              fit: BoxFit.cover,
+                          iconWidget: ExcludeSemantics(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/add_photo_alternate_(1).png',
+                                width: 32.0,
+                                height: 32.0,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),

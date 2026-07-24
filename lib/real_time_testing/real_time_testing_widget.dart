@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'real_time_testing_model.dart';
 export 'real_time_testing_model.dart';
+import '/flutter_flow/app_log.dart';
 
 class RealTimeTestingWidget extends StatefulWidget {
   const RealTimeTestingWidget({super.key});
@@ -100,7 +101,7 @@ class _RealTimeTestingWidgetState extends State<RealTimeTestingWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        font: GoogleFonts.inter(
+                                        font: GoogleFonts.manrope(
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -129,7 +130,7 @@ class _RealTimeTestingWidgetState extends State<RealTimeTestingWidget> {
                 ),
               FFButtonWidget(
                 onPressed: () {
-                  print('Button pressed ...');
+                  appLog('Button pressed ...');
                 },
                 text: 'Button',
                 options: FFButtonOptions(
@@ -139,7 +140,7 @@ class _RealTimeTestingWidgetState extends State<RealTimeTestingWidget> {
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        font: GoogleFonts.interTight(
+                        font: GoogleFonts.manrope(
                           fontWeight: FlutterFlowTheme.of(context)
                               .titleSmall
                               .fontWeight,

@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/comp_no_data_found_widget.dart';
@@ -72,7 +73,7 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -84,7 +85,7 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -96,7 +97,7 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -108,7 +109,7 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -120,7 +121,7 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -132,7 +133,7 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -187,16 +188,21 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1.0, 0.0),
-                            child: FlutterFlowIconButton(
-                              borderRadius: 100.0,
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: FlutterFlowTheme.of(context).extraBlack,
-                                size: 24.0,
+                            child: Semantics(
+                              button: true,
+                              label: 'Back',
+                              child: FlutterFlowIconButton(
+                                borderRadius: 100.0,
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color:
+                                      FlutterFlowTheme.of(context).extraBlack,
+                                  size: 24.0,
+                                ),
+                                onPressed: () async {
+                                  context.safePop();
+                                },
                               ),
-                              onPressed: () async {
-                                context.safePop();
-                              },
                             ),
                           ),
                           Text(
@@ -268,20 +274,17 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                Container(
+                                                AppNetworkImage(
+                                                  url: getJsonField(
+                                                          userDetailsItem,
+                                                          r'''$.profile_picture''')
+                                                      .toString(),
                                                   width: 32.0,
                                                   height: 32.0,
-                                                  clipBehavior: Clip.antiAlias,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: Image.network(
-                                                    getJsonField(
-                                                      userDetailsItem,
-                                                      r'''$.profile_picture''',
-                                                    ).toString(),
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                                  fit: BoxFit.cover,
+                                                  isAvatar: true,
+                                                  semanticLabel:
+                                                      'Profile photo',
                                                 ),
                                                 Expanded(
                                                   child: Column(
@@ -350,7 +353,7 @@ class _CompReviewInviteWidgetState extends State<CompReviewInviteWidget>
                                                               color: FlutterFlowTheme
                                                                       .of(context)
                                                                   .greyL4,
-                                                              fontSize: 10.0,
+                                                              fontSize: 12.0,
                                                               letterSpacing:
                                                                   0.0,
                                                               fontWeight:

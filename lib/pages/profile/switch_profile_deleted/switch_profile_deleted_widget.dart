@@ -1,4 +1,5 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -70,14 +71,13 @@ class _SwitchProfileDeletedWidgetState
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          FlutterFlowIconButton(
-                            borderRadius: 100.0,
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: FlutterFlowTheme.of(context).extraBlack,
-                              size: 24.0,
-                            ),
-                            onPressed: () async {
+                          AppIconButton(
+                            icon: Icons.arrow_back,
+                            semanticLabel: 'Back',
+                            tooltip: 'Back',
+                            iconSize: 24.0,
+                            color: FlutterFlowTheme.of(context).extraBlack,
+                            onTap: () async {
                               context.safePop();
                             },
                           ),
@@ -118,7 +118,7 @@ class _SwitchProfileDeletedWidgetState
                           children: [
                             Icon(
                               Icons.add,
-                              color: FlutterFlowTheme.of(context).white,
+                              color: Colors.white,
                               size: 16.0,
                             ),
                             Text(
@@ -132,7 +132,7 @@ class _SwitchProfileDeletedWidgetState
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: Colors.white,
                                     fontSize: 12.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
@@ -160,7 +160,9 @@ class _SwitchProfileDeletedWidgetState
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                       child: InkWell(
-                        splashColor: Colors.transparent,
+                        splashColor: FlutterFlowTheme.of(context)
+                            .primary
+                            .withAlpha(0x14),
                         focusColor: Colors.transparent,
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
@@ -194,9 +196,14 @@ class _SwitchProfileDeletedWidgetState
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                           ),
-                                          child: Image.network(
-                                            'https://picsum.photos/seed/813/600',
+                                          child: AppNetworkImage(
+                                            url:
+                                                'https://picsum.photos/seed/813/600',
+                                            width: 32.0,
+                                            height: 32.0,
                                             fit: BoxFit.cover,
+                                            fallbackIcon: Icons.person_rounded,
+                                            semanticLabel: 'Profile photo',
                                           ),
                                         ),
                                         Column(
@@ -251,7 +258,7 @@ class _SwitchProfileDeletedWidgetState
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .greyL4,
-                                                    fontSize: 10.0,
+                                                    fontSize: 12.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                     fontStyle:

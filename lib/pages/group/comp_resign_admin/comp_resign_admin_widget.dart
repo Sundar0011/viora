@@ -78,16 +78,20 @@ class _CompResignAdminWidgetState extends State<CompResignAdminWidget> {
                 children: [
                   Align(
                     alignment: AlignmentDirectional(-1.0, 0.0),
-                    child: FlutterFlowIconButton(
-                      borderRadius: 100.0,
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: FlutterFlowTheme.of(context).extraBlack,
-                        size: 24.0,
+                    child: Semantics(
+                      button: true,
+                      label: 'Back',
+                      child: FlutterFlowIconButton(
+                        borderRadius: 100.0,
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: FlutterFlowTheme.of(context).extraBlack,
+                          size: 24.0,
+                        ),
+                        onPressed: () async {
+                          context.safePop();
+                        },
                       ),
-                      onPressed: () async {
-                        context.safePop();
-                      },
                     ),
                   ),
                   Text(

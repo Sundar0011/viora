@@ -1,8 +1,8 @@
+import '/components/app_icon_button.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/comp_location_permission_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -14,6 +14,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -86,7 +87,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -98,7 +99,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -110,7 +111,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -122,7 +123,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -134,7 +135,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -146,7 +147,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -198,14 +199,13 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            FlutterFlowIconButton(
-                              borderRadius: 100.0,
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: FlutterFlowTheme.of(context).extraBlack,
-                                size: 24.0,
-                              ),
-                              onPressed: () async {
+                            AppIconButton(
+                              icon: Icons.arrow_back,
+                              semanticLabel: 'Back',
+                              tooltip: 'Back',
+                              iconSize: 24.0,
+                              color: FlutterFlowTheme.of(context).extraBlack,
+                              onTap: () async {
                                 context.safePop();
                               },
                             ),
@@ -241,11 +241,12 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                             borderRadius: BorderRadius.circular(24.0),
                           ),
                           child: InkWell(
-                            splashColor: Colors.transparent,
+                            splashColor: Colors.white.withAlpha(0x33),
                             focusColor: Colors.transparent,
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
+                              HapticFeedback.lightImpact();
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -272,7 +273,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                               children: [
                                 Icon(
                                   Icons.cached_sharp,
-                                  color: FlutterFlowTheme.of(context).white,
+                                  color: Colors.white,
                                   size: 16.0,
                                 ),
                                 Text(
@@ -287,8 +288,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        color:
-                                            FlutterFlowTheme.of(context).white,
+                                        color: Colors.white,
                                         fontSize: 12.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
@@ -345,11 +345,14 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                     ),
                               ),
                               InkWell(
-                                splashColor: Colors.transparent,
+                                splashColor: FlutterFlowTheme.of(context)
+                                    .primary
+                                    .withAlpha(0x14),
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
+                                  HapticFeedback.lightImpact();
                                   context.pushNamed(
                                       NeighbourhoodExploreWidget.routeName);
                                 },
@@ -453,11 +456,14 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                       ),
                                 ),
                                 InkWell(
-                                  splashColor: Colors.transparent,
+                                  splashColor: FlutterFlowTheme.of(context)
+                                      .primary
+                                      .withAlpha(0x14),
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
+                                    HapticFeedback.lightImpact();
                                     context.pushNamed(
                                         NeighbourhoodsFollowingWidget
                                             .routeName);
@@ -613,7 +619,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).greyL4,
                                                                             fontSize:
-                                                                                10.0,
+                                                                                12.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -654,7 +660,7 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).greyL4,
                                                                             fontSize:
-                                                                                10.0,
+                                                                                12.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -670,8 +676,12 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                                               ],
                                                             ),
                                                             InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
+                                                              splashColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary
+                                                                      .withAlpha(
+                                                                          0x14),
                                                               focusColor: Colors
                                                                   .transparent,
                                                               hoverColor: Colors
@@ -680,6 +690,8 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
+                                                                HapticFeedback
+                                                                    .lightImpact();
                                                                 _model.apiResult8wl =
                                                                     await AddFollowCall
                                                                         .call(
@@ -773,7 +785,20 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                                     ],
                                                   ),
                                                 ),
-                                              );
+                                              )
+                                                  .animate()
+                                                  .fadeIn(
+                                                    duration: 260.ms,
+                                                    delay: (40 *
+                                                            (followersIndex %
+                                                                8))
+                                                        .ms,
+                                                  )
+                                                  .slideY(
+                                                    begin: 0.06,
+                                                    end: 0,
+                                                    curve: Curves.easeOutCubic,
+                                                  );
                                             }),
                                           ),
                                         );
@@ -961,6 +986,16 @@ class _NeighborhoodsWidgetState extends State<NeighborhoodsWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    Image.asset(
+                                      'assets/images/empty_groups.png',
+                                      width: 180.0,
+                                      height: 180.0,
+                                      fit: BoxFit.contain,
+                                    ).animate().fadeIn(duration: 400.ms).scale(
+                                          begin: Offset(0.92, 0.92),
+                                          end: Offset(1, 1),
+                                          curve: Curves.easeOutBack,
+                                        ),
                                     Text(
                                       'You\'re not following any Neighbourhoods.',
                                       textAlign: TextAlign.center,

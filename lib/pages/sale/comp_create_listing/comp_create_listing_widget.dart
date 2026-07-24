@@ -184,7 +184,7 @@ class _CompCreateListingWidgetState extends State<CompCreateListingWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -247,7 +247,7 @@ class _CompCreateListingWidgetState extends State<CompCreateListingWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -310,7 +310,7 @@ class _CompCreateListingWidgetState extends State<CompCreateListingWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -373,7 +373,7 @@ class _CompCreateListingWidgetState extends State<CompCreateListingWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium

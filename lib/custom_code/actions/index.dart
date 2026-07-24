@@ -43,3 +43,5 @@ export 'setup_notifications.dart' show setupNotifications;
 export 'refresh_and_store_jwt_token.dart' show refreshAndStoreJwtToken;
 export 'check_internet_connect.dart' show checkInternetConnect;
 export 'find_os_action.dart' show findOsAction;
+export 'fresh_realtime_channel.dart'
+    show freshRealtimeChannel, resetRealtimeChannelRegistry;

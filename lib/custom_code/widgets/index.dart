@@ -13,3 +13,5 @@ export 'comment_mention_text_field_widget.dart'
     show CommentMentionTextFieldWidget;
 export 'modern_loading_widget.dart' show ModernLoadingWidget;
 export 'mention_text_field_widge_edit.dart' show MentionTextFieldWidgeEdit;
+export 'gradient_primary_button.dart' show GradientPrimaryButton;
+export 'gradient_avatar_ring.dart' show GradientAvatarRing;

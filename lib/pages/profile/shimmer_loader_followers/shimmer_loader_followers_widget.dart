@@ -46,7 +46,7 @@ class _ShimmerLoaderFollowersWidgetState
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 1500.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -59,7 +59,7 @@ class _ShimmerLoaderFollowersWidgetState
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 1500.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -72,7 +72,7 @@ class _ShimmerLoaderFollowersWidgetState
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 1500.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -104,7 +104,7 @@ class _ShimmerLoaderFollowersWidgetState
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0x170C0C0C),
+                  color: FlutterFlowTheme.of(context).alternate,
                   borderRadius: BorderRadius.circular(0.0),
                 ),
               ).animateOnPageLoad(
@@ -114,7 +114,7 @@ class _ShimmerLoaderFollowersWidgetState
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0x170C0C0C),
+                  color: FlutterFlowTheme.of(context).alternate,
                   borderRadius: BorderRadius.circular(0.0),
                 ),
               ).animateOnPageLoad(
@@ -124,7 +124,7 @@ class _ShimmerLoaderFollowersWidgetState
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0x170C0C0C),
+                  color: FlutterFlowTheme.of(context).alternate,
                   borderRadius: BorderRadius.circular(0.0),
                 ),
               ).animateOnPageLoad(

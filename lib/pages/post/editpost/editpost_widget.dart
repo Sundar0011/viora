@@ -1,6 +1,8 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -114,6 +116,7 @@ class _EditpostWidgetState extends State<EditpostWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -156,18 +159,20 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                         context.safePop();
                                       },
                                     ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(24.0),
-                                      child: Image.network(
-                                        FFAppState().AsProfilePicture,
-                                        width: 40.0,
-                                        height: 40.0,
-                                        fit: BoxFit.fill,
-                                      ),
+                                    AppNetworkImage(
+                                      url: FFAppState().AsProfilePicture,
+                                      width: 40.0,
+                                      height: 40.0,
+                                      fit: BoxFit.cover,
+                                      isAvatar: true,
+                                      semanticLabel: 'Your profile photo',
                                     ),
                                     if (widget!.groupId == 'null')
                                       InkWell(
-                                        splashColor: Colors.transparent,
+                                        splashColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary
+                                                .withAlpha(0x14),
                                         focusColor: Colors.transparent,
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
@@ -364,7 +369,7 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
-                                          font: GoogleFonts.interTight(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .titleSmall
@@ -374,8 +379,7 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                                     .titleSmall
                                                     .fontStyle,
                                           ),
-                                          color: FlutterFlowTheme.of(context)
-                                              .white,
+                                          color: Colors.white,
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight:
@@ -474,14 +478,14 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0x00000000),
+                                      color: Colors.transparent,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Color(0x00000000),
+                                      color: Colors.transparent,
                                       width: 1.0,
                                     ),
                                     borderRadius: BorderRadius.circular(8.0),
@@ -538,39 +542,36 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                if (false)
-                                  Align(
-                                    alignment: AlignmentDirectional(1.0, -1.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        _model.images = [];
-                                        _model.imagesCount = 0;
-                                        _model.imagesuploaded = [];
-                                        _model.showImageIcon = true;
+                                // Removes the already-saved photo gallery.
+                                // Enabled 2026-07-21 (if-false quick win #2).
+                                Align(
+                                  alignment: AlignmentDirectional(1.0, -1.0),
+                                  child: AppIconButton(
+                                    icon: Icons.close,
+                                    iconSize: 24.0,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    semanticLabel: 'Remove saved photos',
+                                    tooltip: 'Remove photos',
+                                    onTap: () async {
+                                      _model.images = [];
+                                      _model.imagesCount = 0;
+                                      _model.imagesuploaded = [];
+                                      _model.showImageIcon = true;
+                                      safeSetState(() {});
+                                      if ((String var1) {
+                                        return var1.length != 0;
+                                      }(_model
+                                          .inputTextFieldTextController.text)) {
+                                        _model.datapresent = true;
                                         safeSetState(() {});
-                                        if ((String var1) {
-                                          return var1.length != 0;
-                                        }(_model.inputTextFieldTextController
-                                            .text)) {
-                                          _model.datapresent = true;
-                                          safeSetState(() {});
-                                        } else {
-                                          _model.datapresent = false;
-                                          safeSetState(() {});
-                                        }
-                                      },
-                                      child: Icon(
-                                        Icons.close,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 24.0,
-                                      ),
-                                    ),
+                                      } else {
+                                        _model.datapresent = false;
+                                        safeSetState(() {});
+                                      }
+                                    },
                                   ),
+                                ),
                                 if (_model.imagesCount! > 1)
                                   Builder(
                                     builder: (context) {
@@ -608,18 +609,16 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                                           uploadedImagesIndex];
                                                   return Stack(
                                                     children: [
-                                                      ClipRRect(
+                                                      AppNetworkImage(
+                                                        url: uploadedImagesItem,
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        fit: BoxFit.cover,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(8.0),
-                                                        child: Image.network(
-                                                          uploadedImagesItem,
-                                                          width:
-                                                              double.infinity,
-                                                          height:
-                                                              double.infinity,
-                                                          fit: BoxFit.cover,
-                                                        ),
+                                                        semanticLabel:
+                                                            'Attached photo',
                                                       ),
                                                       Align(
                                                         alignment:
@@ -633,16 +632,11 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                                                       0.0,
                                                                       0.0,
                                                                       8.0),
-                                                          child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .transparent,
+                                                          child: AppIconButton(
+                                                            semanticLabel:
+                                                                'Remove this photo',
+                                                            minTapTarget: 44.0,
+                                                            enableHaptic: false,
                                                             onTap: () async {
                                                               _model.removeAtIndexFromImages(
                                                                   uploadedImagesIndex);
@@ -653,18 +647,21 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                                               safeSetState(
                                                                   () {});
                                                             },
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          0.0),
-                                                              child:
-                                                                  Image.asset(
-                                                                'assets/images/Icon.webp',
-                                                                width: 24.0,
-                                                                height: 24.0,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                            iconWidget:
+                                                                ExcludeSemantics(
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            0.0),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/Icon.webp',
+                                                                  width: 24.0,
+                                                                  height: 24.0,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -737,15 +734,14 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                   Stack(
                                     alignment: AlignmentDirectional(-1.0, 1.0),
                                     children: [
-                                      ClipRRect(
+                                      AppNetworkImage(
+                                        url: _model.images.firstOrNull!,
+                                        width: double.infinity,
+                                        height: 200.0,
+                                        fit: BoxFit.cover,
                                         borderRadius:
                                             BorderRadius.circular(8.0),
-                                        child: Image.network(
-                                          _model.images.firstOrNull!,
-                                          width: double.infinity,
-                                          height: 200.0,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        semanticLabel: 'Attached photo',
                                       ),
                                       Align(
                                         alignment:
@@ -754,11 +750,10 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   8.0, 0.0, 0.0, 8.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
+                                          child: AppIconButton(
+                                            semanticLabel: 'Remove this photo',
+                                            minTapTarget: 44.0,
+                                            enableHaptic: false,
                                             onTap: () async {
                                               _model.images = [];
                                               _model.imagesCount = 0;
@@ -780,14 +775,16 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                               _model.showImageIcon = true;
                                               safeSetState(() {});
                                             },
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(0.0),
-                                              child: Image.asset(
-                                                'assets/images/Icon.webp',
-                                                width: 24.0,
-                                                height: 24.0,
-                                                fit: BoxFit.cover,
+                                            iconWidget: ExcludeSemantics(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(0.0),
+                                                child: Image.asset(
+                                                  'assets/images/Icon.webp',
+                                                  width: 24.0,
+                                                  height: 24.0,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -805,43 +802,40 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                if (false)
-                                  Align(
-                                    alignment: AlignmentDirectional(1.0, -1.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        safeSetState(() {
-                                          _model.isDataUploading_uploadDataVel =
-                                              false;
-                                          _model.uploadedLocalFiles_uploadDataVel =
-                                              [];
-                                        });
+                                // Removes the newly-uploaded photos.
+                                // Enabled 2026-07-21 (if-false quick win #3).
+                                Align(
+                                  alignment: AlignmentDirectional(1.0, -1.0),
+                                  child: AppIconButton(
+                                    icon: Icons.close,
+                                    iconSize: 24.0,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    semanticLabel: 'Remove uploaded photos',
+                                    tooltip: 'Remove photos',
+                                    onTap: () async {
+                                      safeSetState(() {
+                                        _model.isDataUploading_uploadDataVel =
+                                            false;
+                                        _model.uploadedLocalFiles_uploadDataVel =
+                                            [];
+                                      });
 
-                                        _model.showImageIcon = true;
+                                      _model.showImageIcon = true;
+                                      safeSetState(() {});
+                                      if ((String var1) {
+                                        return var1.length != 0;
+                                      }(_model
+                                          .inputTextFieldTextController.text)) {
+                                        _model.datapresent = true;
                                         safeSetState(() {});
-                                        if ((String var1) {
-                                          return var1.length != 0;
-                                        }(_model.inputTextFieldTextController
-                                            .text)) {
-                                          _model.datapresent = true;
-                                          safeSetState(() {});
-                                        } else {
-                                          _model.datapresent = false;
-                                          safeSetState(() {});
-                                        }
-                                      },
-                                      child: Icon(
-                                        Icons.close,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 24.0,
-                                      ),
-                                    ),
+                                      } else {
+                                        _model.datapresent = false;
+                                        safeSetState(() {});
+                                      }
+                                    },
                                   ),
+                                ),
                                 if (_model.newuploadImages.length > 1)
                                   Builder(
                                     builder: (context) {
@@ -910,34 +904,32 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                                                       0.0,
                                                                       0.0,
                                                                       8.0),
-                                                          child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .transparent,
+                                                          child: AppIconButton(
+                                                            semanticLabel:
+                                                                'Remove this photo',
+                                                            minTapTarget: 44.0,
+                                                            enableHaptic: false,
                                                             onTap: () async {
                                                               _model.removeAtIndexFromNewuploadImages(
                                                                   uploadedImagesIndex);
                                                               safeSetState(
                                                                   () {});
                                                             },
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          0.0),
-                                                              child:
-                                                                  Image.asset(
-                                                                'assets/images/Icon.webp',
-                                                                width: 24.0,
-                                                                height: 24.0,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                            iconWidget:
+                                                                ExcludeSemantics(
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            0.0),
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/Icon.webp',
+                                                                  width: 24.0,
+                                                                  height: 24.0,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -1025,11 +1017,10 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             8.0, 0.0, 0.0, 8.0),
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
+                                        child: AppIconButton(
+                                          semanticLabel: 'Remove this photo',
+                                          minTapTarget: 44.0,
+                                          enableHaptic: false,
                                           onTap: () async {
                                             _model.newuploadImages = [];
                                             safeSetState(() {});
@@ -1048,14 +1039,16 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                                             _model.showImageIcon = true;
                                             safeSetState(() {});
                                           },
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                            child: Image.asset(
-                                              'assets/images/Icon.webp',
-                                              width: 24.0,
-                                              height: 24.0,
-                                              fit: BoxFit.cover,
+                                          iconWidget: ExcludeSemantics(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(0.0),
+                                              child: Image.asset(
+                                                'assets/images/Icon.webp',
+                                                width: 24.0,
+                                                height: 24.0,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -1083,11 +1076,10 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       if (_model.showImageIcon)
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
+                        AppIconButton(
+                          semanticLabel: 'Add photos',
+                          minTapTarget: 44.0,
+                          enableHaptic: false,
                           onTap: () async {
                             final selectedMedia = await selectMedia(
                               mediaSource: MediaSource.photoGallery,
@@ -1137,13 +1129,15 @@ class _EditpostWidgetState extends State<EditpostWidget> {
                               safeSetState(() {});
                             }
                           },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/add_photo_alternate_(1).png',
-                              width: 32.0,
-                              height: 32.0,
-                              fit: BoxFit.cover,
+                          iconWidget: ExcludeSemantics(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/add_photo_alternate_(1).png',
+                                width: 32.0,
+                                height: 32.0,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),

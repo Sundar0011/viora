@@ -77,7 +77,8 @@ class _CompNotificationWidgetState extends State<CompNotificationWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -152,7 +153,8 @@ class _CompNotificationWidgetState extends State<CompNotificationWidget> {
                   ),
                   if (widget!.isread == false)
                     InkWell(
-                      splashColor: Colors.transparent,
+                      splashColor:
+                          FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,

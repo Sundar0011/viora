@@ -94,7 +94,8 @@ class _CompHomeTextWidgetState extends State<CompHomeTextWidget> {
                 ),
               if (!_model.showText)
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,

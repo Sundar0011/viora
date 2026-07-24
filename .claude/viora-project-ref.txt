@@ -1,0 +1,3 @@
+# Viora's Supabase project ref. Every Supabase MCP call is locked to this ref by the
+# guard-supabase-project.mjs hook. Project "viora", org ktwqtgdvmdtifflaxegp, region ap-south-1.
+hlmymmlkgirafodcnkgg

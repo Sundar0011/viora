@@ -1,0 +1,54 @@
+# ── Flutter / Dart ────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+.pub-cache/
+.pub/
+coverage/
+
+# ── IDE / Editor ──────────────────────────────────
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# ── OS ────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Android ───────────────────────────────────────
+android/.gradle/
+android/local.properties
+android/key.properties
+android/app/upload-keystore.jks
+**/*.keystore
+**/*.jks
+
+# ── iOS ───────────────────────────────────────────
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+**/*.mobileprovision
+**/*.p12
+**/*.cer
+
+# ── Secrets / environment (NEVER commit) ──────────
+.env
+.env.*
+*.pem
+*.key
+# .mcp.json uses the hosted Supabase MCP over HTTP + OAuth — no token in the file,
+# so it is committed and shared at the project level. If you ever switch to a config
+# that embeds a token/secret, gitignore it and commit .mcp.json.example instead.
+
+# ── Claude Code (local-only) ──────────────────────
+.claude/settings.local.json
+
+# NOTE: assets/environment_values/environment.json, android/app/google-services.json
+# and ios/Runner/GoogleService-Info.plist are ALREADY tracked in git history and
+# contain a live secret. They are intentionally NOT ignored here because the app needs
+# them at runtime. They must be handled via key rotation + moving the secret server-side
+# (see docs/roadmap.md → Security remediation).

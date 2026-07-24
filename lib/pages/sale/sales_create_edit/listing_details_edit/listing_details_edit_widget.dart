@@ -1,6 +1,7 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
@@ -160,6 +161,7 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
             backgroundColor: FlutterFlowTheme.of(context).white,
             body: SafeArea(
               top: true,
+              bottom: true,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -296,21 +298,15 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                             final imagesItem =
                                                                 images[
                                                                     imagesIndex];
-                                                            return ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          0.0),
-                                                              child:
-                                                                  Image.network(
-                                                                imagesItem,
-                                                                width: double
-                                                                    .infinity,
-                                                                height: double
-                                                                    .infinity,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
+                                                            return AppNetworkImage(
+                                                              url: imagesItem,
+                                                              width: double
+                                                                  .infinity,
+                                                              height: double
+                                                                  .infinity,
+                                                              fit: BoxFit.cover,
+                                                              semanticLabel:
+                                                                  'Listing photo',
                                                             );
                                                           },
                                                         ),
@@ -387,14 +383,13 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                               width: double.infinity,
                                               height: double.infinity,
                                               decoration: BoxDecoration(),
-                                              child: ClipRRect(
+                                              child: AppNetworkImage(
+                                                url: _model
+                                                    .imagesuplaoded.firstOrNull,
+                                                fit: BoxFit.cover,
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
-                                                child: Image.network(
-                                                  _model.imagesuplaoded
-                                                      .firstOrNull!,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                semanticLabel: 'Listing photo',
                                               ),
                                             ),
                                         ],
@@ -602,7 +597,10 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                 BorderRadius.circular(100.0),
                                           ),
                                           child: InkWell(
-                                            splashColor: Colors.transparent,
+                                            splashColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary
+                                                    .withAlpha(0x14),
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
@@ -944,7 +942,9 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                       ),
                                                       filled: true,
                                                       fillColor:
-                                                          Color(0xFFF7F9FC),
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
                                                       contentPadding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
@@ -1174,7 +1174,9 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                       ),
                                                       filled: true,
                                                       fillColor:
-                                                          Color(0xFFF7F9FC),
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
                                                       contentPadding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
@@ -1328,7 +1330,9 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                       .secondaryText,
                                                   size: 24.0,
                                                 ),
-                                                fillColor: Color(0xFFF7F9FC),
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
                                                 elevation: 2.0,
                                                 borderColor:
                                                     FlutterFlowTheme.of(context)
@@ -1436,35 +1440,34 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                         columnSaleRow!
                                                             .ePriceType),
                                                 optionHeight: 32.0,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          font:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
+                                                textStyle: FlutterFlowTheme.of(
+                                                        context)
+                                                    .labelMedium
+                                                    .override(
+                                                      font: GoogleFonts.manrope(
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .fontStyle,
+                                                      ),
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .fontStyle,
+                                                    ),
                                                 selectedTextStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1665,7 +1668,9 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                         ),
                                                         filled: true,
                                                         fillColor:
-                                                            Color(0xFFF7F9FC),
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                         contentPadding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
@@ -1969,7 +1974,9 @@ class _ListingDetailsEditWidgetState extends State<ListingDetailsEditWidget> {
                                                           ),
                                                           filled: true,
                                                           fillColor:
-                                                              Color(0xFFF7F9FC),
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .alternate,
                                                           contentPadding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(

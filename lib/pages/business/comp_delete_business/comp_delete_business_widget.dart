@@ -1,6 +1,7 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -80,19 +81,14 @@ class _CompDeleteBusinessWidgetState extends State<CompDeleteBusinessWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
+                      AppIconButton(
+                        icon: Icons.arrow_back,
+                        iconSize: 24.0,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        semanticLabel: 'Go back',
+                        onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
                       ),
                       Text(
                         'Delete Business?',
@@ -116,7 +112,7 @@ class _CompDeleteBusinessWidgetState extends State<CompDeleteBusinessWidget> {
                     ].divide(SizedBox(width: 10.0)),
                   ),
                   Text(
-                    'What happens when you delete your business on SquaDD:',
+                    'What happens when you delete your business on Flock:',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.manrope(
                             fontWeight: FontWeight.w600,
@@ -157,7 +153,7 @@ class _CompDeleteBusinessWidgetState extends State<CompDeleteBusinessWidget> {
                             ),
                             Flexible(
                               child: Text(
-                                'Your business profile, posts, and content will no longer be visible on SquaDD.',
+                                'Your business profile, posts, and content will no longer be visible on Flock.',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(

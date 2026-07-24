@@ -1,4 +1,4 @@
-package com.company.squaDD
+package com.viora.app
 
 import io.flutter.embedding.android.FlutterActivity
 

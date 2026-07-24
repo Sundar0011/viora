@@ -1,6 +1,10 @@
+// comp_share_widget.dart
+// "Share with" bottom sheet: pick neighbours to share a post/listing with.
+// Avatars route through the shared AppNetworkImage.
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -200,7 +204,7 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                                 ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0x00000000),
+                            color: Colors.transparent,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(4.0),
@@ -227,7 +231,7 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         filled: true,
-                        fillColor: Color(0xFFF7F9FC),
+                        fillColor: FlutterFlowTheme.of(context).alternate,
                         contentPadding: EdgeInsetsDirectional.fromSTEB(
                             12.0, 8.0, 12.0, 8.0),
                         prefixIcon: Icon(
@@ -275,7 +279,9 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                           itemBuilder: (context, usersIndex) {
                             final usersItem = users[usersIndex];
                             return InkWell(
-                              splashColor: Colors.transparent,
+                              splashColor: FlutterFlowTheme.of(context)
+                                  .primary
+                                  .withAlpha(0x14),
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
@@ -322,7 +328,7 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                                     'community_id': FFAppState().communityId,
                                     'sender_id': currentUserUid,
                                     'message':
-                                        '${FFAppState().URL}${'pagename=${widget!.pagename}'}${'&id=${widget!.id}'}',
+                                        '${FFAppState().URL}${'pageName=${widget!.pagename}'}${'&postId=${widget!.id}'}',
                                     'e_message_type': 'text',
                                     'islink': true,
                                     'is_read': false,
@@ -334,7 +340,7 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                                           supaSerialize<DateTime>(
                                               functions.getCurrentUtcTime()),
                                       'last_message':
-                                          '${FFAppState().URL}${'pagename=${widget!.pagename}'}${'&id=${widget!.id}'}',
+                                          '${FFAppState().URL}${'pageName=${widget!.pagename}'}${'&postId=${widget!.id}'}',
                                     },
                                     matchingRows: (rows) => rows.eqOrNull(
                                       'id',
@@ -377,7 +383,7 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                                     'community_id': FFAppState().communityId,
                                     'sender_id': currentUserUid,
                                     'message':
-                                        '${FFAppState().URL}${'pagename=${widget!.pagename}'}${'&id=${widget!.id}'}',
+                                        '${FFAppState().URL}${'pageName=${widget!.pagename}'}${'&postId=${widget!.id}'}',
                                     'e_message_type': 'text',
                                     'islink': true,
                                     'is_read': false,
@@ -389,7 +395,7 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                                           supaSerialize<DateTime>(
                                               functions.getCurrentUtcTime()),
                                       'last_message':
-                                          '${FFAppState().URL}${'pagename=${widget!.pagename}'}${'&id=${widget!.id}'}',
+                                          '${FFAppState().URL}${'pageName=${widget!.pagename}'}${'&postId=${widget!.id}'}',
                                     },
                                     matchingRows: (rows) => rows.eqOrNull(
                                       'id',
@@ -440,20 +446,18 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Container(
+                                      AppNetworkImage(
+                                        url: getJsonField(
+                                          usersItem,
+                                          r'''$.profile_picture''',
+                                        ).toString(),
                                         width: 64.0,
                                         height: 64.0,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Image.network(
-                                          getJsonField(
-                                            usersItem,
-                                            r'''$.profile_picture''',
-                                          ).toString(),
-                                          fit: BoxFit.cover,
-                                        ),
+                                        isAvatar: true,
+                                        semanticLabel: '${getJsonField(
+                                          usersItem,
+                                          r'''$.name''',
+                                        ).toString()}\'s profile photo',
                                       ),
                                       Text(
                                         getJsonField(
@@ -552,7 +556,7 @@ class _CompShareWidgetState extends State<CompShareWidget> {
                       );
 
                       await Share.share(
-                        '${FFAppState().URL}${'pagename=${widget!.pagename}'}${'&id=${widget!.id}'}',
+                        '${FFAppState().URL}${'pageName=${widget!.pagename}'}${'&postId=${widget!.id}'}',
                         sharePositionOrigin: getWidgetBoundingBox(context),
                       );
                     },

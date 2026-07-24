@@ -1,3 +1,4 @@
+import '/components/app_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -80,19 +81,14 @@ class _CompPromotionRejectedWidgetState
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
+                      AppIconButton(
+                        icon: Icons.arrow_back,
+                        iconSize: 24.0,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        semanticLabel: 'Go back',
+                        onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
                       ),
                       Text(
                         'Promotion Request Rejected',
@@ -141,7 +137,7 @@ class _CompPromotionRejectedWidgetState
                           text: '💡 Need help or want to try again? ',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
+                                    font: GoogleFonts.manrope(
                                       fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -160,13 +156,13 @@ class _CompPromotionRejectedWidgetState
                           text: 'Reach out to support.',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
+                                    font: GoogleFonts.manrope(
                                       fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    color: Color(0xFF516EFF),
+                                    color: FlutterFlowTheme.of(context).primary,
                                     fontSize: 16.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
@@ -178,7 +174,7 @@ class _CompPromotionRejectedWidgetState
                         )
                       ],
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
+                            font: GoogleFonts.manrope(
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .fontWeight,

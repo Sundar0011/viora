@@ -1,3 +1,4 @@
+import '/components/app_icon_button.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
@@ -81,22 +82,18 @@ class _CompComfirmDeleteAccountWidgetState
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
+                      AppIconButton(
+                        icon: Icons.arrow_back,
+                        semanticLabel: 'Back',
+                        tooltip: 'Back',
+                        iconSize: 24.0,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
                       ),
                       Text(
-                        'Thinking of leaving SquaDD?',
+                        'Thinking of leaving Flock?',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.manrope(
                                 fontWeight: FontWeight.w600,

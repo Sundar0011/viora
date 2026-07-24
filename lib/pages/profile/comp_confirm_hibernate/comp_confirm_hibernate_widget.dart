@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/components/app_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -76,15 +76,13 @@ class _CompConfirmHibernateWidgetState
                           children: [
                             Align(
                               alignment: AlignmentDirectional(-1.0, 0.0),
-                              child: FlutterFlowIconButton(
-                                borderRadius: 100.0,
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color:
-                                      FlutterFlowTheme.of(context).extraBlack,
-                                  size: 24.0,
-                                ),
-                                onPressed: () async {
+                              child: AppIconButton(
+                                icon: Icons.arrow_back,
+                                semanticLabel: 'Back',
+                                tooltip: 'Back',
+                                iconSize: 24.0,
+                                color: FlutterFlowTheme.of(context).extraBlack,
+                                onTap: () async {
                                   context.safePop();
                                 },
                               ),

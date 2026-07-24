@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:async';
+import '/flutter_flow/app_log.dart';
 
 Future<void> subscribeToMessagesAndMarkAsRead(
   String chatId,
@@ -47,10 +48,10 @@ Future<void> subscribeToMessagesAndMarkAsRead(
                   .neq('sender_id', currentUserId)
                   .eq('is_read', false);
 
-              print('Marked ${unreadMessages.length} messages as read');
+              appLog('Marked ${unreadMessages.length} messages as read');
             }
           } catch (e) {
-            print('Error processing messages: $e');
+            appLog('Error processing messages: $e');
           }
         });
 
@@ -60,8 +61,8 @@ Future<void> subscribeToMessagesAndMarkAsRead(
       FFAppState().chatSubscriptions = currentSubscriptions;
     });
 
-    print('Successfully subscribed to chat: $chatId');
+    appLog('Successfully subscribed to chat: $chatId');
   } catch (e) {
-    print('Error in subscription: $e');
+    appLog('Error in subscription: $e');
   }
 }

@@ -1,5 +1,7 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/components/app_network_image.dart';
+import '/components/async_state_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -81,6 +83,7 @@ class _MyPagesWidgetState extends State<MyPagesWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -200,407 +203,279 @@ class _MyPagesWidgetState extends State<MyPagesWidget> {
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            FutureBuilder<ApiCallResponse>(
-                              future: (_model.apiRequestCompleter ??=
-                                      Completer<ApiCallResponse>()
-                                        ..complete(GetMyBusinessCall.call(
-                                          pUserid: currentUserUid,
-                                          token: currentJwtToken,
-                                          pCommunityid:
-                                              FFAppState().communityId,
-                                        )))
-                                  .future,
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
+                      child: RefreshIndicator(
+                        color: FlutterFlowTheme.of(context).primary,
+                        // Clearing the completer drops the cached
+                        // GetMyBusiness response, so the FutureBuilder below
+                        // issues a real new request; waiting on it keeps the
+                        // spinner up until the fresh data has landed.
+                        onRefresh: () async {
+                          safeSetState(() => _model.apiRequestCompleter = null);
+                          await _model.waitForApiRequestCompleted();
+                        },
+                        child: SingleChildScrollView(
+                          // Required, otherwise the pull gesture never reaches
+                          // the RefreshIndicator when the list is short.
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              FutureBuilder<ApiCallResponse>(
+                                future: (_model.apiRequestCompleter ??=
+                                        Completer<ApiCallResponse>()
+                                          ..complete(GetMyBusinessCall.call(
+                                            pUserid: currentUserUid,
+                                            token: currentJwtToken,
+                                            pCommunityid:
+                                                FFAppState().communityId,
+                                          )))
+                                    .future,
+                                builder: (context, snapshot) {
+                                  // One shared treatment for loading (shimmer),
+                                  // failure (retry) and "no pages yet" instead
+                                  // of a bare spinner and a blank list.
+                                  return AsyncStateView.fromSnapshot<
+                                      ApiCallResponse>(
+                                    snapshot: snapshot,
+                                    skeletonItemCount: 3,
+                                    onRetry: () => safeSetState(() =>
+                                        _model.apiRequestCompleter = null),
+                                    isEmpty: (ApiCallResponse response) {
+                                      final dynamic body = response.jsonBody;
+                                      return body == null ||
+                                          (body is List && body.isEmpty);
+                                    },
+                                    emptyIcon: Icons.storefront_outlined,
+                                    emptyTitle: 'No business pages yet',
+                                    emptyBody:
+                                        'Create a page to tell your neighbours what you do.',
+                                    emptyActionLabel: 'Create a page',
+                                    onEmptyAction: () => context.pushNamed(
+                                      CreatePageWidget.routeName,
+                                      queryParameters: {
+                                        'pageType': serializeParam(
+                                          'create',
+                                          ParamType.String,
                                         ),
-                                      ),
+                                      }.withoutNulls,
                                     ),
-                                  );
-                                }
-                                final listViewGetMyBusinessResponse =
-                                    snapshot.data!;
+                                    builder: (context,
+                                        listViewGetMyBusinessResponse) {
+                                      return Builder(
+                                        builder: (context) {
+                                          final myPages =
+                                              listViewGetMyBusinessResponse
+                                                  .jsonBody
+                                                  .toList();
 
-                                return Builder(
-                                  builder: (context) {
-                                    final myPages =
-                                        listViewGetMyBusinessResponse.jsonBody
-                                            .toList();
-
-                                    return ListView.separated(
-                                      padding: EdgeInsets.zero,
-                                      primary: false,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: myPages.length,
-                                      separatorBuilder: (_, __) =>
-                                          SizedBox(height: 5.0),
-                                      itemBuilder: (context, myPagesIndex) {
-                                        final myPagesItem =
-                                            myPages[myPagesIndex];
-                                        return InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed(
-                                              BusinessHomePageWidget.routeName,
-                                              queryParameters: {
-                                                'businessId': serializeParam(
-                                                  getJsonField(
-                                                    myPagesItem,
-                                                    r'''$.id''',
-                                                  ).toString(),
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        20.0, 8.0, 20.0, 16.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      child: Image.network(
-                                                        getJsonField(
-                                                          myPagesItem,
-                                                          r'''$.profile_picture''',
-                                                        ).toString(),
-                                                        width: 64.0,
-                                                        height: 64.0,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            getJsonField(
-                                                              myPagesItem,
-                                                              r'''$.name''',
-                                                            ).toString(),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .manrope(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                          return ListView.separated(
+                                            padding: EdgeInsets.zero,
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: myPages.length,
+                                            separatorBuilder: (_, __) =>
+                                                SizedBox(height: 5.0),
+                                            itemBuilder:
+                                                (context, myPagesIndex) {
+                                              final myPagesItem =
+                                                  myPages[myPagesIndex];
+                                              return Semantics(
+                                                button: true,
+                                                label:
+                                                    'Business page: ${getJsonField(
+                                                  myPagesItem,
+                                                  r'''$.name''',
+                                                ).toString()}. Opens the page.',
+                                                child: InkWell(
+                                                  splashColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary
+                                                          .withAlpha(0x14),
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    context.pushNamed(
+                                                      BusinessHomePageWidget
+                                                          .routeName,
+                                                      queryParameters: {
+                                                        'businessId':
+                                                            serializeParam(
+                                                          getJsonField(
+                                                            myPagesItem,
+                                                            r'''$.id''',
+                                                          ).toString(),
+                                                          ParamType.String,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    );
+                                                  },
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    20.0,
+                                                                    8.0,
+                                                                    20.0,
+                                                                    16.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            AppNetworkImage(
+                                                              url: getJsonField(
+                                                                myPagesItem,
+                                                                r'''$.profile_picture''',
+                                                              ).toString(),
+                                                              width: 64.0,
+                                                              height: 64.0,
+                                                              fit: BoxFit.cover,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                              fallbackIcon: Icons
+                                                                  .storefront_rounded,
+                                                              semanticLabel:
+                                                                  'Photo of ${getJsonField(
+                                                                myPagesItem,
+                                                                r'''$.name''',
+                                                              ).toString()}',
+                                                            ),
+                                                            Expanded(
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    getJsonField(
+                                                                      myPagesItem,
+                                                                      r'''$.name''',
+                                                                    ).toString(),
+                                                                    style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
-                                                                        .fontStyle,
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.manrope(
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).extraBlack,
+                                                                          fontSize:
+                                                                              16.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                          lineHeight:
+                                                                              1.4,
+                                                                        ),
                                                                   ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .extraBlack,
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                  lineHeight:
-                                                                      1.4,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            '${getJsonField(
-                                                              myPagesItem,
-                                                              r'''$.contacted_count''',
-                                                            ).toString()} people contacted this business',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .manrope(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                  Text(
+                                                                    '${getJsonField(
+                                                                      myPagesItem,
+                                                                      r'''$.contacted_count''',
+                                                                    ).toString()} people contacted this business',
+                                                                    style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
-                                                                        .fontStyle,
+                                                                        .override(
+                                                                          font:
+                                                                              GoogleFonts.manrope(
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).greyL4,
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                          lineHeight:
+                                                                              1.4,
+                                                                        ),
                                                                   ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .greyL4,
-                                                                  fontSize:
-                                                                      10.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                  lineHeight:
-                                                                      1.4,
-                                                                ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        if (((String var1) {
-                                                              return var1 ==
-                                                                  "null";
-                                                            }(getJsonField(
-                                                              myPagesItem,
-                                                              r'''$.promotion_status''',
-                                                            ).toString())) ==
-                                                            false)
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              if (((String
-                                                                      var1) {
-                                                                    return var1 ==
-                                                                        "null";
-                                                                  }(getJsonField(
-                                                                    myPagesItem,
-                                                                    r'''$.promotion_status''',
-                                                                  ).toString())) ==
-                                                                  true) {
-                                                                context
-                                                                    .pushNamed(
-                                                                  PromoteBusinessWidget
-                                                                      .routeName,
-                                                                  queryParameters:
-                                                                      {
-                                                                    'businessId':
-                                                                        serializeParam(
-                                                                      getJsonField(
-                                                                        myPagesItem,
-                                                                        r'''$.business_id''',
-                                                                      ).toString(),
-                                                                      ParamType
-                                                                          .String,
-                                                                    ),
-                                                                    'pagetype':
-                                                                        serializeParam(
-                                                                      'new',
-                                                                      ParamType
-                                                                          .String,
-                                                                    ),
-                                                                  }.withoutNulls,
-                                                                );
-                                                              } else {
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
                                                                 if (((String
                                                                         var1) {
                                                                       return var1 ==
-                                                                          "under review";
+                                                                          "null";
                                                                     }(getJsonField(
                                                                       myPagesItem,
                                                                       r'''$.promotion_status''',
                                                                     ).toString())) ==
-                                                                    true) {
-                                                                  await showModalBottomSheet(
-                                                                    isScrollControlled:
-                                                                        true,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (context) {
-                                                                      return GestureDetector(
-                                                                        onTap:
-                                                                            () {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
-                                                                          FocusManager
-                                                                              .instance
-                                                                              .primaryFocus
-                                                                              ?.unfocus();
-                                                                        },
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              MediaQuery.viewInsetsOf(context),
-                                                                          child:
-                                                                              CompUnderReviewWidget(
-                                                                            type:
-                                                                                'home',
-                                                                          ),
-                                                                        ),
-                                                                      );
-                                                                    },
-                                                                  ).then((value) =>
-                                                                      safeSetState(
-                                                                          () {}));
-                                                                } else {
-                                                                  if (((String
-                                                                          var1) {
-                                                                        return var1 ==
-                                                                            "mismatch";
-                                                                      }(getJsonField(
-                                                                        myPagesItem,
-                                                                        r'''$.promotion_status''',
-                                                                      ).toString())) ==
-                                                                      true) {
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            FocusScope.of(context).unfocus();
-                                                                            FocusManager.instance.primaryFocus?.unfocus();
-                                                                          },
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.viewInsetsOf(context),
-                                                                            child:
-                                                                                CompMismatchWidget(
-                                                                              businessId: getJsonField(
-                                                                                myPagesItem,
-                                                                                r'''$.id''',
-                                                                              ).toString(),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
-                                                                  } else {
-                                                                    if (((String
-                                                                            var1) {
-                                                                          return var1 ==
-                                                                              "ended";
-                                                                        }(getJsonField(
-                                                                          myPagesItem,
-                                                                          r'''$.promotion_status''',
-                                                                        ).toString())) ==
-                                                                        true) {
-                                                                      await showModalBottomSheet(
-                                                                        isScrollControlled:
-                                                                            true,
-                                                                        backgroundColor:
-                                                                            Colors.transparent,
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (context) {
-                                                                          return GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              FocusScope.of(context).unfocus();
-                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                            },
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: CompPromotionEndedWidget(
-                                                                                type: 'renew',
-                                                                                businessId: getJsonField(
-                                                                                  myPagesItem,
-                                                                                  r'''$.id''',
-                                                                                ).toString(),
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        },
-                                                                      ).then((value) =>
-                                                                          safeSetState(
-                                                                              () {}));
-                                                                    } else {
+                                                                    false)
+                                                                  FFButtonWidget(
+                                                                    onPressed:
+                                                                        () async {
                                                                       if (((String
                                                                               var1) {
                                                                             return var1 ==
-                                                                                "live";
+                                                                                "null";
                                                                           }(getJsonField(
                                                                             myPagesItem,
                                                                             r'''$.promotion_status''',
                                                                           ).toString())) ==
                                                                           true) {
-                                                                        await showModalBottomSheet(
-                                                                          isScrollControlled:
-                                                                              true,
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (context) {
-                                                                            return GestureDetector(
-                                                                              onTap: () {
-                                                                                FocusScope.of(context).unfocus();
-                                                                                FocusManager.instance.primaryFocus?.unfocus();
-                                                                              },
-                                                                              child: Padding(
-                                                                                padding: MediaQuery.viewInsetsOf(context),
-                                                                                child: CompPromotionIsLiveWidget(
-                                                                                  type: 'review',
-                                                                                  businessId: getJsonField(
-                                                                                    myPagesItem,
-                                                                                    r'''$.id''',
-                                                                                  ).toString(),
-                                                                                  planEndDate: functions.returnPlanEndDate(getJsonField(
-                                                                                    myPagesItem,
-                                                                                    r'''$.plan_end_date''',
-                                                                                  ).toString()),
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        ).then((value) =>
-                                                                            safeSetState(() {}));
+                                                                        context
+                                                                            .pushNamed(
+                                                                          PromoteBusinessWidget
+                                                                              .routeName,
+                                                                          queryParameters:
+                                                                              {
+                                                                            'businessId':
+                                                                                serializeParam(
+                                                                              getJsonField(
+                                                                                myPagesItem,
+                                                                                r'''$.business_id''',
+                                                                              ).toString(),
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'pagetype':
+                                                                                serializeParam(
+                                                                              'new',
+                                                                              ParamType.String,
+                                                                            ),
+                                                                          }.withoutNulls,
+                                                                        );
                                                                       } else {
                                                                         if (((String
                                                                                 var1) {
-                                                                              return var1 == "rejected";
+                                                                              return var1 == "under review";
                                                                             }(getJsonField(
                                                                               myPagesItem,
                                                                               r'''$.promotion_status''',
@@ -622,115 +497,237 @@ class _MyPagesWidgetState extends State<MyPagesWidget> {
                                                                                 },
                                                                                 child: Padding(
                                                                                   padding: MediaQuery.viewInsetsOf(context),
-                                                                                  child: CompPromotionRejectedWidget(
-                                                                                    type: 'renew',
-                                                                                    businessId: getJsonField(
-                                                                                      myPagesItem,
-                                                                                      r'''$.id''',
-                                                                                    ).toString(),
+                                                                                  child: CompUnderReviewWidget(
+                                                                                    type: 'home',
                                                                                   ),
                                                                                 ),
                                                                               );
                                                                             },
                                                                           ).then((value) =>
                                                                               safeSetState(() {}));
+                                                                        } else {
+                                                                          if (((String var1) {
+                                                                                return var1 == "mismatch";
+                                                                              }(getJsonField(
+                                                                                myPagesItem,
+                                                                                r'''$.promotion_status''',
+                                                                              ).toString())) ==
+                                                                              true) {
+                                                                            await showModalBottomSheet(
+                                                                              isScrollControlled: true,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return GestureDetector(
+                                                                                  onTap: () {
+                                                                                    FocusScope.of(context).unfocus();
+                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                  },
+                                                                                  child: Padding(
+                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                    child: CompMismatchWidget(
+                                                                                      businessId: getJsonField(
+                                                                                        myPagesItem,
+                                                                                        r'''$.id''',
+                                                                                      ).toString(),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                            ).then((value) =>
+                                                                                safeSetState(() {}));
+                                                                          } else {
+                                                                            if (((String var1) {
+                                                                                  return var1 == "ended";
+                                                                                }(getJsonField(
+                                                                                  myPagesItem,
+                                                                                  r'''$.promotion_status''',
+                                                                                ).toString())) ==
+                                                                                true) {
+                                                                              await showModalBottomSheet(
+                                                                                isScrollControlled: true,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                context: context,
+                                                                                builder: (context) {
+                                                                                  return GestureDetector(
+                                                                                    onTap: () {
+                                                                                      FocusScope.of(context).unfocus();
+                                                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                                                    },
+                                                                                    child: Padding(
+                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                      child: CompPromotionEndedWidget(
+                                                                                        type: 'renew',
+                                                                                        businessId: getJsonField(
+                                                                                          myPagesItem,
+                                                                                          r'''$.id''',
+                                                                                        ).toString(),
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              ).then((value) => safeSetState(() {}));
+                                                                            } else {
+                                                                              if (((String var1) {
+                                                                                    return var1 == "live";
+                                                                                  }(getJsonField(
+                                                                                    myPagesItem,
+                                                                                    r'''$.promotion_status''',
+                                                                                  ).toString())) ==
+                                                                                  true) {
+                                                                                await showModalBottomSheet(
+                                                                                  isScrollControlled: true,
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return GestureDetector(
+                                                                                      onTap: () {
+                                                                                        FocusScope.of(context).unfocus();
+                                                                                        FocusManager.instance.primaryFocus?.unfocus();
+                                                                                      },
+                                                                                      child: Padding(
+                                                                                        padding: MediaQuery.viewInsetsOf(context),
+                                                                                        child: CompPromotionIsLiveWidget(
+                                                                                          type: 'review',
+                                                                                          businessId: getJsonField(
+                                                                                            myPagesItem,
+                                                                                            r'''$.id''',
+                                                                                          ).toString(),
+                                                                                          planEndDate: functions.returnPlanEndDate(getJsonField(
+                                                                                            myPagesItem,
+                                                                                            r'''$.plan_end_date''',
+                                                                                          ).toString()),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                ).then((value) => safeSetState(() {}));
+                                                                              } else {
+                                                                                if (((String var1) {
+                                                                                      return var1 == "rejected";
+                                                                                    }(getJsonField(
+                                                                                      myPagesItem,
+                                                                                      r'''$.promotion_status''',
+                                                                                    ).toString())) ==
+                                                                                    true) {
+                                                                                  await showModalBottomSheet(
+                                                                                    isScrollControlled: true,
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    context: context,
+                                                                                    builder: (context) {
+                                                                                      return GestureDetector(
+                                                                                        onTap: () {
+                                                                                          FocusScope.of(context).unfocus();
+                                                                                          FocusManager.instance.primaryFocus?.unfocus();
+                                                                                        },
+                                                                                        child: Padding(
+                                                                                          padding: MediaQuery.viewInsetsOf(context),
+                                                                                          child: CompPromotionRejectedWidget(
+                                                                                            type: 'renew',
+                                                                                            businessId: getJsonField(
+                                                                                              myPagesItem,
+                                                                                              r'''$.id''',
+                                                                                            ).toString(),
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  ).then((value) => safeSetState(() {}));
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
                                                                         }
                                                                       }
-                                                                    }
-                                                                  }
-                                                                }
-                                                              }
-                                                            },
-                                                            text: getJsonField(
-                                                              myPagesItem,
-                                                              r'''$.promotion_status''',
-                                                            ).toString(),
-                                                            options:
-                                                                FFButtonOptions(
-                                                              height: 22.0,
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                    },
+                                                                    text:
+                                                                        getJsonField(
+                                                                      myPagesItem,
+                                                                      r'''$.promotion_status''',
+                                                                    ).toString(),
+                                                                    options:
+                                                                        FFButtonOptions(
+                                                                      height:
+                                                                          22.0,
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                                           16.0,
                                                                           0.0,
                                                                           16.0,
                                                                           0.0),
-                                                              iconPadding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
                                                                           0.0,
                                                                           0.0,
                                                                           0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryL1,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .interTight(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .titleSmall
-                                                                              .fontStyle,
-                                                                        ),
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryL1,
+                                                                      textStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .titleSmall
+                                                                          .override(
+                                                                            font:
+                                                                                GoogleFonts.manrope(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                            ),
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primary,
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                          ),
+                                                                      elevation:
+                                                                          0.0,
+                                                                      borderSide:
+                                                                          BorderSide(
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .primary,
-                                                                        fontSize:
-                                                                            10.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .fontStyle,
+                                                                        width:
+                                                                            1.0,
                                                                       ),
-                                                              elevation: 0.0,
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                width: 1.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          24.0),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              24.0),
+                                                                    ),
+                                                                    showLoadingIndicator:
+                                                                        false,
+                                                                  ),
+                                                              ],
                                                             ),
-                                                            showLoadingIndicator:
-                                                                false,
-                                                          ),
-                                                      ],
-                                                    ),
-                                                  ].divide(
-                                                      SizedBox(width: 8.0)),
+                                                          ].divide(SizedBox(
+                                                              width: 8.0)),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        width: double.infinity,
+                                                        height: 1.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .greayL1,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Container(
-                                                width: double.infinity,
-                                                height: 1.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .greayL1,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

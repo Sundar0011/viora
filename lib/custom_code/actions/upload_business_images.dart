@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:typed_data';
+import '/flutter_flow/app_log.dart';
 
 Future<List<String>> uploadBusinessImages(
   FFUploadedFile? profile,
@@ -57,7 +58,7 @@ Future<List<String>> uploadBusinessImages(
 
     return [uploadedProfileUrl, uploadedCoverUrl];
   } catch (e) {
-    print('UploadBusinessImages error: $e');
+    appLog('UploadBusinessImages error: $e');
     // Return the original URLs if something goes wrong
     return [profileUrl, coverUrl];
   }

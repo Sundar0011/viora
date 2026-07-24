@@ -264,7 +264,7 @@ class _TagTextFieldState extends State<TagTextField> {
       final response = await http
           .post(
             Uri.parse(
-                'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/tag_search'),
+                'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/tag_search'),
             headers: {
               'Content-Type': 'application/json',
               'apikey': widget.apikey,

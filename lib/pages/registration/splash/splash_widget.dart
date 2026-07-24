@@ -1,6 +1,6 @@
+import '/custom_code/widgets/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -56,17 +56,47 @@ class _SplashWidgetState extends State<SplashWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: Container(
-                  width: double.infinity,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: Image.asset(
-                        'assets/images/new_splash.png',
-                      ).image,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: Image.asset(
+                            'assets/images/new_splash.png',
+                          ).image,
+                        ),
+                      ),
                     ),
-                  ),
+                    // Soft warm bottom-fade scrim behind the headline block,
+                    // layered over the hero photo (spec §6, onboarding).
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            FlutterFlowTheme.of(context)
+                                .primaryBackground
+                                .withAlpha(0xF0),
+                          ],
+                          stops: const [0.55, 1.0],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                color: FlutterFlowTheme.of(context).primaryBackground,
+                child: SafeArea(
+                  top: false,
+                  bottom: true,
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
@@ -81,56 +111,29 @@ class _SplashWidgetState extends State<SplashWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  'REAL PEOPLE. REAL PLACES.',
+                                  'Flock',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                      .displayMedium
                                       .override(
-                                        font: GoogleFonts.manrope(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
                                         color: FlutterFlowTheme.of(context)
-                                            .extraBlack,
-                                        fontSize: 24.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                        lineHeight: 1.4,
+                                            .primary,
                                       ),
                                 ),
                                 Text(
-                                  'REAL CONNECTIONS',
+                                  'find your people.',
+                                  textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                                      .displaySmall
                                       .override(
-                                        font: GoogleFonts.manrope(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        fontSize: 32.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                        lineHeight: 1.4,
+                                            .primaryText,
                                       ),
                                 ),
                               ],
                             ),
                             Text(
-                              'Strong rhythm and authenticity; fits community-oriented apps',
+                              'Real neighbors. Real places. Real connections.',
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -156,45 +159,12 @@ class _SplashWidgetState extends State<SplashWidget> {
                         Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            FFButtonWidget(
-                              onPressed: () async {
+                            GradientPrimaryButton(
+                              text: 'Get Started',
+                              onPressed: () {
                                 HapticFeedback.mediumImpact();
-
                                 context.pushNamed(LoginPageWidget.routeName);
                               },
-                              text: 'Get Started',
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 46.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 12.0, 16.0, 12.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      font: GoogleFonts.manrope(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                      lineHeight: 1.4,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
@@ -223,11 +193,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                                       ),
                                 ),
                                 InkWell(
-                                  splashColor: Colors.transparent,
+                                  splashColor: FlutterFlowTheme.of(context)
+                                      .primary
+                                      .withAlpha(0x14),
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
+                                    HapticFeedback.lightImpact();
                                     context.pushNamed(
                                         CreateAccountPageWidget.routeName);
                                   },

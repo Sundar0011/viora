@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -10,6 +11,7 @@ import '/pages/home/comp_loading/comp_loading_widget.dart';
 import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comp_joining_request_model.dart';
@@ -88,16 +90,21 @@ class _CompJoiningRequestWidgetState extends State<CompJoiningRequestWidget> {
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1.0, 0.0),
-                            child: FlutterFlowIconButton(
-                              borderRadius: 100.0,
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: FlutterFlowTheme.of(context).extraBlack,
-                                size: 24.0,
+                            child: Semantics(
+                              button: true,
+                              label: 'Back',
+                              child: FlutterFlowIconButton(
+                                borderRadius: 100.0,
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color:
+                                      FlutterFlowTheme.of(context).extraBlack,
+                                  size: 24.0,
+                                ),
+                                onPressed: () async {
+                                  context.safePop();
+                                },
                               ),
-                              onPressed: () async {
-                                context.safePop();
-                              },
                             ),
                           ),
                           Text(
@@ -210,18 +217,14 @@ class _CompJoiningRequestWidgetState extends State<CompJoiningRequestWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
+                                          AppNetworkImage(
+                                            url: columnPublicUserProfileRow!
+                                                .profilePicture!,
                                             width: 32.0,
                                             height: 32.0,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Image.network(
-                                              columnPublicUserProfileRow!
-                                                  .profilePicture!,
-                                              fit: BoxFit.cover,
-                                            ),
+                                            fit: BoxFit.cover,
+                                            isAvatar: true,
+                                            semanticLabel: 'Profile photo',
                                           ),
                                           Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -286,7 +289,7 @@ class _CompJoiningRequestWidgetState extends State<CompJoiningRequestWidget> {
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .greyL4,
-                                                      fontSize: 10.0,
+                                                      fontSize: 12.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -304,6 +307,7 @@ class _CompJoiningRequestWidgetState extends State<CompJoiningRequestWidget> {
                                       ),
                                       FFButtonWidget(
                                         onPressed: () async {
+                                          HapticFeedback.lightImpact();
                                           await GroupUserStatusTable().update(
                                             data: {
                                               'is_approved': true,
@@ -377,12 +381,12 @@ class _CompJoiningRequestWidgetState extends State<CompJoiningRequestWidget> {
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: Color(0x00264AFF),
+                                          color: Colors.transparent,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
                                               .titleSmall
                                               .override(
-                                                font: GoogleFonts.interTight(
+                                                font: GoogleFonts.manrope(
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)

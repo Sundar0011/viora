@@ -2,6 +2,7 @@ import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -80,19 +81,14 @@ class _CompDeleteEventWidgetState extends State<CompDeleteEventWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
+                      AppIconButton(
+                        icon: Icons.arrow_back,
+                        iconSize: 24.0,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        semanticLabel: 'Go back',
+                        onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
                       ),
                       Text(
                         'Delete Event?',
@@ -157,7 +153,7 @@ class _CompDeleteEventWidgetState extends State<CompDeleteEventWidget> {
                             ),
                             Flexible(
                               child: Text(
-                                'This event and all its details will be permanently removed from SquaDD.',
+                                'This event and all its details will be permanently removed from Flock.',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(

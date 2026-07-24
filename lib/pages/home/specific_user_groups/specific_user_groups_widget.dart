@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -50,6 +51,7 @@ class _SpecificUserGroupsWidgetState extends State<SpecificUserGroupsWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -148,15 +150,15 @@ class _SpecificUserGroupsWidgetState extends State<SpecificUserGroupsWidget> {
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      ClipRRect(
+                                      AppNetworkImage(
+                                        url:
+                                            'https://picsum.photos/seed/407/600',
+                                        width: 40.0,
+                                        height: 40.0,
+                                        fit: BoxFit.cover,
                                         borderRadius:
                                             BorderRadius.circular(2.0),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/407/600',
-                                          width: 40.0,
-                                          height: 40.0,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        semanticLabel: 'Group photo',
                                       ),
                                       Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -206,7 +208,7 @@ class _SpecificUserGroupsWidgetState extends State<SpecificUserGroupsWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .greyL4,
-                                                  fontSize: 10.0,
+                                                  fontSize: 12.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                   fontStyle:
@@ -475,15 +477,15 @@ class _SpecificUserGroupsWidgetState extends State<SpecificUserGroupsWidget> {
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      ClipRRect(
+                                      AppNetworkImage(
+                                        url:
+                                            'https://picsum.photos/seed/407/600',
+                                        width: 40.0,
+                                        height: 40.0,
+                                        fit: BoxFit.cover,
                                         borderRadius:
                                             BorderRadius.circular(2.0),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/407/600',
-                                          width: 40.0,
-                                          height: 40.0,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        semanticLabel: 'Group photo',
                                       ),
                                       Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -533,7 +535,7 @@ class _SpecificUserGroupsWidgetState extends State<SpecificUserGroupsWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .greyL4,
-                                                  fontSize: 10.0,
+                                                  fontSize: 12.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                   fontStyle:
@@ -802,15 +804,15 @@ class _SpecificUserGroupsWidgetState extends State<SpecificUserGroupsWidget> {
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      ClipRRect(
+                                      AppNetworkImage(
+                                        url:
+                                            'https://picsum.photos/seed/407/600',
+                                        width: 40.0,
+                                        height: 40.0,
+                                        fit: BoxFit.cover,
                                         borderRadius:
                                             BorderRadius.circular(2.0),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/407/600',
-                                          width: 40.0,
-                                          height: 40.0,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        semanticLabel: 'Group photo',
                                       ),
                                       Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -860,7 +862,7 @@ class _SpecificUserGroupsWidgetState extends State<SpecificUserGroupsWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .greyL4,
-                                                  fontSize: 10.0,
+                                                  fontSize: 12.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                   fontStyle:

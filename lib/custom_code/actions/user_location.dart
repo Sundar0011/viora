@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import '/flutter_flow/app_log.dart';
 
 Future<bool> userLocation() async {
   try {
@@ -58,7 +59,7 @@ Future<bool> userLocation() async {
 
     return true;
   } catch (e) {
-    print('Error in userLocation(): $e');
+    appLog('Error in userLocation(): $e');
     return false;
   }
 }

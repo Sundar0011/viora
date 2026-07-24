@@ -277,7 +277,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
 
   Future<void> _searchProfiles(String query) async {
     const String apiUrl =
-        'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/search_profiles';
+        'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/search_profiles';
 
     try {
       final response = await http.post(
@@ -367,7 +367,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
     int currentIndex = 0;
 
     final baseStyle = TextStyle(
-      color: Color(0xFF0C0C0C),
+      color: FlutterFlowTheme.of(context).primaryText,
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w600,
@@ -376,7 +376,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
     );
 
     final mentionStyle = TextStyle(
-      color: Color(0xFF264AFF),
+      color: FlutterFlowTheme.of(context).primary,
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w600,
@@ -443,7 +443,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
               maxHeight: 300,
             ),
             decoration: BoxDecoration(
-              color: Color(0xFFFFFFFF),
+              color: FlutterFlowTheme.of(context).secondaryBackground,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Stack(
@@ -454,7 +454,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                   decoration: InputDecoration(
                     hintText: "What's happening in your neighborhood?..",
                     hintStyle: TextStyle(
-                      color: Color(0xFF999999),
+                      color: FlutterFlowTheme.of(context).secondaryText,
                       fontFamily: 'Manrope',
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -462,7 +462,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                       letterSpacing: 0.07,
                     ),
                     filled: true,
-                    fillColor: Color(0xFFFFFFFF),
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
@@ -475,7 +475,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                   textAlignVertical: TextAlignVertical.top,
                   style: TextStyle(
                     color: _mentionMap.isEmpty
-                        ? Color(0xFF0C0C0C)
+                        ? FlutterFlowTheme.of(context).primaryText
                         : Colors.transparent,
                     fontFamily: 'Manrope',
                     fontSize: 14,
@@ -483,7 +483,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                     height: 1.3,
                     letterSpacing: 0.07,
                   ),
-                  cursorColor: Color(0xFF264AFF),
+                  cursorColor: FlutterFlowTheme.of(context).secondary,
                 ),
                 if (_mentionMap.isNotEmpty && _textController.text.isNotEmpty)
                   Positioned.fill(
@@ -504,13 +504,13 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
               margin: EdgeInsets.only(top: 4),
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: Color(0xFF264AFF).withOpacity(0.1),
+                color: FlutterFlowTheme.of(context).secondary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 'Tagged: ${_mentionMap.keys.map((name) => '@$name').join(', ')}',
                 style: TextStyle(
-                  color: Color(0xFF264AFF),
+                  color: FlutterFlowTheme.of(context).primary,
                   fontFamily: 'Manrope',
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -521,7 +521,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
             Container(
               margin: EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: FlutterFlowTheme.of(context).secondaryBackground,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -542,7 +542,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                     itemCount: _suggestions.length,
                     separatorBuilder: (context, index) => Container(
                       height: 1,
-                      color: Color(0xFFF0F0F0),
+                      color: FlutterFlowTheme.of(context).alternate,
                       margin: EdgeInsets.symmetric(horizontal: 16),
                     ),
                     itemBuilder: (context, index) {
@@ -576,7 +576,7 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                                             user['profile_picture']
                                                 .toString()
                                                 .isEmpty
-                                        ? Color(0xFFE0E0E0)
+                                        ? FlutterFlowTheme.of(context).alternate
                                         : null,
                                   ),
                                   child: user['profile_picture'] == null ||
@@ -585,7 +585,8 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                                               .isEmpty
                                       ? Icon(
                                           Icons.person,
-                                          color: Color(0xFF666666),
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
                                           size: 20,
                                         )
                                       : null,
@@ -595,7 +596,8 @@ class _MentionTextFieldWidgeEditState extends State<MentionTextFieldWidgeEdit> {
                                   child: Text(
                                     user['name'] ?? '',
                                     style: TextStyle(
-                                      color: Color(0xFF0C0C0C),
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
                                       fontFamily: 'Manrope',
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,

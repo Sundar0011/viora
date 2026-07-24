@@ -12,13 +12,14 @@ import 'package:flutter/material.dart';
 // Imports (keep as-is for FlutterFlow compatibility)
 import '/flutter_flow/custom_functions.dart';
 import '/custom_code/actions/index.dart';
+import '/flutter_flow/app_log.dart';
 
 // Realtime listener guard
 bool _searchProfilesListenerInitialized = false;
 
 Future<void> fetchSearchProfilesRealtime(String searchText) async {
   final supabase = Supabase.instance.client;
-  print("🔍 fetchSearchProfilesRealtime('$searchText') called");
+  appLog("🔍 fetchSearchProfilesRealtime('$searchText') called");
 
   try {
     final response = await supabase.rpc('search_public_user_profiles', params: {
@@ -32,34 +33,33 @@ Future<void> fetchSearchProfilesRealtime(String searchText) async {
         FFAppState().AsPublicProfile = results; // ✅ Updated app state name
       });
 
-      print("✅ Search results updated (${results.length} users)");
+      appLog("✅ Search results updated (${results.length} users)");
     } else {
       FFAppState().update(() {
         FFAppState().AsPublicProfile = []; // ✅ Updated app state name
       });
-      print("⚠️ No users found matching '$searchText'");
+      appLog("⚠️ No users found matching '$searchText'");
     }
   } catch (e) {
-    print("❌ Error during search: $e");
+    appLog("❌ Error during search: $e");
   }
 
   // Optional: Real-time updates on profile changes (e.g., name updates)
   if (!_searchProfilesListenerInitialized) {
     _searchProfilesListenerInitialized = true;
 
-    supabase
-        .channel('public_user_profile_search')
+    freshRealtimeChannel(supabase, 'public_user_profile_search')
         .onPostgresChanges(
           event: PostgresChangeEvent.update,
           schema: 'public',
           table: 'public_user_profile',
           callback: (payload) {
-            print("🔄 Profile update detected, refreshing search");
+            appLog("🔄 Profile update detected, refreshing search");
             fetchSearchProfilesRealtime(searchText);
           },
         )
         .subscribe();
 
-    print("📡 Listening to real-time 'public_user_profile' changes");
+    appLog("📡 Listening to real-time 'public_user_profile' changes");
   }
 }

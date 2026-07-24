@@ -1,3 +1,4 @@
+import '/components/app_icon_button.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -126,19 +127,15 @@ class _CompVerifyWidgetState extends State<CompVerifyWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
+                      AppIconButton(
+                        icon: Icons.arrow_back,
+                        semanticLabel: 'Back',
+                        tooltip: 'Back',
+                        iconSize: 24.0,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
                       ),
                       Text(
                         'Delete Account',
@@ -202,7 +199,7 @@ class _CompVerifyWidgetState extends State<CompVerifyWidget> {
                         )
                       ],
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
+                            font: GoogleFonts.manrope(
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .fontWeight,
@@ -286,7 +283,9 @@ class _CompVerifyWidgetState extends State<CompVerifyWidget> {
                         children: [
                           if (_model.timerOn == false)
                             InkWell(
-                              splashColor: Colors.transparent,
+                              splashColor: FlutterFlowTheme.of(context)
+                                  .primary
+                                  .withAlpha(0x14),
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
@@ -410,7 +409,7 @@ class _CompVerifyWidgetState extends State<CompVerifyWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall
                                       .override(
-                                        font: GoogleFonts.interTight(
+                                        font: GoogleFonts.manrope(
                                           fontWeight: FontWeight.w500,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)

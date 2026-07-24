@@ -23,10 +23,10 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint --max-warnings=0 .",
-    "serve": "firebase -P squadd-640af emulators:start --only functions",
-    "shell": "firebase -P squadd-640af functions:shell",
+    "serve": "firebase -P viora-b75f7 emulators:start --only functions",
+    "shell": "firebase -P viora-b75f7 functions:shell",
     "start": "npm run shell",
-    "logs": "firebase -P squadd-640af functions:log",
+    "logs": "firebase -P viora-b75f7 functions:log",
     "compile": "cp ../../tsconfig.template.json ./tsconfig-compile.json && tsc --project tsconfig-compile.json"
   },
   "engines": {

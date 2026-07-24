@@ -124,7 +124,7 @@ class _CompForgetPasswordWidgetState extends State<CompForgetPasswordWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'We’ve sent a link to your registered email address so you can reset your SquaDD password.\nFollow the steps below to get back into your account:',
+                              'We’ve sent a link to your registered email address so you can reset your Flock password.\nFollow the steps below to get back into your account:',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -178,11 +178,11 @@ class _CompForgetPasswordWidgetState extends State<CompForgetPasswordWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       14.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'Look for an email from SquaDD with the subject line “Reset Your Password.”',
+                                    'Look for an email from Flock with the subject line “Reset Your Password.”',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -244,7 +244,7 @@ class _CompForgetPasswordWidgetState extends State<CompForgetPasswordWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -306,7 +306,7 @@ class _CompForgetPasswordWidgetState extends State<CompForgetPasswordWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium

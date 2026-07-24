@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:typed_data';
+import '/flutter_flow/app_log.dart';
 
 Future uploadSalesImages(
   List<FFUploadedFile> uploadedImages,
@@ -27,7 +28,7 @@ Future uploadSalesImages(
         final cleanSaleId = saleId.trim();
         final path = '$cleanSaleId/$fileName';
 
-        print('Uploading to path: $path'); // Debug
+        appLog('Uploading to path: $path'); // Debug
 
         await Supabase.instance.client.storage.from(bucketName).uploadBinary(
               path,
@@ -48,6 +49,6 @@ Future uploadSalesImages(
       }
     }
   } catch (e) {
-    print('UploadSalesImages error: $e');
+    appLog('UploadSalesImages error: $e');
   }
 }

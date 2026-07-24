@@ -73,7 +73,7 @@ Future<String> oneSignalNotification(
 
     // Call Supabase RPC function to upsert device info
     final url = Uri.parse(
-        'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/upsert_user_device');
+        'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/upsert_user_device');
 
     final response = await http.post(
       url,

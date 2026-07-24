@@ -72,6 +72,7 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -182,7 +183,7 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -256,7 +257,7 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                             alignment: AlignmentDirectional(
                                                 -1.0, -1.0),
                                             child: Text(
-                                              '1. Account Name: SquaDD Promotions',
+                                              '1. Account Name: Flock Promotions',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -441,7 +442,7 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                font: GoogleFonts.inter(
+                                                font: GoogleFonts.manrope(
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -595,7 +596,9 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                                           4.0),
                                                 ),
                                                 filled: true,
-                                                fillColor: Color(0xFFF7F9FC),
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
                                                 contentPadding:
                                                     EdgeInsetsDirectional
                                                         .fromSTEB(12.0, 16.0,
@@ -661,7 +664,7 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                font: GoogleFonts.inter(
+                                                font: GoogleFonts.manrope(
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -690,7 +693,10 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                                     .bytes?.isEmpty ??
                                                 true))
                                           InkWell(
-                                            splashColor: Colors.transparent,
+                                            splashColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary
+                                                    .withAlpha(0x14),
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
@@ -742,7 +748,9 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                               width: double.infinity,
                                               height: 88.0,
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFF7F9FC),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
                                               ),
                                               alignment: AlignmentDirectional(
                                                   0.0, 0.0),
@@ -826,9 +834,8 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                                                                     context)
                                                                 .bodyMedium
                                                                 .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
+                                                                  font: GoogleFonts
+                                                                      .manrope(
                                                                     fontWeight: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -911,9 +918,7 @@ class _UploadReceiptWidgetState extends State<UploadReceiptWidget> {
                     children: [
                       Expanded(
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
+                          onPressed: () {},
                           text: 'Cancel',
                           options: FFButtonOptions(
                             height: 46.0,

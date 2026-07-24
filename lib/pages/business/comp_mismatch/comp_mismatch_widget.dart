@@ -1,5 +1,6 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -82,19 +83,14 @@ class _CompMismatchWidgetState extends State<CompMismatchWidget> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
+                      AppIconButton(
+                        icon: Icons.arrow_back,
+                        iconSize: 24.0,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        semanticLabel: 'Go back',
+                        onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
                       ),
                       Flexible(
                         child: Text(
@@ -146,7 +142,7 @@ class _CompMismatchWidgetState extends State<CompMismatchWidget> {
                       Text(
                         'Reference Number *',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.inter(
+                              font: GoogleFonts.manrope(
                                 fontWeight: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .fontWeight,
@@ -255,7 +251,7 @@ class _CompMismatchWidgetState extends State<CompMismatchWidget> {
                                 borderRadius: BorderRadius.circular(4.0),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFF7F9FC),
+                              fillColor: FlutterFlowTheme.of(context).alternate,
                               contentPadding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 16.0, 12.0, 16.0),
                             ),

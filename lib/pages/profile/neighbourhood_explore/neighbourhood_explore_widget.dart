@@ -1,3 +1,7 @@
+import '/components/async_state_view.dart';
+import '/components/empty_state.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -19,6 +23,8 @@ import '/index.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'neighbourhood_explore_model.dart';
@@ -41,6 +47,9 @@ class _NeighbourhoodExploreWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  /// Non-null when the page load failed; drives the error state.
+  Object? _loadError;
+
   @override
   void initState() {
     super.initState();
@@ -48,6 +57,14 @@ class _NeighbourhoodExploreWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await _loadPage();
+    });
+  }
+
+  /// Runs the page load, recording any failure so the UI can surface it.
+  Future<void> _loadPage() async {
+    try {
+      _loadError = null;
       _model.apiResultlnn = await GetneighbourhoodPostsCall.call(
         pCommunityid: FFAppState().communityId,
         pUserid: currentUserUid,
@@ -76,7 +93,17 @@ class _NeighbourhoodExploreWidgetState
       safeSetState(() {});
       _model.showData = true;
       safeSetState(() {});
-    });
+    } catch (e) {
+      _loadError = e;
+      safeSetState(() {});
+    }
+  }
+
+  /// Retry handler for the error state.
+  Future<void> _retryLoad() async {
+    _loadError = null;
+    safeSetState(() {});
+    await _loadPage();
   }
 
   @override
@@ -125,15 +152,14 @@ class _NeighbourhoodExploreWidgetState
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  FlutterFlowIconButton(
-                                    borderRadius: 100.0,
-                                    icon: Icon(
-                                      Icons.arrow_back,
-                                      color: FlutterFlowTheme.of(context)
-                                          .extraBlack,
-                                      size: 24.0,
-                                    ),
-                                    onPressed: () async {
+                                  AppIconButton(
+                                    icon: Icons.arrow_back,
+                                    semanticLabel: 'Back',
+                                    tooltip: 'Back',
+                                    iconSize: 24.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).extraBlack,
+                                    onTap: () async {
                                       context.safePop();
                                     },
                                   ),
@@ -211,9 +237,7 @@ class _NeighbourhoodExploreWidgetState
                                           .extraBlack,
                                       size: 16.0,
                                     ),
-                                    onPressed: () {
-                                      print('IconButton pressed ...');
-                                    },
+                                    onPressed: () {},
                                   ),
                                 ),
                             ],
@@ -420,8 +444,12 @@ class _NeighbourhoodExploreWidgetState
                                                                   .spaceBetween,
                                                           children: [
                                                             InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
+                                                              splashColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary
+                                                                      .withAlpha(
+                                                                          0x14),
                                                               focusColor: Colors
                                                                   .transparent,
                                                               hoverColor: Colors
@@ -474,14 +502,27 @@ class _NeighbourhoodExploreWidgetState
                                                                       shape: BoxShape
                                                                           .circle,
                                                                     ),
-                                                                    child: Image
-                                                                        .network(
-                                                                      getJsonField(
+                                                                    child:
+                                                                        AppNetworkImage(
+                                                                      url:
+                                                                          getJsonField(
                                                                         postsItem,
                                                                         r'''$.profile_picture''',
                                                                       ).toString(),
+                                                                      width:
+                                                                          32.0,
+                                                                      height:
+                                                                          32.0,
                                                                       fit: BoxFit
                                                                           .cover,
+                                                                      fallbackIcon:
+                                                                          Icons
+                                                                              .person_rounded,
+                                                                      semanticLabel:
+                                                                          '${getJsonField(
+                                                                        postsItem,
+                                                                        r'''$.name''',
+                                                                      ).toString()} profile photo',
                                                                     ),
                                                                   ),
                                                                   Column(
@@ -528,7 +569,7 @@ class _NeighbourhoodExploreWidgetState
                                                                                     fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                   ),
                                                                                   color: FlutterFlowTheme.of(context).greyL4,
-                                                                                  fontSize: 10.0,
+                                                                                  fontSize: 12.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w500,
                                                                                   fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -557,7 +598,7 @@ class _NeighbourhoodExploreWidgetState
                                                                                     fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                   ),
                                                                                   color: FlutterFlowTheme.of(context).greyL4,
-                                                                                  fontSize: 10.0,
+                                                                                  fontSize: 12.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w500,
                                                                                   fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -607,9 +648,11 @@ class _NeighbourhoodExploreWidgetState
                                                                       .max,
                                                               children: [
                                                                 InkWell(
-                                                                  splashColor:
-                                                                      Colors
-                                                                          .transparent,
+                                                                  splashColor: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary
+                                                                      .withAlpha(
+                                                                          0x14),
                                                                   focusColor: Colors
                                                                       .transparent,
                                                                   hoverColor: Colors
@@ -763,9 +806,11 @@ class _NeighbourhoodExploreWidgetState
                                                                           180),
                                                                   child:
                                                                       InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
+                                                                    splashColor: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary
+                                                                        .withAlpha(
+                                                                            0x14),
                                                                     focusColor:
                                                                         Colors
                                                                             .transparent,
@@ -1002,9 +1047,11 @@ class _NeighbourhoodExploreWidgetState
                                                                           .max,
                                                                   children: [
                                                                     InkWell(
-                                                                      splashColor:
-                                                                          Colors
-                                                                              .transparent,
+                                                                      splashColor: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary
+                                                                          .withAlpha(
+                                                                              0x14),
                                                                       focusColor:
                                                                           Colors
                                                                               .transparent,
@@ -1108,9 +1155,10 @@ class _NeighbourhoodExploreWidgetState
                                                                     BorderRadius
                                                                         .circular(
                                                                             0.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  getJsonField(
+                                                                child:
+                                                                    AppNetworkImage(
+                                                                  url:
+                                                                      getJsonField(
                                                                     postsItem,
                                                                     r'''$.images[0]''',
                                                                   ).toString(),
@@ -1118,6 +1166,8 @@ class _NeighbourhoodExploreWidgetState
                                                                       .infinity,
                                                                   fit: BoxFit
                                                                       .contain,
+                                                                  semanticLabel:
+                                                                      'Post photo',
                                                                 ),
                                                               ),
                                                             if (((getJsonField(
@@ -1164,8 +1214,12 @@ class _NeighbourhoodExploreWidgetState
                                                               MainAxisSize.max,
                                                           children: [
                                                             InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
+                                                              splashColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary
+                                                                      .withAlpha(
+                                                                          0x14),
                                                               focusColor: Colors
                                                                   .transparent,
                                                               hoverColor: Colors
@@ -1276,8 +1330,12 @@ class _NeighbourhoodExploreWidgetState
                                                               ),
                                                             ),
                                                             InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
+                                                              splashColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary
+                                                                      .withAlpha(
+                                                                          0x14),
                                                               focusColor: Colors
                                                                   .transparent,
                                                               hoverColor: Colors
@@ -1381,8 +1439,12 @@ class _NeighbourhoodExploreWidgetState
                                                           ],
                                                         ),
                                                         InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
+                                                          splashColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primary
+                                                                  .withAlpha(
+                                                                      0x14),
                                                           focusColor: Colors
                                                               .transparent,
                                                           hoverColor: Colors
@@ -1549,8 +1611,12 @@ class _NeighbourhoodExploreWidgetState
                                                           ),
                                                         ),
                                                         InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
+                                                          splashColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primary
+                                                                  .withAlpha(
+                                                                      0x14),
                                                           focusColor: Colors
                                                               .transparent,
                                                           hoverColor: Colors
@@ -1844,8 +1910,21 @@ class _NeighbourhoodExploreWidgetState
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
+                                      Image.asset(
+                                        'assets/images/empty_feed.png',
+                                        width: 160.0,
+                                        height: 160.0,
+                                        fit: BoxFit.contain,
+                                      )
+                                          .animate()
+                                          .fadeIn(duration: 400.ms)
+                                          .scale(
+                                            begin: Offset(0.92, 0.92),
+                                            end: Offset(1, 1),
+                                            curve: Curves.easeOutBack,
+                                          ),
                                       Text(
-                                        'No posts to show',
+                                        'No posts yet',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -1870,7 +1949,7 @@ class _NeighbourhoodExploreWidgetState
                                             ),
                                       ),
                                       Text(
-                                        'Looks like no one has uploaded anything yet. Check back soon!',
+                                        'When neighbours in this area post, it shows up here.',
                                         textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -1904,18 +1983,25 @@ class _NeighbourhoodExploreWidgetState
                       ],
                     ),
                   ),
-                if (!_model.showData)
+                if (_loadError != null)
                   Expanded(
-                    child: Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
-                      child: Container(
-                        width: 50.0,
-                        height: 50.0,
-                        child: custom_widgets.SimpleLoader(
-                          width: 50.0,
-                          height: 50.0,
-                        ),
-                      ),
+                    child: EmptyState(
+                      icon: Icons.error_outline_rounded,
+                      iconColor: FlutterFlowTheme.of(context).error,
+                      iconBackgroundColor:
+                          FlutterFlowTheme.of(context).error.withAlpha(0x1F),
+                      title: 'Something went wrong',
+                      body: AsyncStateView.describeError(_loadError!),
+                      actionLabel: 'Retry',
+                      onAction: _retryLoad,
+                    ),
+                  ),
+                if (_loadError == null && !_model.showData)
+                  Expanded(
+                    child: Semantics(
+                      label: 'Loading neighbourhoods',
+                      liveRegion: true,
+                      child: const AppSkeletonList(),
                     ),
                   ),
               ],

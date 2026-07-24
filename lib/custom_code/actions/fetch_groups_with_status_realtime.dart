@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -22,12 +23,12 @@ Future fetchGroupsWithStatusRealtime() async {
         FFAppState().update(() {
           FFAppState().AsGroupList = response;
         });
-        print('✅ Group list updated from RPC.');
+        appLog('✅ Group list updated from RPC.');
       } else {
-        print('⚠️ Warning: Invalid response from RPC.');
+        appLog('⚠️ Warning: Invalid response from RPC.');
       }
     } catch (error) {
-      print('❌ Error calling get_groups_with_user_status RPC: $error');
+      appLog('❌ Error calling get_groups_with_user_status RPC: $error');
     }
   }
 
@@ -45,7 +46,7 @@ Future fetchGroupsWithStatusRealtime() async {
   for (final table in tables) {
     final channelId = 'group-list-realtime:$table'; // unique ID for list
 
-    final channel = supabase.channel(channelId);
+    final channel = freshRealtimeChannel(supabase, channelId);
 
     channel
         .onPostgresChanges(
@@ -53,12 +54,12 @@ Future fetchGroupsWithStatusRealtime() async {
           schema: 'public',
           table: table,
           callback: (payload) async {
-            print('🔄 [Group List] Change in $table. Refetching...');
+            appLog('🔄 [Group List] Change in $table. Refetching...');
             await fetchGroups();
           },
         )
         .subscribe();
 
-    print('📡 Subscribed to group list realtime changes for $table');
+    appLog('📡 Subscribed to group list realtime changes for $table');
   }
 }

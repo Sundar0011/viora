@@ -96,6 +96,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -168,7 +169,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(0.0),
                                   child: Image.asset(
-                                    'assets/images/Header_(1).webp',
+                                    'assets/images/group_cover_placeholder.png',
                                     width: double.infinity,
                                     height: 240.0,
                                     fit: BoxFit.cover,
@@ -204,7 +205,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
                                 child: InkWell(
-                                  splashColor: Colors.transparent,
+                                  splashColor: FlutterFlowTheme.of(context)
+                                      .primary
+                                      .withAlpha(0x14),
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
@@ -437,7 +440,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),
@@ -518,7 +522,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                   textStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
-                                        font: GoogleFonts.inter(
+                                        font: GoogleFonts.manrope(
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -540,7 +544,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                       FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            font: GoogleFonts.inter(
+                                            font: GoogleFonts.manrope(
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -751,7 +755,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),
@@ -994,7 +999,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 15.0, 16.0),
@@ -1070,7 +1077,10 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                             final searchplacesItem =
                                                 searchplaces[searchplacesIndex];
                                             return InkWell(
-                                              splashColor: Colors.transparent,
+                                              splashColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary
+                                                      .withAlpha(0x14),
                                               focusColor: Colors.transparent,
                                               hoverColor: Colors.transparent,
                                               highlightColor:
@@ -1237,7 +1247,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                 ),
                               ),
                               InkWell(
-                                splashColor: Colors.transparent,
+                                splashColor: FlutterFlowTheme.of(context)
+                                    .primary
+                                    .withAlpha(0x14),
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
@@ -1268,7 +1280,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                   width: double.infinity,
                                   height: 50.0,
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFF7F9FC),
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                     borderRadius: BorderRadius.circular(4.0),
                                     border: Border.all(
                                       color:
@@ -1379,7 +1392,9 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                 ),
                               ),
                               InkWell(
-                                splashColor: Colors.transparent,
+                                splashColor: FlutterFlowTheme.of(context)
+                                    .primary
+                                    .withAlpha(0x14),
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
@@ -1423,7 +1438,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                   width: double.infinity,
                                   height: 50.0,
                                   decoration: BoxDecoration(
-                                    color: Color(0xFFF7F9FC),
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
                                     borderRadius: BorderRadius.circular(4.0),
                                     border: Border.all(
                                       color:
@@ -1627,7 +1643,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),
@@ -1714,13 +1731,14 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                         : null,
                                     activeColor:
                                         FlutterFlowTheme.of(context).primary,
-                                    checkColor:
-                                        FlutterFlowTheme.of(context).info,
+                                    checkColor: Colors.white,
                                   ),
                                 ),
                                 Flexible(
                                   child: InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
@@ -1739,7 +1757,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  font: GoogleFonts.inter(
+                                                  font: GoogleFonts.manrope(
                                                     fontWeight: FontWeight.w500,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
@@ -1760,7 +1778,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                                 ),
                                           ),
                                           TextSpan(
-                                            text: 'SquaDD’s event policy.',
+                                            text: 'Flock’s event policy.',
                                             style: TextStyle(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -1773,7 +1791,7 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              font: GoogleFonts.inter(
+                                              font: GoogleFonts.manrope(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium

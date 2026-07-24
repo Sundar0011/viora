@@ -1,3 +1,8 @@
+import '/pages/group/group_list_refresh.dart';
+import '/components/empty_state.dart';
+import '/components/app_shimmer_box.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -26,6 +31,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -75,6 +81,55 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
     super.dispose();
   }
 
+  /// Content-shaped shimmer shown while the group loads, so the screen never
+  /// renders as a frozen blank frame (ui-review 2026-07-21 §2.7).
+  Widget _buildLoadingSkeleton(BuildContext context) {
+    final FFSpacing spacing = FlutterFlowTheme.of(context).designToken.spacing;
+    return Semantics(
+      label: 'Loading group',
+      liveRegion: true,
+      child: ListView(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        children: [
+          const AppShimmerBox(width: double.infinity, height: 240.0),
+          Padding(
+            padding: EdgeInsets.all(spacing.md),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const AppShimmerLine(widthFactor: 0.6, height: 22.0),
+                SizedBox(height: spacing.sm),
+                const AppShimmerLine(widthFactor: 0.35, height: 14.0),
+                SizedBox(height: spacing.md),
+                const AppShimmerLine(widthFactor: 1.0, height: 44.0),
+                SizedBox(height: spacing.lg),
+                const AppShimmerLine(widthFactor: 0.9, height: 14.0),
+                SizedBox(height: spacing.sm),
+                const AppShimmerLine(widthFactor: 0.75, height: 14.0),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Retries the group fetch after a failure, re-running the loading gate.
+  Future<void> _reloadGroupDetails() async {
+    safeSetState(() => _model.loader = true);
+    try {
+      await refreshGroupDetails(widget!.groupId!);
+    } catch (_) {
+      // Already logged in the data layer; the error state below stays visible.
+    } finally {
+      if (mounted) {
+        safeSetState(() => _model.loader = false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -89,8 +144,9 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: InkWell(
-            splashColor: Colors.transparent,
+            splashColor: FlutterFlowTheme.of(context).primary.withAlpha(0x14),
             focusColor: Colors.transparent,
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
@@ -105,7 +161,8 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  if (!_model.loader)
+                  if (!_model.loader &&
+                      (FFAppState().AsSpecificGroupDetails != null))
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(),
@@ -138,21 +195,29 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        FlutterFlowIconButton(
-                                          borderRadius: 100.0,
-                                          icon: Icon(
-                                            Icons.arrow_back,
-                                            color: FlutterFlowTheme.of(context)
-                                                .extraBlack,
-                                            size: 24.0,
+                                        Semantics(
+                                          button: true,
+                                          label: 'Back',
+                                          child: FlutterFlowIconButton(
+                                            borderRadius: 100.0,
+                                            icon: Icon(
+                                              Icons.arrow_back,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .extraBlack,
+                                              size: 24.0,
+                                            ),
+                                            onPressed: () async {
+                                              context.safePop();
+                                            },
                                           ),
-                                          onPressed: () async {
-                                            context.safePop();
-                                          },
                                         ),
                                         Expanded(
                                           child: InkWell(
-                                            splashColor: Colors.transparent,
+                                            splashColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary
+                                                    .withAlpha(0x14),
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
@@ -170,7 +235,9 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                             child: Container(
                                               height: 36.0,
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFF7F9FC),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
                                                 borderRadius:
                                                     BorderRadius.circular(4.0),
                                               ),
@@ -243,11 +310,9 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                       r'''$.user_status''',
                                                     ).toString()}' ==
                                                     'admin')))
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
+                                          AppIconButton(
+                                            semanticLabel: 'Group options',
+                                            iconSize: 16.0,
                                             onTap: () async {
                                               if (('${getJsonField(
                                                         FFAppState()
@@ -334,7 +399,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                     safeSetState(() {}));
                                               }
                                             },
-                                            child: Container(
+                                            iconWidget: Container(
                                               width: 34.0,
                                               height: 34.0,
                                               decoration: BoxDecoration(
@@ -392,19 +457,16 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(0.0),
-                                            child: Image.network(
-                                              getJsonField(
-                                                FFAppState()
-                                                    .AsSpecificGroupDetails,
-                                                r'''$.profile_picture''',
-                                              ).toString(),
-                                              width: double.infinity,
-                                              height: 240.0,
-                                              fit: BoxFit.cover,
-                                            ),
+                                          AppNetworkImage(
+                                            url: getJsonField(
+                                                    FFAppState()
+                                                        .AsSpecificGroupDetails,
+                                                    r'''$.profile_picture''')
+                                                .toString(),
+                                            width: double.infinity,
+                                            height: 240.0,
+                                            fit: BoxFit.cover,
+                                            semanticLabel: 'Group cover photo',
                                           ),
                                           Padding(
                                             padding:
@@ -441,9 +503,8 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                   .of(context)
                                                               .bodyMedium
                                                               .override(
-                                                                font:
-                                                                    GoogleFonts
-                                                                        .inter(
+                                                                font: GoogleFonts
+                                                                    .manrope(
                                                                   fontWeight: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -1213,6 +1274,8 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                           child: FFButtonWidget(
                                                             onPressed:
                                                                 () async {
+                                                              HapticFeedback
+                                                                  .lightImpact();
                                                               await showModalBottomSheet(
                                                                 isScrollControlled:
                                                                     true,
@@ -1483,6 +1546,8 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                 0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                         await GroupUserStatusTable()
                                                             .insert({
                                                           'community_id':
@@ -1579,10 +1644,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                             .fromSTEB(0.0, 16.0,
                                                                 0.0, 0.0),
                                                     child: FFButtonWidget(
-                                                      onPressed: () {
-                                                        print(
-                                                            'Requested_Group_Button pressed ...');
-                                                      },
+                                                      onPressed: () {},
                                                       text: 'Requested',
                                                       icon: FaIcon(
                                                         FontAwesomeIcons
@@ -1799,18 +1861,15 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                Container(
+                                                AppNetworkImage(
+                                                  url: FFAppState()
+                                                      .AsProfilePicture,
                                                   width: 40.0,
                                                   height: 40.0,
-                                                  clipBehavior: Clip.antiAlias,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: Image.network(
-                                                    FFAppState()
-                                                        .AsProfilePicture,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                                  fit: BoxFit.cover,
+                                                  isAvatar: true,
+                                                  semanticLabel:
+                                                      'Profile photo',
                                                 ),
                                                 Expanded(
                                                   child: InkWell(
@@ -1929,6 +1988,27 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                         builder: (context) {
                                           final posts =
                                               FFAppState().AsPost.toList();
+                                          // The list below only shows posts
+                                          // belonging to this group, so count
+                                          // those before claiming "no posts".
+                                          final groupPosts = posts
+                                              .where((p) =>
+                                                  widget!.groupId ==
+                                                  getJsonField(
+                                                    p,
+                                                    r'''$.group_id''',
+                                                  ).toString())
+                                              .toList();
+                                          if (groupPosts.isEmpty) {
+                                            return EmptyState(
+                                              icon: Icons.forum_outlined,
+                                              title:
+                                                  'No posts in this group yet',
+                                              body:
+                                                  'Be the first to share something with this group.',
+                                              compact: true,
+                                            );
+                                          }
 
                                           return Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -2020,25 +2100,19 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                             MainAxisSize.max,
                                                                         children:
                                                                             [
-                                                                          Container(
+                                                                          AppNetworkImage(
+                                                                            url:
+                                                                                getJsonField(postsItem, r'''$.user_profile_picture''').toString(),
                                                                             width:
                                                                                 32.0,
                                                                             height:
                                                                                 32.0,
-                                                                            clipBehavior:
-                                                                                Clip.antiAlias,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              shape: BoxShape.circle,
-                                                                            ),
-                                                                            child:
-                                                                                Image.network(
-                                                                              getJsonField(
-                                                                                postsItem,
-                                                                                r'''$.user_profile_picture''',
-                                                                              ).toString(),
-                                                                              fit: BoxFit.cover,
-                                                                            ),
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            isAvatar:
+                                                                                true,
+                                                                            semanticLabel:
+                                                                                'Profile photo',
                                                                           ),
                                                                           Column(
                                                                             mainAxisSize:
@@ -2078,7 +2152,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                             fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                           ),
                                                                                           color: FlutterFlowTheme.of(context).greyL4,
-                                                                                          fontSize: 10.0,
+                                                                                          fontSize: 12.0,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w500,
                                                                                           fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -2104,7 +2178,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                             fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                           ),
                                                                                           color: FlutterFlowTheme.of(context).greyL4,
-                                                                                          fontSize: 10.0,
+                                                                                          fontSize: 12.0,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w500,
                                                                                           fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -2276,15 +2350,11 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                           angle:
                                                                               90.0 * (math.pi / 180),
                                                                           child:
-                                                                              InkWell(
-                                                                            splashColor:
-                                                                                Colors.transparent,
-                                                                            focusColor:
-                                                                                Colors.transparent,
-                                                                            hoverColor:
-                                                                                Colors.transparent,
-                                                                            highlightColor:
-                                                                                Colors.transparent,
+                                                                              AppIconButton(
+                                                                            semanticLabel:
+                                                                                'Post options',
+                                                                            iconSize:
+                                                                                16.0,
                                                                             onTap:
                                                                                 () async {
                                                                               if ('${getJsonField(
@@ -2328,7 +2398,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                 safeSetState(() {});
                                                                               }
                                                                             },
-                                                                            child:
+                                                                            iconWidget:
                                                                                 Container(
                                                                               decoration: BoxDecoration(),
                                                                               child: Padding(
@@ -2438,7 +2508,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                 MainAxisSize.max,
                                                                             children: [
                                                                               InkWell(
-                                                                                splashColor: Colors.transparent,
+                                                                                splashColor: FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                                                                                 focusColor: Colors.transparent,
                                                                                 hoverColor: Colors.transparent,
                                                                                 highlightColor: Colors.transparent,
@@ -2543,20 +2613,16 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                 .length ==
                                                                             1) ==
                                                                         true)
-                                                                      ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(0.0),
-                                                                        child: Image
-                                                                            .network(
-                                                                          getJsonField(
-                                                                            postsItem,
-                                                                            r'''$.post_images[0]''',
-                                                                          ).toString(),
-                                                                          width:
-                                                                              double.infinity,
-                                                                          fit: BoxFit
-                                                                              .contain,
-                                                                        ),
+                                                                      AppNetworkImage(
+                                                                        url: getJsonField(postsItem,
+                                                                                r'''$.post_images[0]''')
+                                                                            .toString(),
+                                                                        width: double
+                                                                            .infinity,
+                                                                        fit: BoxFit
+                                                                            .contain,
+                                                                        semanticLabel:
+                                                                            'Post photo',
                                                                       ),
                                                                     if (((getJsonField(
                                                                               postsItem,
@@ -2604,19 +2670,11 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                       MainAxisSize
                                                                           .max,
                                                                   children: [
-                                                                    InkWell(
-                                                                      splashColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      focusColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      hoverColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .transparent,
+                                                                    AppIconButton(
+                                                                      semanticLabel:
+                                                                          'Like this post',
+                                                                      iconSize:
+                                                                          22.0,
                                                                       onTap:
                                                                           () async {
                                                                         _model.addlike2 =
@@ -2638,7 +2696,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                         safeSetState(
                                                                             () {});
                                                                       },
-                                                                      child:
+                                                                      iconWidget:
                                                                           Container(
                                                                         decoration:
                                                                             BoxDecoration(),
@@ -3141,19 +3199,11 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                         context)
                                                                     .secondaryBackground,
                                                                 boxShadow: [
-                                                                  BoxShadow(
-                                                                    blurRadius:
-                                                                        6.0,
-                                                                    color: Color(
-                                                                        0x33000000),
-                                                                    offset:
-                                                                        Offset(
-                                                                      0.0,
-                                                                      2.0,
-                                                                    ),
-                                                                    spreadRadius:
-                                                                        0.0,
-                                                                  )
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .designToken
+                                                                      .shadow
+                                                                      .md
                                                                 ],
                                                                 borderRadius:
                                                                     BorderRadius
@@ -3871,24 +3921,19 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                               .max,
                                                                       children:
                                                                           [
-                                                                        Container(
+                                                                        AppNetworkImage(
+                                                                          url: columnPublicUserProfileRow!
+                                                                              .profilePicture!,
                                                                           width:
                                                                               32.0,
                                                                           height:
                                                                               32.0,
-                                                                          clipBehavior:
-                                                                              Clip.antiAlias,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            shape:
-                                                                                BoxShape.circle,
-                                                                          ),
-                                                                          child:
-                                                                              Image.network(
-                                                                            columnPublicUserProfileRow!.profilePicture!,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ),
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          isAvatar:
+                                                                              true,
+                                                                          semanticLabel:
+                                                                              'Profile photo',
                                                                         ),
                                                                         Column(
                                                                           mainAxisSize:
@@ -3925,7 +3970,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                       fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                     ),
                                                                                     color: FlutterFlowTheme.of(context).greyL4,
-                                                                                    fontSize: 10.0,
+                                                                                    fontSize: 12.0,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w500,
                                                                                     fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -4024,7 +4069,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                 FFButtonOptions(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(16.0, 6.0, 16.0, 6.0),
                                                                               iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              color: Color(0xFFE9EDFF),
+                                                                              color: FlutterFlowTheme.of(context).primaryL1,
                                                                               textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                                                                                     font: GoogleFonts.manrope(
                                                                                       fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
@@ -4088,7 +4133,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                               iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                                                                               color: FlutterFlowTheme.of(context).greayL1,
                                                                               textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    font: GoogleFonts.interTight(
+                                                                                    font: GoogleFonts.manrope(
                                                                                       fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                       fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                     ),
@@ -4137,7 +4182,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                               iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                                                                               color: FlutterFlowTheme.of(context).greayL1,
                                                                               textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    font: GoogleFonts.interTight(
+                                                                                    font: GoogleFonts.manrope(
                                                                                       fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                       fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                     ),
@@ -4165,9 +4210,7 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                                 listViewGroupAdminRow.userId))
                                                                           FFButtonWidget(
                                                                             onPressed:
-                                                                                () {
-                                                                              print('Creator_Button pressed ...');
-                                                                            },
+                                                                                () {},
                                                                             text:
                                                                                 'Creator',
                                                                             options:
@@ -4175,9 +4218,9 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                                               height: 24.0,
                                                                               padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                                                                               iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              color: Color(0xFF23B3A6),
+                                                                              color: FlutterFlowTheme.of(context).primary,
                                                                               textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    font: GoogleFonts.interTight(
+                                                                                    font: GoogleFonts.manrope(
                                                                                       fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                       fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                                     ),
@@ -4309,548 +4352,548 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                                                           gropsItem,
                                                           r'''$.group_id''',
                                                         ).toString(),
-                                                    child: InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        context.pushNamed(
-                                                          GroupDetailsWidget
-                                                              .routeName,
-                                                          queryParameters: {
-                                                            'groupId':
-                                                                serializeParam(
-                                                              getJsonField(
-                                                                gropsItem,
-                                                                r'''$.group_id''',
-                                                              ).toString(),
-                                                              ParamType.String,
-                                                            ),
-                                                          }.withoutNulls,
-                                                        );
-                                                      },
-                                                      child: Container(
-                                                        width: double.infinity,
-                                                        height: 56.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      20.0,
-                                                                      8.0,
-                                                                      20.0,
-                                                                      8.0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Expanded(
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              2.0),
-                                                                      child: Image
-                                                                          .network(
-                                                                        getJsonField(
-                                                                          gropsItem,
-                                                                          r'''$.profile_picture''',
-                                                                        ).toString(),
+                                                    child: Semantics(
+                                                      button: true,
+                                                      label: 'Open group',
+                                                      child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          context.pushNamed(
+                                                            GroupDetailsWidget
+                                                                .routeName,
+                                                            queryParameters: {
+                                                              'groupId':
+                                                                  serializeParam(
+                                                                getJsonField(
+                                                                  gropsItem,
+                                                                  r'''$.group_id''',
+                                                                ).toString(),
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          constraints:
+                                                              BoxConstraints(
+                                                                  minHeight:
+                                                                      56.0),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20.0,
+                                                                        8.0,
+                                                                        20.0,
+                                                                        8.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      AppNetworkImage(
+                                                                        url: getJsonField(gropsItem,
+                                                                                r'''$.profile_picture''')
+                                                                            .toString(),
                                                                         width:
                                                                             40.0,
                                                                         height:
                                                                             40.0,
                                                                         fit: BoxFit
                                                                             .cover,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(2.0),
+                                                                        semanticLabel:
+                                                                            'Group cover photo',
                                                                       ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Text(
-                                                                            getJsonField(
-                                                                              gropsItem,
-                                                                              r'''$.name''',
-                                                                            ).toString(),
-                                                                            maxLines:
-                                                                                1,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  font: GoogleFonts.manrope(
+                                                                      Expanded(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Text(
+                                                                              getJsonField(
+                                                                                gropsItem,
+                                                                                r'''$.name''',
+                                                                              ).toString(),
+                                                                              maxLines: 1,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    font: GoogleFonts.manrope(
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).extraBlack,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                     fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    lineHeight: 1.4,
                                                                                   ),
-                                                                                  color: FlutterFlowTheme.of(context).extraBlack,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  lineHeight: 1.4,
-                                                                                ),
-                                                                          ),
-                                                                          Text(
-                                                                            '${getJsonField(
-                                                                              gropsItem,
-                                                                              r'''$.total_members''',
-                                                                            ).toString()} members',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  font: GoogleFonts.manrope(
+                                                                            ),
+                                                                            Text(
+                                                                              '${getJsonField(
+                                                                                gropsItem,
+                                                                                r'''$.total_members''',
+                                                                              ).toString()} members',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    font: GoogleFonts.manrope(
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    ),
+                                                                                    color: FlutterFlowTheme.of(context).greyL4,
+                                                                                    fontSize: 12.0,
+                                                                                    letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w500,
                                                                                     fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                                    lineHeight: 1.4,
                                                                                   ),
-                                                                                  color: FlutterFlowTheme.of(context).greyL4,
-                                                                                  fontSize: 10.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                  fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  lineHeight: 1.4,
-                                                                                ),
-                                                                          ),
-                                                                        ],
+                                                                            ),
+                                                                          ],
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  ].divide(SizedBox(
-                                                                      width:
-                                                                          8.0)),
+                                                                    ].divide(SizedBox(
+                                                                        width:
+                                                                            8.0)),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              Stack(
-                                                                children: [
-                                                                  if ('${getJsonField(
-                                                                        gropsItem,
-                                                                        r'''$.user_status''',
-                                                                      ).toString()}' ==
-                                                                      'join')
-                                                                    FFButtonWidget(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        await GroupMembersTable()
-                                                                            .insert({
-                                                                          'community_id':
-                                                                              FFAppState().communityId,
-                                                                          'user_id':
-                                                                              currentUserUid,
-                                                                          'group_id':
-                                                                              getJsonField(
-                                                                            gropsItem,
-                                                                            r'''$.group_id''',
-                                                                          ).toString(),
-                                                                          'is_requested':
-                                                                              false,
-                                                                          'requested_date':
-                                                                              supaSerialize<DateTime>(functions.getCurrentUtcTime()),
-                                                                          'is_approved':
-                                                                              true,
-                                                                          'approved_by':
-                                                                              currentUserUid,
-                                                                          'joined_at':
-                                                                              supaSerialize<DateTime>(functions.getCurrentUtcTime()),
-                                                                        });
-                                                                        await GroupUserStatusTable()
-                                                                            .insert({
-                                                                          'community_id':
-                                                                              FFAppState().communityId,
-                                                                          'user_id':
-                                                                              currentUserUid,
-                                                                          'group_id':
-                                                                              getJsonField(
-                                                                            gropsItem,
-                                                                            r'''$.group_id''',
-                                                                          ).toString(),
-                                                                          'is_requested':
-                                                                              false,
-                                                                          'is_invited':
-                                                                              false,
-                                                                          'is_member':
-                                                                              true,
-                                                                          'joined_at':
-                                                                              supaSerialize<DateTime>(functions.getCurrentUtcTime()),
-                                                                        });
-                                                                        _model.apiResultd2p =
-                                                                            await UpdateTotalGroupMembersCall.call(
-                                                                          token:
-                                                                              currentJwtToken,
-                                                                          anonKey:
-                                                                              FFDevEnvironmentValues().AnonKey,
-                                                                          groupId:
-                                                                              getJsonField(
-                                                                            gropsItem,
-                                                                            r'''$.group_id''',
-                                                                          ).toString(),
-                                                                        );
+                                                                Stack(
+                                                                  children: [
+                                                                    if ('${getJsonField(
+                                                                          gropsItem,
+                                                                          r'''$.user_status''',
+                                                                        ).toString()}' ==
+                                                                        'join')
+                                                                      FFButtonWidget(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          HapticFeedback
+                                                                              .lightImpact();
+                                                                          await GroupMembersTable()
+                                                                              .insert({
+                                                                            'community_id':
+                                                                                FFAppState().communityId,
+                                                                            'user_id':
+                                                                                currentUserUid,
+                                                                            'group_id':
+                                                                                getJsonField(
+                                                                              gropsItem,
+                                                                              r'''$.group_id''',
+                                                                            ).toString(),
+                                                                            'is_requested':
+                                                                                false,
+                                                                            'requested_date':
+                                                                                supaSerialize<DateTime>(functions.getCurrentUtcTime()),
+                                                                            'is_approved':
+                                                                                true,
+                                                                            'approved_by':
+                                                                                currentUserUid,
+                                                                            'joined_at':
+                                                                                supaSerialize<DateTime>(functions.getCurrentUtcTime()),
+                                                                          });
+                                                                          await GroupUserStatusTable()
+                                                                              .insert({
+                                                                            'community_id':
+                                                                                FFAppState().communityId,
+                                                                            'user_id':
+                                                                                currentUserUid,
+                                                                            'group_id':
+                                                                                getJsonField(
+                                                                              gropsItem,
+                                                                              r'''$.group_id''',
+                                                                            ).toString(),
+                                                                            'is_requested':
+                                                                                false,
+                                                                            'is_invited':
+                                                                                false,
+                                                                            'is_member':
+                                                                                true,
+                                                                            'joined_at':
+                                                                                supaSerialize<DateTime>(functions.getCurrentUtcTime()),
+                                                                          });
+                                                                          _model.apiResultd2p =
+                                                                              await UpdateTotalGroupMembersCall.call(
+                                                                            token:
+                                                                                currentJwtToken,
+                                                                            anonKey:
+                                                                                FFDevEnvironmentValues().AnonKey,
+                                                                            groupId:
+                                                                                getJsonField(
+                                                                              gropsItem,
+                                                                              r'''$.group_id''',
+                                                                            ).toString(),
+                                                                          );
 
-                                                                        safeSetState(
-                                                                            () {});
-                                                                      },
-                                                                      text:
-                                                                          'Join',
-                                                                      options:
-                                                                          FFButtonOptions(
-                                                                        height:
-                                                                            24.0,
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            16.0,
-                                                                            0.0),
-                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        color: Color(
-                                                                            0x00264AFF),
-                                                                        textStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .override(
-                                                                              font: GoogleFonts.interTight(
+                                                                          safeSetState(
+                                                                              () {});
+                                                                        },
+                                                                        text:
+                                                                            'Join',
+                                                                        options:
+                                                                            FFButtonOptions(
+                                                                          height:
+                                                                              24.0,
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              16.0,
+                                                                              0.0,
+                                                                              16.0,
+                                                                              0.0),
+                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          color:
+                                                                              Colors.transparent,
+                                                                          textStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                font: GoogleFonts.manrope(
+                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                ),
+                                                                                color: FlutterFlowTheme.of(context).primaryD3,
+                                                                                fontSize: 12.0,
+                                                                                letterSpacing: 0.0,
                                                                                 fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                 fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                               ),
-                                                                              color: FlutterFlowTheme.of(context).primaryD3,
-                                                                              fontSize: 12.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                            ),
-                                                                        elevation:
-                                                                            0.0,
-                                                                        borderSide:
-                                                                            BorderSide(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primaryD3,
-                                                                          width:
-                                                                              1.0,
+                                                                          elevation:
+                                                                              0.0,
+                                                                          borderSide:
+                                                                              BorderSide(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryD3,
+                                                                            width:
+                                                                                1.0,
+                                                                          ),
+                                                                          borderRadius:
+                                                                              BorderRadius.only(
+                                                                            topLeft:
+                                                                                Radius.circular(100.0),
+                                                                            topRight:
+                                                                                Radius.circular(100.0),
+                                                                            bottomLeft:
+                                                                                Radius.circular(100.0),
+                                                                            bottomRight:
+                                                                                Radius.circular(100.0),
+                                                                          ),
                                                                         ),
-                                                                        borderRadius:
-                                                                            BorderRadius.only(
-                                                                          topLeft:
-                                                                              Radius.circular(100.0),
-                                                                          topRight:
-                                                                              Radius.circular(100.0),
-                                                                          bottomLeft:
-                                                                              Radius.circular(100.0),
-                                                                          bottomRight:
-                                                                              Radius.circular(100.0),
+                                                                        showLoadingIndicator:
+                                                                            false,
+                                                                      ),
+                                                                    if ('${getJsonField(
+                                                                          gropsItem,
+                                                                          r'''$.user_status''',
+                                                                        ).toString()}' ==
+                                                                        'joined')
+                                                                      FFButtonWidget(
+                                                                        onPressed:
+                                                                            () {},
+                                                                        text:
+                                                                            'Joined',
+                                                                        icon:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .done_all,
+                                                                          size:
+                                                                              15.0,
                                                                         ),
-                                                                      ),
-                                                                      showLoadingIndicator:
-                                                                          false,
-                                                                    ),
-                                                                  if ('${getJsonField(
-                                                                        gropsItem,
-                                                                        r'''$.user_status''',
-                                                                      ).toString()}' ==
-                                                                      'joined')
-                                                                    FFButtonWidget(
-                                                                      onPressed:
-                                                                          () {
-                                                                        print(
-                                                                            'Joined pressed ...');
-                                                                      },
-                                                                      text:
-                                                                          'Joined',
-                                                                      icon:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .done_all,
-                                                                        size:
-                                                                            15.0,
-                                                                      ),
-                                                                      options:
-                                                                          FFButtonOptions(
-                                                                        height:
-                                                                            24.0,
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            16.0,
-                                                                            0.0),
-                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        iconColor:
-                                                                            FlutterFlowTheme.of(context).greyL4,
-                                                                        color: Color(
-                                                                            0x00264AFF),
-                                                                        textStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .override(
-                                                                              font: GoogleFonts.interTight(
-                                                                                fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                              ),
-                                                                              color: FlutterFlowTheme.of(context).greyL4,
-                                                                              fontSize: 12.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                            ),
-                                                                        elevation:
-                                                                            0.0,
-                                                                        borderSide:
-                                                                            BorderSide(
-                                                                          color:
+                                                                        options:
+                                                                            FFButtonOptions(
+                                                                          height:
+                                                                              24.0,
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              16.0,
+                                                                              0.0,
+                                                                              16.0,
+                                                                              0.0),
+                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          iconColor:
                                                                               FlutterFlowTheme.of(context).greyL4,
-                                                                          width:
-                                                                              1.0,
-                                                                        ),
-                                                                        borderRadius:
-                                                                            BorderRadius.only(
-                                                                          topLeft:
-                                                                              Radius.circular(100.0),
-                                                                          topRight:
-                                                                              Radius.circular(100.0),
-                                                                          bottomLeft:
-                                                                              Radius.circular(100.0),
-                                                                          bottomRight:
-                                                                              Radius.circular(100.0),
-                                                                        ),
-                                                                      ),
-                                                                      showLoadingIndicator:
-                                                                          false,
-                                                                    ),
-                                                                  if ('${getJsonField(
-                                                                        gropsItem,
-                                                                        r'''$.user_status''',
-                                                                      ).toString()}' ==
-                                                                      'requested')
-                                                                    FFButtonWidget(
-                                                                      onPressed:
-                                                                          () {
-                                                                        print(
-                                                                            'Requested pressed ...');
-                                                                      },
-                                                                      text:
-                                                                          'Requested',
-                                                                      options:
-                                                                          FFButtonOptions(
-                                                                        height:
-                                                                            24.0,
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            16.0,
-                                                                            0.0),
-                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .greyL2,
-                                                                        textStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .override(
-                                                                              font: GoogleFonts.interTight(
-                                                                                fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                              ),
-                                                                              color: FlutterFlowTheme.of(context).greyL3,
-                                                                              fontSize: 12.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                            ),
-                                                                        elevation:
-                                                                            0.0,
-                                                                        borderRadius:
-                                                                            BorderRadius.only(
-                                                                          topLeft:
-                                                                              Radius.circular(100.0),
-                                                                          topRight:
-                                                                              Radius.circular(100.0),
-                                                                          bottomLeft:
-                                                                              Radius.circular(100.0),
-                                                                          bottomRight:
-                                                                              Radius.circular(100.0),
-                                                                        ),
-                                                                      ),
-                                                                      showLoadingIndicator:
-                                                                          false,
-                                                                    ),
-                                                                  if ('${getJsonField(
-                                                                        gropsItem,
-                                                                        r'''$.user_status''',
-                                                                      ).toString()}' ==
-                                                                      'request')
-                                                                    FFButtonWidget(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        await GroupUserStatusTable()
-                                                                            .insert({
-                                                                          'community_id':
-                                                                              FFAppState().communityId,
-                                                                          'user_id':
-                                                                              currentUserUid,
-                                                                          'group_id':
-                                                                              getJsonField(
-                                                                            gropsItem,
-                                                                            r'''$.group_id''',
-                                                                          ).toString(),
-                                                                          'is_requested':
-                                                                              true,
-                                                                          'is_invited':
-                                                                              false,
-                                                                          'is_member':
-                                                                              false,
-                                                                          'is_approved':
-                                                                              false,
-                                                                          'requested_date':
-                                                                              supaSerialize<DateTime>(functions.getCurrentUtcTime()),
-                                                                        });
-                                                                      },
-                                                                      text:
-                                                                          'Request',
-                                                                      icon:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .lock_outline_sharp,
-                                                                        size:
-                                                                            15.0,
-                                                                      ),
-                                                                      options:
-                                                                          FFButtonOptions(
-                                                                        height:
-                                                                            24.0,
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            16.0,
-                                                                            0.0,
-                                                                            16.0,
-                                                                            0.0),
-                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        iconColor:
-                                                                            FlutterFlowTheme.of(context).primaryD3,
-                                                                        color: Color(
-                                                                            0x00264AFF),
-                                                                        textStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .override(
-                                                                              font: GoogleFonts.interTight(
-                                                                                fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                              ),
-                                                                              color: FlutterFlowTheme.of(context).primaryD3,
-                                                                              fontSize: 12.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                            ),
-                                                                        elevation:
-                                                                            0.0,
-                                                                        borderSide:
-                                                                            BorderSide(
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).primaryD3,
-                                                                          width:
-                                                                              1.0,
-                                                                        ),
-                                                                        borderRadius:
-                                                                            BorderRadius.only(
-                                                                          topLeft:
-                                                                              Radius.circular(100.0),
-                                                                          topRight:
-                                                                              Radius.circular(100.0),
-                                                                          bottomLeft:
-                                                                              Radius.circular(100.0),
-                                                                          bottomRight:
-                                                                              Radius.circular(100.0),
-                                                                        ),
-                                                                      ),
-                                                                      showLoadingIndicator:
-                                                                          false,
-                                                                    ),
-                                                                  if ('${getJsonField(
-                                                                        gropsItem,
-                                                                        r'''$.user_status''',
-                                                                      ).toString()}' ==
-                                                                      'admin')
-                                                                    FFButtonWidget(
-                                                                      onPressed:
-                                                                          () {
-                                                                        print(
-                                                                            'Button pressed ...');
-                                                                      },
-                                                                      text:
-                                                                          'Admin',
-                                                                      options:
-                                                                          FFButtonOptions(
-                                                                        height:
-                                                                            24.0,
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            12.0,
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0),
-                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        color: Color(
-                                                                            0xFF23B3A6),
-                                                                        textStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .override(
-                                                                              font: GoogleFonts.interTight(
+                                                                              Colors.transparent,
+                                                                          textStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                font: GoogleFonts.manrope(
+                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                ),
+                                                                                color: FlutterFlowTheme.of(context).greyL4,
+                                                                                fontSize: 12.0,
+                                                                                letterSpacing: 0.0,
                                                                                 fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
                                                                                 fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
                                                                               ),
-                                                                              color: Colors.white,
-                                                                              fontSize: 12.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
-                                                                            ),
-                                                                        elevation:
-                                                                            0.0,
-                                                                        borderRadius:
-                                                                            BorderRadius.only(
-                                                                          topLeft:
-                                                                              Radius.circular(100.0),
-                                                                          topRight:
-                                                                              Radius.circular(100.0),
-                                                                          bottomLeft:
-                                                                              Radius.circular(100.0),
-                                                                          bottomRight:
-                                                                              Radius.circular(100.0),
+                                                                          elevation:
+                                                                              0.0,
+                                                                          borderSide:
+                                                                              BorderSide(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).greyL4,
+                                                                            width:
+                                                                                1.0,
+                                                                          ),
+                                                                          borderRadius:
+                                                                              BorderRadius.only(
+                                                                            topLeft:
+                                                                                Radius.circular(100.0),
+                                                                            topRight:
+                                                                                Radius.circular(100.0),
+                                                                            bottomLeft:
+                                                                                Radius.circular(100.0),
+                                                                            bottomRight:
+                                                                                Radius.circular(100.0),
+                                                                          ),
                                                                         ),
+                                                                        showLoadingIndicator:
+                                                                            false,
                                                                       ),
-                                                                      showLoadingIndicator:
-                                                                          false,
-                                                                    ),
-                                                                ],
-                                                              ),
-                                                            ],
+                                                                    if ('${getJsonField(
+                                                                          gropsItem,
+                                                                          r'''$.user_status''',
+                                                                        ).toString()}' ==
+                                                                        'requested')
+                                                                      FFButtonWidget(
+                                                                        onPressed:
+                                                                            () {},
+                                                                        text:
+                                                                            'Requested',
+                                                                        options:
+                                                                            FFButtonOptions(
+                                                                          height:
+                                                                              24.0,
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              16.0,
+                                                                              0.0,
+                                                                              16.0,
+                                                                              0.0),
+                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).greyL2,
+                                                                          textStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                font: GoogleFonts.manrope(
+                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                ),
+                                                                                color: FlutterFlowTheme.of(context).greyL3,
+                                                                                fontSize: 12.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                              ),
+                                                                          elevation:
+                                                                              0.0,
+                                                                          borderRadius:
+                                                                              BorderRadius.only(
+                                                                            topLeft:
+                                                                                Radius.circular(100.0),
+                                                                            topRight:
+                                                                                Radius.circular(100.0),
+                                                                            bottomLeft:
+                                                                                Radius.circular(100.0),
+                                                                            bottomRight:
+                                                                                Radius.circular(100.0),
+                                                                          ),
+                                                                        ),
+                                                                        showLoadingIndicator:
+                                                                            false,
+                                                                      ),
+                                                                    if ('${getJsonField(
+                                                                          gropsItem,
+                                                                          r'''$.user_status''',
+                                                                        ).toString()}' ==
+                                                                        'request')
+                                                                      FFButtonWidget(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          HapticFeedback
+                                                                              .lightImpact();
+                                                                          await GroupUserStatusTable()
+                                                                              .insert({
+                                                                            'community_id':
+                                                                                FFAppState().communityId,
+                                                                            'user_id':
+                                                                                currentUserUid,
+                                                                            'group_id':
+                                                                                getJsonField(
+                                                                              gropsItem,
+                                                                              r'''$.group_id''',
+                                                                            ).toString(),
+                                                                            'is_requested':
+                                                                                true,
+                                                                            'is_invited':
+                                                                                false,
+                                                                            'is_member':
+                                                                                false,
+                                                                            'is_approved':
+                                                                                false,
+                                                                            'requested_date':
+                                                                                supaSerialize<DateTime>(functions.getCurrentUtcTime()),
+                                                                          });
+                                                                        },
+                                                                        text:
+                                                                            'Request',
+                                                                        icon:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .lock_outline_sharp,
+                                                                          size:
+                                                                              15.0,
+                                                                        ),
+                                                                        options:
+                                                                            FFButtonOptions(
+                                                                          height:
+                                                                              24.0,
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              16.0,
+                                                                              0.0,
+                                                                              16.0,
+                                                                              0.0),
+                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          iconColor:
+                                                                              FlutterFlowTheme.of(context).primaryD3,
+                                                                          color:
+                                                                              Colors.transparent,
+                                                                          textStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                font: GoogleFonts.manrope(
+                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                ),
+                                                                                color: FlutterFlowTheme.of(context).primaryD3,
+                                                                                fontSize: 12.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                              ),
+                                                                          elevation:
+                                                                              0.0,
+                                                                          borderSide:
+                                                                              BorderSide(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryD3,
+                                                                            width:
+                                                                                1.0,
+                                                                          ),
+                                                                          borderRadius:
+                                                                              BorderRadius.only(
+                                                                            topLeft:
+                                                                                Radius.circular(100.0),
+                                                                            topRight:
+                                                                                Radius.circular(100.0),
+                                                                            bottomLeft:
+                                                                                Radius.circular(100.0),
+                                                                            bottomRight:
+                                                                                Radius.circular(100.0),
+                                                                          ),
+                                                                        ),
+                                                                        showLoadingIndicator:
+                                                                            false,
+                                                                      ),
+                                                                    if ('${getJsonField(
+                                                                          gropsItem,
+                                                                          r'''$.user_status''',
+                                                                        ).toString()}' ==
+                                                                        'admin')
+                                                                      FFButtonWidget(
+                                                                        onPressed:
+                                                                            () {},
+                                                                        text:
+                                                                            'Admin',
+                                                                        options:
+                                                                            FFButtonOptions(
+                                                                          height:
+                                                                              24.0,
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              12.0,
+                                                                              0.0,
+                                                                              12.0,
+                                                                              0.0),
+                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          textStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                font: GoogleFonts.manrope(
+                                                                                  fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                  fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                                ),
+                                                                                color: Colors.white,
+                                                                                fontSize: 12.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                                                                                fontStyle: FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                                                                              ),
+                                                                          elevation:
+                                                                              0.0,
+                                                                          borderRadius:
+                                                                              BorderRadius.only(
+                                                                            topLeft:
+                                                                                Radius.circular(100.0),
+                                                                            topRight:
+                                                                                Radius.circular(100.0),
+                                                                            bottomLeft:
+                                                                                Radius.circular(100.0),
+                                                                            bottomRight:
+                                                                                Radius.circular(100.0),
+                                                                          ),
+                                                                        ),
+                                                                        showLoadingIndicator:
+                                                                            false,
+                                                                      ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
@@ -4876,18 +4919,31 @@ class _GroupDetailsWidgetState extends State<GroupDetailsWidget> {
                     Expanded(
                       child: Container(
                         width: double.infinity,
-                        height: 100.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
                         ),
-                        child: Container(
-                          width: 50.0,
-                          height: 50.0,
-                          child: custom_widgets.Loader(
-                            width: 50.0,
-                            height: 50.0,
-                          ),
+                        child: _buildLoadingSkeleton(context),
+                      ),
+                    ),
+                  // Failed / missing fetch: this branch used to be absent, so a
+                  // failure left the screen blank forever (ui-review §2.7).
+                  if (!_model.loader &&
+                      (FFAppState().AsSpecificGroupDetails == null))
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: EmptyState(
+                          icon: Icons.wifi_off_rounded,
+                          title: 'Could not load this group',
+                          body:
+                              'We could not reach this group right now. Check your connection and try again.',
+                          actionLabel: 'Retry',
+                          onAction: () => _reloadGroupDetails(),
                         ),
                       ),
                     ),

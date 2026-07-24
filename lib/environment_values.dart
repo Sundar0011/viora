@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/app_log.dart';
 
 class FFDevEnvironmentValues {
   static const String currentEnvironment = 'Production';
@@ -26,7 +27,7 @@ class FFDevEnvironmentValues {
       _oneSignalAppId = data['oneSignalAppId'];
       _secretKey = data['secretKey'];
     } catch (e) {
-      print('Error loading environment values: $e');
+      appLog('Error loading environment values: $e');
     }
   }
 

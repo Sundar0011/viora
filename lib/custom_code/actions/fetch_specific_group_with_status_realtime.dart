@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -25,16 +26,16 @@ Future fetchSpecificGroupWithStatusRealtime(String groupId) async {
         'p_group_id': _lastGroupId!, // Use stored group ID
       }).select();
       if (response == null || response is! List || response.isEmpty) {
-        print('⚠️ [Group Detail] No data or bad RPC response');
+        appLog('⚠️ [Group Detail] No data or bad RPC response');
         return;
       }
       final data = response.first;
       FFAppState().update(() {
         FFAppState().AsSpecificGroupDetails = data;
       });
-      print('✅ Specific group ($_lastGroupId) updated');
+      appLog('✅ Specific group ($_lastGroupId) updated');
     } catch (e) {
-      print('❌ Error fetching specific group: $e');
+      appLog('❌ Error fetching specific group: $e');
     }
   }
 
@@ -44,18 +45,18 @@ Future fetchSpecificGroupWithStatusRealtime(String groupId) async {
   for (final table in tables) {
     final channelId =
         'group-detail-realtime:$table:$groupId'; // unique ID per group
-    final channel = supabase.channel(channelId);
+    final channel = freshRealtimeChannel(supabase, channelId);
     channel
         .onPostgresChanges(
           event: PostgresChangeEvent.all,
           schema: 'public',
           table: table,
           callback: (payload) async {
-            print('🔄 [Group Detail] Change in $table. Refetching...');
+            appLog('🔄 [Group Detail] Change in $table. Refetching...');
             await fetchGroupDetails(); // Now uses _lastGroupId automatically
           },
         )
         .subscribe();
-    print('📡 Subscribed to group detail realtime changes for $table');
+    appLog('📡 Subscribed to group detail realtime changes for $table');
   }
 }

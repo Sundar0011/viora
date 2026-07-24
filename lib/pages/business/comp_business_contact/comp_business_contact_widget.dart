@@ -84,7 +84,8 @@ class _CompBusinessContactWidgetState extends State<CompBusinessContactWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -192,7 +193,8 @@ class _CompBusinessContactWidgetState extends State<CompBusinessContactWidget> {
                   color: FlutterFlowTheme.of(context).alternate,
                 ),
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -210,7 +212,7 @@ class _CompBusinessContactWidgetState extends State<CompBusinessContactWidget> {
                         scheme: 'mailto',
                         path: widget!.email!,
                         query: {
-                          'subject': 'Hi , I saw your Business in SquaDD',
+                          'subject': 'Hi , I saw your Business in Flock',
                         }
                             .entries
                             .map((MapEntry<String, String> e) =>
@@ -309,7 +311,8 @@ class _CompBusinessContactWidgetState extends State<CompBusinessContactWidget> {
                   color: FlutterFlowTheme.of(context).alternate,
                 ),
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,

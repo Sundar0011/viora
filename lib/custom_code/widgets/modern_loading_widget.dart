@@ -33,7 +33,7 @@ class ModernLoadingWidget extends StatefulWidget {
 class _ModernLoadingWidgetState extends State<ModernLoadingWidget>
     with TickerProviderStateMixin {
   late AnimationController _controller;
-  final String appName = "SquaDD";
+  final String appName = "Flock";
 
   @override
   void initState() {
@@ -55,8 +55,9 @@ class _ModernLoadingWidgetState extends State<ModernLoadingWidget>
 
   @override
   Widget build(BuildContext context) {
-    final primaryCol = widget.primaryColor ?? const Color(0xFF6366F1);
-    final secondaryCol = widget.secondaryColor ?? const Color(0xFF8B5CF6);
+    final theme = FlutterFlowTheme.of(context);
+    final primaryCol = widget.primaryColor ?? theme.primary;
+    final secondaryCol = widget.secondaryColor ?? theme.tertiary;
     final size = widget.width ?? 200.0;
 
     return Container(

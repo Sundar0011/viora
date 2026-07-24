@@ -1,3 +1,7 @@
+// comp_pageview_widget.dart
+// Horizontal photo carousel used by post cards. Images route through the shared
+// AppNetworkImage so they are cached and degrade gracefully when a URL is dead.
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -66,12 +70,10 @@ class _CompPageviewWidgetState extends State<CompPageviewWidget> {
                     return Container(
                       width: double.infinity,
                       decoration: BoxDecoration(),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(0.0),
-                        child: Image.network(
-                          postImagesItem.toString(),
-                          fit: BoxFit.cover,
-                        ),
+                      child: AppNetworkImage(
+                        url: postImagesItem.toString(),
+                        fit: BoxFit.cover,
+                        semanticLabel: 'Post photo',
                       ),
                     );
                   },

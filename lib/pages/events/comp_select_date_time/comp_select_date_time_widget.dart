@@ -195,7 +195,9 @@ class _CompSelectDateTimeWidgetState extends State<CompSelectDateTimeWidget> {
                                         true) ||
                                     (widget!.pageName == 'start'),
                                 child: InkWell(
-                                  splashColor: Colors.transparent,
+                                  splashColor: FlutterFlowTheme.of(context)
+                                      .primary
+                                      .withAlpha(0x14),
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
@@ -208,8 +210,8 @@ class _CompSelectDateTimeWidgetState extends State<CompSelectDateTimeWidget> {
                                     height: 28.0,
                                     decoration: BoxDecoration(
                                       color: timeItem == _model.selectTime
-                                          ? Color(0xFF516EFF)
-                                          : Color(0x00FFFFFF),
+                                          ? FlutterFlowTheme.of(context).primary
+                                          : Colors.transparent,
                                       borderRadius: BorderRadius.circular(4.0),
                                       border: Border.all(
                                         color: timeItem == _model.selectTime
@@ -232,8 +234,7 @@ class _CompSelectDateTimeWidgetState extends State<CompSelectDateTimeWidget> {
                                                       .fontStyle,
                                             ),
                                             color: timeItem == _model.selectTime
-                                                ? FlutterFlowTheme.of(context)
-                                                    .white
+                                                ? Colors.white
                                                 : FlutterFlowTheme.of(context)
                                                     .greyL5,
                                             fontSize: 12.0,
@@ -282,7 +283,9 @@ class _CompSelectDateTimeWidgetState extends State<CompSelectDateTimeWidget> {
                             children: List.generate(time.length, (timeIndex) {
                               final timeItem = time[timeIndex];
                               return InkWell(
-                                splashColor: Colors.transparent,
+                                splashColor: FlutterFlowTheme.of(context)
+                                    .primary
+                                    .withAlpha(0x14),
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
@@ -295,8 +298,8 @@ class _CompSelectDateTimeWidgetState extends State<CompSelectDateTimeWidget> {
                                   height: 28.0,
                                   decoration: BoxDecoration(
                                     color: timeItem == _model.selectTime
-                                        ? Color(0xFF516EFF)
-                                        : Color(0x00FFFFFF),
+                                        ? FlutterFlowTheme.of(context).primary
+                                        : Colors.transparent,
                                     borderRadius: BorderRadius.circular(4.0),
                                     border: Border.all(
                                       color: timeItem == _model.selectTime
@@ -319,8 +322,7 @@ class _CompSelectDateTimeWidgetState extends State<CompSelectDateTimeWidget> {
                                                     .fontStyle,
                                           ),
                                           color: timeItem == _model.selectTime
-                                              ? FlutterFlowTheme.of(context)
-                                                  .white
+                                              ? Colors.white
                                               : FlutterFlowTheme.of(context)
                                                   .greyL5,
                                           fontSize: 12.0,

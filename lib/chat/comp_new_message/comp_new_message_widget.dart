@@ -1,6 +1,10 @@
+// comp_new_message_widget.dart
+// Flock "New Chat" bottom sheet: search neighbours and open a conversation.
+// Avatars route through the shared AppNetworkImage (cached + placeholder + error).
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -65,7 +69,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -77,7 +81,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -89,7 +93,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -101,7 +105,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -113,7 +117,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -125,7 +129,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -137,7 +141,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -149,7 +153,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -161,7 +165,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -214,16 +218,20 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                       children: [
                         Align(
                           alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: FlutterFlowIconButton(
-                            borderRadius: 100.0,
-                            icon: Icon(
-                              Icons.arrow_back,
-                              color: FlutterFlowTheme.of(context).extraBlack,
-                              size: 24.0,
+                          child: Semantics(
+                            label: 'Close new chat',
+                            button: true,
+                            child: FlutterFlowIconButton(
+                              borderRadius: 100.0,
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: FlutterFlowTheme.of(context).extraBlack,
+                                size: 24.0,
+                              ),
+                              onPressed: () async {
+                                context.safePop();
+                              },
                             ),
-                            onPressed: () async {
-                              context.safePop();
-                            },
                           ),
                         ),
                         Text(
@@ -326,7 +334,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                                           ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Color(0x00000000),
+                                          color: Colors.transparent,
                                           width: 1.0,
                                         ),
                                         borderRadius:
@@ -360,7 +368,8 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 8.0, 12.0, 8.0),
@@ -458,23 +467,19 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                                                       alignment:
                                                           AlignmentDirectional(
                                                               0.0, -1.0),
-                                                      child: Container(
+                                                      child: AppNetworkImage(
+                                                        url: getJsonField(
+                                                          profileItem,
+                                                          r'''$.profile_picture''',
+                                                        ).toString(),
                                                         width: 32.0,
                                                         height: 32.0,
-                                                        clipBehavior:
-                                                            Clip.antiAlias,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Image.network(
-                                                          getJsonField(
-                                                            profileItem,
-                                                            r'''$.profile_picture''',
-                                                          ).toString(),
-                                                          fit: BoxFit.cover,
-                                                        ),
+                                                        isAvatar: true,
+                                                        semanticLabel:
+                                                            '${getJsonField(
+                                                          profileItem,
+                                                          r'''$.name''',
+                                                        ).toString()}\'s profile photo',
                                                       ),
                                                     ),
                                                     Column(
@@ -546,7 +551,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                                                                             context)
                                                                         .greyL4,
                                                                     fontSize:
-                                                                        10.0,
+                                                                        12.0,
                                                                     letterSpacing:
                                                                         0.0,
                                                                     fontWeight:
@@ -641,7 +646,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                                                                                 fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                               ),
                                                                               color: FlutterFlowTheme.of(context).greyL4,
-                                                                              fontSize: 10.0,
+                                                                              fontSize: 12.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
                                                                               fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -662,7 +667,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                                                                                 fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                               ),
                                                                               color: FlutterFlowTheme.of(context).greyL4,
-                                                                              fontSize: 10.0,
+                                                                              fontSize: 12.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.w500,
                                                                               fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -820,7 +825,7 @@ class _CompNewMessageWidgetState extends State<CompNewMessageWidget>
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 0.0, 0.0),
-                                                    color: Color(0x00FFFFFF),
+                                                    color: Colors.transparent,
                                                     textStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)

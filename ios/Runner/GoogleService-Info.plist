@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>129801406213-8hcdqec01vuuiptod536clhsu5ralp48.apps.googleusercontent.com</string>
+	<string>227687828358-idhevrt5idtu6hr9ed03kf1tr7ou1l8d.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.129801406213-8hcdqec01vuuiptod536clhsu5ralp48</string>
+	<string>com.googleusercontent.apps.227687828358-idhevrt5idtu6hr9ed03kf1tr7ou1l8d</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>129801406213-l3agjdgcn65belimrik2lhiit4te7qpe.apps.googleusercontent.com</string>
+	<string>227687828358-a7n42d4kcp99qq9pepfie3ftlms0ltcu.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDUkrTTT_8x_QOFjRYl7zMcCoo2SwbpaKc</string>
+	<string>AIzaSyCqpbCsyY02Y_oY5izPs3-UUTBluY945qE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>129801406213</string>
+	<string>227687828358</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.company.squaDD</string>
+	<string>com.viora.app</string>
 	<key>PROJECT_ID</key>
-	<string>squadd-640af</string>
+	<string>viora-b75f7</string>
 	<key>STORAGE_BUCKET</key>
-	<string>squadd-640af.firebasestorage.app</string>
+	<string>viora-b75f7.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:129801406213:ios:c6bd6fc98aa525bbf7196c</string>
+	<string>1:227687828358:ios:ccdafa9d0f551a599e7a07</string>
 </dict>
 </plist>

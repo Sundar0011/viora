@@ -140,9 +140,7 @@ class _CompMuteWidgetState extends State<CompMuteWidget> {
                         children: [
                           Expanded(
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
+                              onPressed: () {},
                               text: 'Undo',
                               options: FFButtonOptions(
                                 width: double.infinity,
@@ -181,9 +179,7 @@ class _CompMuteWidgetState extends State<CompMuteWidget> {
                           ),
                           Expanded(
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
+                              onPressed: () {},
                               text: 'Mute',
                               options: FFButtonOptions(
                                 width: double.infinity,

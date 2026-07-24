@@ -9,6 +9,7 @@ import '/backend/supabase/supabase.dart';
 import '../../flutter_flow/lat_lng.dart';
 import '../../flutter_flow/place.dart';
 import '../../flutter_flow/uploaded_file.dart';
+import '/flutter_flow/app_log.dart';
 
 /// SERIALIZATION HELPERS
 
@@ -89,7 +90,7 @@ String? serializeParam(
     }
     return data;
   } catch (e) {
-    print('Error serializing parameter: $e');
+    appLog('Error serializing parameter: $e');
     return null;
   }
 }
@@ -334,7 +335,7 @@ dynamic deserializeParam<T>(
         return null;
     }
   } catch (e) {
-    print('Error deserializing parameter: $e');
+    appLog('Error deserializing parameter: $e');
     return null;
   }
 }

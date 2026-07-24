@@ -1,6 +1,14 @@
+// message_page_widget.dart
+// Flock message thread: realtime message list, image attachments, block/unblock
+// banners and the composer. Icon-only controls route through AppIconButton so
+// they carry a screen-reader label and a >=44dp tap target; remote images route
+// through AppNetworkImage; the "no messages yet" branch uses the shared EmptyState.
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
+import '/components/empty_state.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -17,6 +25,7 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'message_page_model.dart';
@@ -116,6 +125,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -134,62 +144,69 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              FlutterFlowIconButton(
-                                borderRadius: 100.0,
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color:
-                                      FlutterFlowTheme.of(context).extraBlack,
-                                  size: 24.0,
-                                ),
-                                onPressed: () async {
-                                  if (widget!.previousName == 'loading') {
-                                    context.pushNamed(
-                                      ChatWidget.routeName,
-                                      queryParameters: {
-                                        'selectMessage': serializeParam(
-                                          false,
-                                          ParamType.bool,
-                                        ),
-                                        'previousPage': serializeParam(
-                                          'loading',
-                                          ParamType.String,
-                                        ),
-                                      }.withoutNulls,
-                                    );
-
-                                    await actions.cancelMessageSubscription(
-                                      widget!.chatId!,
-                                    );
-                                  } else {
-                                    if (widget!.previousName == 'chat') {
-                                      _model.userChat12 =
-                                          await GetChatCall.call(
-                                        apiKey:
-                                            FFDevEnvironmentValues().AnonKey,
-                                        token: currentJwtToken,
-                                        searchQuery: ' ',
+                              // FlutterFlowIconButton already meets the 48dp
+                              // IconButton minimum; it just has no label.
+                              Semantics(
+                                label: 'Back',
+                                button: true,
+                                child: FlutterFlowIconButton(
+                                  borderRadius: 100.0,
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    color:
+                                        FlutterFlowTheme.of(context).extraBlack,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    if (widget!.previousName == 'loading') {
+                                      context.pushNamed(
+                                        ChatWidget.routeName,
+                                        queryParameters: {
+                                          'selectMessage': serializeParam(
+                                            false,
+                                            ParamType.bool,
+                                          ),
+                                          'previousPage': serializeParam(
+                                            'loading',
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
                                       );
 
-                                      FFAppState().matchedUsers = getJsonField(
-                                        (_model.userChat12?.jsonBody ?? ''),
-                                        r'''$''',
-                                      );
-                                      safeSetState(() {});
-                                      context.safePop();
                                       await actions.cancelMessageSubscription(
                                         widget!.chatId!,
                                       );
                                     } else {
-                                      context.safePop();
-                                      await actions.cancelMessageSubscription(
-                                        widget!.chatId!,
-                                      );
-                                    }
-                                  }
+                                      if (widget!.previousName == 'chat') {
+                                        _model.userChat12 =
+                                            await GetChatCall.call(
+                                          apiKey:
+                                              FFDevEnvironmentValues().AnonKey,
+                                          token: currentJwtToken,
+                                          searchQuery: ' ',
+                                        );
 
-                                  safeSetState(() {});
-                                },
+                                        FFAppState().matchedUsers =
+                                            getJsonField(
+                                          (_model.userChat12?.jsonBody ?? ''),
+                                          r'''$''',
+                                        );
+                                        safeSetState(() {});
+                                        context.safePop();
+                                        await actions.cancelMessageSubscription(
+                                          widget!.chatId!,
+                                        );
+                                      } else {
+                                        context.safePop();
+                                        await actions.cancelMessageSubscription(
+                                          widget!.chatId!,
+                                        );
+                                      }
+                                    }
+
+                                    safeSetState(() {});
+                                  },
+                                ),
                               ),
                               Expanded(
                                 child: Container(
@@ -235,18 +252,17 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                             Align(
                                               alignment: AlignmentDirectional(
                                                   0.0, -1.0),
-                                              child: Container(
+                                              child: AppNetworkImage(
+                                                url: rowPublicUserProfileRow
+                                                    ?.profilePicture,
                                                 width: 32.0,
                                                 height: 32.0,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Image.network(
-                                                  rowPublicUserProfileRow!
-                                                      .profilePicture!,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                isAvatar: true,
+                                                semanticLabel:
+                                                    '${valueOrDefault<String>(
+                                                  rowPublicUserProfileRow?.name,
+                                                  'Neighbour',
+                                                )}\'s profile photo',
                                               ),
                                             ),
                                             Expanded(
@@ -285,12 +301,46 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                     ),
                                               ),
                                             ),
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
+                                            // Conversation options (report /
+                                            // block). Visual disc stays 34dp;
+                                            // only the hit area grows to 44dp.
+                                            AppIconButton(
+                                              semanticLabel:
+                                                  'Conversation options',
+                                              tooltip: 'Conversation options',
+                                              iconSize: 16.0,
+                                              iconWidget: Container(
+                                                width: 34.0,
+                                                height: 34.0,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .greyL2,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(100.0),
+                                                    topRight:
+                                                        Radius.circular(100.0),
+                                                    bottomLeft:
+                                                        Radius.circular(100.0),
+                                                    bottomRight:
+                                                        Radius.circular(100.0),
+                                                  ),
+                                                ),
+                                                alignment: AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Transform.rotate(
+                                                  angle: 90.0 * (math.pi / 180),
+                                                  child: Icon(
+                                                    Icons.keyboard_control,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    size: 16.0,
+                                                  ),
+                                                ),
+                                              ),
                                               onTap: () async {
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
@@ -327,38 +377,6 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                 ).then((value) =>
                                                     safeSetState(() {}));
                                               },
-                                              child: Container(
-                                                width: 34.0,
-                                                height: 34.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .greyL2,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(100.0),
-                                                    topRight:
-                                                        Radius.circular(100.0),
-                                                    bottomLeft:
-                                                        Radius.circular(100.0),
-                                                    bottomRight:
-                                                        Radius.circular(100.0),
-                                                  ),
-                                                ),
-                                                alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
-                                                child: Transform.rotate(
-                                                  angle: 90.0 * (math.pi / 180),
-                                                  child: Icon(
-                                                    Icons.keyboard_control,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    size: 16.0,
-                                                  ),
-                                                ),
-                                              ),
                                             ),
                                           ].divide(SizedBox(width: 8.0)),
                                         );
@@ -548,7 +566,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).greyL5,
                                                                             fontSize:
-                                                                                10.0,
+                                                                                12.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -612,15 +630,13 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                               currentUserUid) &&
                                                                           (listViewMessagesRow.eMessageType ==
                                                                               'image'))
-                                                                        ClipRRect(
+                                                                        AppNetworkImage(
+                                                                          url: listViewMessagesRow
+                                                                              .fileUrl,
                                                                           borderRadius:
                                                                               BorderRadius.circular(4.0),
-                                                                          child:
-                                                                              Image.network(
-                                                                            listViewMessagesRow.fileUrl!,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ),
+                                                                          semanticLabel:
+                                                                              'Photo received',
                                                                         ),
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -637,11 +653,12 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                           crossAxisAlignment:
                                                                               CrossAxisAlignment.end,
                                                                           children: [
-                                                                            InkWell(
-                                                                              splashColor: Colors.transparent,
-                                                                              focusColor: Colors.transparent,
-                                                                              hoverColor: Colors.transparent,
-                                                                              highlightColor: Colors.transparent,
+                                                                            AppIconButton(
+                                                                              icon: Icons.downloading_rounded,
+                                                                              semanticLabel: 'Download photo',
+                                                                              tooltip: 'Download',
+                                                                              iconSize: 24.0,
+                                                                              color: FlutterFlowTheme.of(context).greyL4,
                                                                               onTap: () async {
                                                                                 await downloadFile(
                                                                                   filename: 'image',
@@ -651,11 +668,6 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                                   ),
                                                                                 );
                                                                               },
-                                                                              child: Icon(
-                                                                                Icons.downloading_rounded,
-                                                                                color: FlutterFlowTheme.of(context).greyL4,
-                                                                                size: 24.0,
-                                                                              ),
                                                                             ),
                                                                             Padding(
                                                                               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 4.0, 0.0),
@@ -666,8 +678,8 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                                         fontWeight: FontWeight.w500,
                                                                                         fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                       ),
-                                                                                      color: FlutterFlowTheme.of(context).white,
-                                                                                      fontSize: 10.0,
+                                                                                      color: Colors.white,
+                                                                                      fontSize: 12.0,
                                                                                       letterSpacing: 0.0,
                                                                                       fontWeight: FontWeight.w500,
                                                                                       fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -787,7 +799,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                                     fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                   ),
                                                                                   color: FlutterFlowTheme.of(context).greyL5,
-                                                                                  fontSize: 10.0,
+                                                                                  fontSize: 12.0,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w500,
                                                                                   fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -866,15 +878,13 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                               currentUserUid) &&
                                                                           (listViewMessagesRow.eMessageType ==
                                                                               'image'))
-                                                                        ClipRRect(
+                                                                        AppNetworkImage(
+                                                                          url: listViewMessagesRow
+                                                                              .fileUrl,
                                                                           borderRadius:
                                                                               BorderRadius.circular(4.0),
-                                                                          child:
-                                                                              Image.network(
-                                                                            listViewMessagesRow.fileUrl!,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ),
+                                                                          semanticLabel:
+                                                                              'Photo you sent',
                                                                         ),
                                                                       Container(
                                                                         constraints:
@@ -904,11 +914,12 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                                 CrossAxisAlignment.end,
                                                                             children:
                                                                                 [
-                                                                              InkWell(
-                                                                                splashColor: Colors.transparent,
-                                                                                focusColor: Colors.transparent,
-                                                                                hoverColor: Colors.transparent,
-                                                                                highlightColor: Colors.transparent,
+                                                                              AppIconButton(
+                                                                                icon: Icons.downloading_rounded,
+                                                                                semanticLabel: 'Download photo',
+                                                                                tooltip: 'Download',
+                                                                                iconSize: 24.0,
+                                                                                color: FlutterFlowTheme.of(context).greyL4,
                                                                                 onTap: () async {
                                                                                   await downloadFile(
                                                                                     filename: 'image',
@@ -918,11 +929,6 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                                     ),
                                                                                   );
                                                                                 },
-                                                                                child: Icon(
-                                                                                  Icons.downloading_rounded,
-                                                                                  color: FlutterFlowTheme.of(context).greyL4,
-                                                                                  size: 24.0,
-                                                                                ),
                                                                               ),
                                                                               Row(
                                                                                 mainAxisSize: MainAxisSize.max,
@@ -934,8 +940,8 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                                                             fontWeight: FontWeight.w500,
                                                                                             fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                                           ),
-                                                                                          color: FlutterFlowTheme.of(context).white,
-                                                                                          fontSize: 10.0,
+                                                                                          color: Colors.white,
+                                                                                          fontSize: 12.0,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w500,
                                                                                           fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -1014,110 +1020,14 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                       visible:
                                           containerMessagesRow?.id == null ||
                                               containerMessagesRow?.id == '',
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: 42.0,
-                                            height: 24.0,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .greyL3,
-                                              borderRadius:
-                                                  BorderRadius.circular(4.0),
-                                            ),
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
-                                            child: Text(
-                                              'Today',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    font: GoogleFonts.manrope(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .white,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                    lineHeight: 1.4,
-                                                  ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 0.0, 20.0, 0.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 48.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .greyL3,
-                                                borderRadius:
-                                                    BorderRadius.circular(4.0),
-                                              ),
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        4.0, 0.0, 4.0, 0.0),
-                                                child: Text(
-                                                  'Say hi, drop a message, or just send a 👋 to get things going.',
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.manrope(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .white,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                        lineHeight: 1.4,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ]
-                                            .divide(SizedBox(height: 10.0))
-                                            .addToEnd(SizedBox(height: 16.0)),
+                                      // Empty thread. Compact so it sits above
+                                      // the composer without pushing it off.
+                                      child: EmptyState(
+                                        compact: true,
+                                        icon: Icons.waving_hand_outlined,
+                                        title: 'No messages yet',
+                                        body:
+                                            'Say hi, drop a message, or just send a 👋 to get things going.',
                                       ),
                                     ),
                                   );
@@ -1142,11 +1052,12 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
+                                  AppIconButton(
+                                    icon: Icons.add,
+                                    semanticLabel: 'Attach a photo',
+                                    tooltip: 'Attach a photo',
+                                    iconSize: 24.0,
+                                    color: FlutterFlowTheme.of(context).greyL5,
                                     onTap: () async {
                                       final selectedMedia =
                                           await selectMediaWithSourceBottomSheet(
@@ -1206,12 +1117,6 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                         safeSetState(() {});
                                       }
                                     },
-                                    child: Icon(
-                                      Icons.add,
-                                      color:
-                                          FlutterFlowTheme.of(context).greyL5,
-                                      size: 24.0,
-                                    ),
                                   ),
                                   Expanded(
                                     child: Container(
@@ -1322,7 +1227,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color: Color(0x00000000),
+                                              color: Colors.transparent,
                                               width: 1.0,
                                             ),
                                             borderRadius:
@@ -1350,7 +1255,9 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 12.0, 16.0),
@@ -1463,7 +1370,9 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                             : null;
 
                                     return InkWell(
-                                      splashColor: Colors.transparent,
+                                      splashColor: FlutterFlowTheme.of(context)
+                                          .primary
+                                          .withAlpha(0x14),
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
@@ -1760,28 +1669,33 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    FlutterFlowIconButton(
-                                      borderRadius: 100.0,
-                                      fillColor:
-                                          FlutterFlowTheme.of(context).greyL2,
-                                      icon: Icon(
-                                        Icons.close,
-                                        color: FlutterFlowTheme.of(context)
-                                            .extraBlack,
-                                        size: 24.0,
+                                    Semantics(
+                                      label: 'Discard photo',
+                                      button: true,
+                                      child: FlutterFlowIconButton(
+                                        borderRadius: 100.0,
+                                        fillColor:
+                                            FlutterFlowTheme.of(context).greyL2,
+                                        icon: Icon(
+                                          Icons.close,
+                                          color: FlutterFlowTheme.of(context)
+                                              .extraBlack,
+                                          size: 24.0,
+                                        ),
+                                        onPressed: () async {
+                                          _model.selectImage = false;
+                                          safeSetState(() {});
+                                          safeSetState(() {
+                                            _model.isDataUploading_uploadDataIvk =
+                                                false;
+                                            _model.uploadedLocalFile_uploadDataIvk =
+                                                FFUploadedFile(
+                                                    bytes:
+                                                        Uint8List.fromList([]),
+                                                    originalFilename: '');
+                                          });
+                                        },
                                       ),
-                                      onPressed: () async {
-                                        _model.selectImage = false;
-                                        safeSetState(() {});
-                                        safeSetState(() {
-                                          _model.isDataUploading_uploadDataIvk =
-                                              false;
-                                          _model.uploadedLocalFile_uploadDataIvk =
-                                              FFUploadedFile(
-                                                  bytes: Uint8List.fromList([]),
-                                                  originalFilename: '');
-                                        });
-                                      },
                                     ),
                                   ],
                                 ),
@@ -1807,16 +1721,18 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 20.0, 40.0),
-                        child: FlutterFlowIconButton(
-                          borderRadius: 100.0,
-                          buttonSize: 48.0,
-                          fillColor: FlutterFlowTheme.of(context).primary,
-                          icon: Icon(
-                            Icons.send_sharp,
-                            color: FlutterFlowTheme.of(context).info,
-                            size: 20.0,
-                          ),
-                          onPressed: () async {
+                        // Highest-traffic control on this screen: 48dp target,
+                        // explicit 'Send message' label for TalkBack/VoiceOver.
+                        child: AppIconButton(
+                          icon: Icons.send_sharp,
+                          semanticLabel: 'Send message',
+                          tooltip: 'Send',
+                          iconSize: 20.0,
+                          minTapTarget: 48.0,
+                          color: Colors.white,
+                          backgroundColor: FlutterFlowTheme.of(context).primary,
+                          borderRadius: BorderRadius.circular(100.0),
+                          onTap: () async {
                             {
                               safeSetState(() =>
                                   _model.isDataUploading_uploadData9nm = true);

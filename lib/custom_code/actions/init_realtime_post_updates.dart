@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -13,7 +14,7 @@ Future initRealtimePostUpdates() async {
   final client = Supabase.instance.client;
 
   // Use a unique channel name to avoid conflicts with other subscriptions
-  final channel = client.channel('post_updates_realtime_feed');
+  final channel = freshRealtimeChannel(client, 'post_updates_realtime_feed');
 
   channel
       .onPostgresChanges(
@@ -26,21 +27,21 @@ Future initRealtimePostUpdates() async {
             final newRow = payload.newRecord;
             final oldRow = payload.oldRecord;
 
-            print('📡 Realtime Event Type: ${eventType}');
-            print('🆕 New record: $newRow');
-            print('🗑️ Old record: $oldRow');
+            appLog('📡 Realtime Event Type: ${eventType}');
+            appLog('🆕 New record: $newRow');
+            appLog('🗑️ Old record: $oldRow');
 
             // Check if newRow is valid for INSERT/UPDATE
             if (eventType != PostgresChangeEvent.delete &&
                 (newRow == null || newRow['id'] == null)) {
-              print('❌ Invalid payload: newRow or ID is null');
+              appLog('❌ Invalid payload: newRow or ID is null');
               return;
             }
 
             // Check if oldRow is valid for DELETE
             if (eventType == PostgresChangeEvent.delete &&
                 (oldRow == null || oldRow['id'] == null)) {
-              print('❌ Invalid DELETE payload: oldRow or ID is null');
+              appLog('❌ Invalid DELETE payload: oldRow or ID is null');
               return;
             }
 
@@ -51,7 +52,7 @@ Future initRealtimePostUpdates() async {
               if (eventType == PostgresChangeEvent.insert ||
                   eventType == PostgresChangeEvent.update) {
                 final postId = newRow['id'];
-                print(
+                appLog(
                     '🔄 Processing ${eventType.name.toUpperCase()} for post ID: $postId');
 
                 final existingIndex =
@@ -68,7 +69,7 @@ Future initRealtimePostUpdates() async {
 
                     // Skip null values to preserve existing enriched data
                     if (newValue == null) {
-                      print('⏭️ Skipping null value for key: $key');
+                      appLog('⏭️ Skipping null value for key: $key');
                       continue;
                     }
 
@@ -79,13 +80,13 @@ Future initRealtimePostUpdates() async {
                       final oldCount =
                           oldRow != null ? _toInt(oldRow[key]) : null;
 
-                      print(
+                      appLog(
                           '📊 Count update for $key: existing=$existingCount, new=$newCount, old=$oldCount');
 
                       // Option 1: Trust the database completely (Recommended)
                       // Always use the new count from the database
                       existingPost[key] = newValue;
-                      print('✅ Updated $key from $existingCount to $newCount');
+                      appLog('✅ Updated $key from $existingCount to $newCount');
 
                       // Option 2: More sophisticated race condition protection (Alternative)
                       // Uncomment below and comment out the above if you want more protection
@@ -98,10 +99,10 @@ Future initRealtimePostUpdates() async {
                           existingCount == oldCount && 
                           newCount == 0 && 
                           existingCount > 1) {
-                        print('⚠️ Suspicious count change for $key, keeping existing: $existingCount');
+                        appLog('⚠️ Suspicious count change for $key, keeping existing: $existingCount');
                       } else {
                         existingPost[key] = newValue;
-                        print('✅ Updated $key from $existingCount to $newCount');
+                        appLog('✅ Updated $key from $existingCount to $newCount');
                       }
                       */
                     } else {
@@ -110,49 +111,49 @@ Future initRealtimePostUpdates() async {
                   }
 
                   posts[existingIndex] = existingPost;
-                  print('✅ Merged data for existing post: $postId');
+                  appLog('✅ Merged data for existing post: $postId');
                 } else {
                   // Post not found in app state - ignore the update
-                  print(
+                  appLog(
                       '⏭️ Post $postId not found in app state, ignoring ${eventType.name.toUpperCase()}');
                 }
               } else if (eventType == PostgresChangeEvent.delete) {
                 final postId = oldRow['id'];
-                print('🗑️ Deleting post with ID: $postId');
+                appLog('🗑️ Deleting post with ID: $postId');
 
                 final existingIndex =
                     posts.indexWhere((p) => p['id'] == postId);
 
                 if (existingIndex != -1) {
                   posts.removeAt(existingIndex);
-                  print('✅ Deleted post: $postId');
+                  appLog('✅ Deleted post: $postId');
                 } else {
-                  print('⚠️ Post $postId not found for deletion');
+                  appLog('⚠️ Post $postId not found for deletion');
                 }
               }
 
               FFAppState().AsPost = posts;
 
               // GLOBAL STATE DEBUG
-              print('🌍 === GLOBAL STATE UPDATE DEBUG ===');
-              print('🌍 Total posts in FFAppState().AsPost: ${posts.length}');
+              appLog('🌍 === GLOBAL STATE UPDATE DEBUG ===');
+              appLog('🌍 Total posts in FFAppState().AsPost: ${posts.length}');
               final updatedPost = posts.firstWhere(
                   (p) => p['id'] == (newRow?['id'] ?? oldRow?['id']),
                   orElse: () => {});
               if (updatedPost.isNotEmpty) {
-                print('🌍 Updated post in global state:');
+                appLog('🌍 Updated post in global state:');
                 updatedPost.forEach((key, value) {
                   if (_isCountField(key)) {
-                    print('🌍   $key: $value (type: ${value.runtimeType})');
+                    appLog('🌍   $key: $value (type: ${value.runtimeType})');
                   }
                 });
               }
-              print('🌍 === END GLOBAL STATE DEBUG ===');
+              appLog('🌍 === END GLOBAL STATE DEBUG ===');
 
-              print('✅ Updated AsPost with ${posts.length} posts');
+              appLog('✅ Updated AsPost with ${posts.length} posts');
             });
           } catch (e) {
-            print('❌ Error in realtime callback: $e');
+            appLog('❌ Error in realtime callback: $e');
           }
         },
       )

@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comp_sales_sort_model.dart';
@@ -75,11 +76,13 @@ class _CompSalesSortWidgetState extends State<CompSalesSortWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      HapticFeedback.lightImpact();
                       FFAppState().SalesSort = 'Newest';
                       safeSetState(() {});
                       _model.customActionOutput1 =
@@ -167,7 +170,7 @@ class _CompSalesSortWidgetState extends State<CompSalesSortWidget> {
                             if (FFAppState().SalesSort == 'Newest')
                               Icon(
                                 Icons.check,
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: FlutterFlowTheme.of(context).primary,
                                 size: 24.0,
                               ),
                           ].divide(SizedBox(width: 16.0)),
@@ -176,11 +179,13 @@ class _CompSalesSortWidgetState extends State<CompSalesSortWidget> {
                     ),
                   ),
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      HapticFeedback.lightImpact();
                       FFAppState().SalesSort = 'Closest';
                       safeSetState(() {});
                       _model.customActionOutput3 =
@@ -268,7 +273,7 @@ class _CompSalesSortWidgetState extends State<CompSalesSortWidget> {
                             if (FFAppState().SalesSort == 'Closest')
                               Icon(
                                 Icons.check,
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: FlutterFlowTheme.of(context).primary,
                                 size: 24.0,
                               ),
                           ].divide(SizedBox(width: 16.0)),

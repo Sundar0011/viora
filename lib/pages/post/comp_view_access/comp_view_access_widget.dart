@@ -137,7 +137,7 @@ class _CompViewAccessWidgetState extends State<CompViewAccessWidget> {
                               alignment: AlignmentDirectional(-1.0, 0.0),
                               child: FlutterFlowRadioButton(
                                 options: [
-                                  'Anyone on or off SquaDD',
+                                  'Anyone on or off Flock',
                                   'Your Neighbourhood Only',
                                   'Nearby Neighbourhood'
                                 ].toList(),
@@ -145,7 +145,7 @@ class _CompViewAccessWidgetState extends State<CompViewAccessWidget> {
                                   safeSetState(() {});
                                   FFAppState().postControl = () {
                                     if (_model.radioButtonValue1 ==
-                                        'Anyone on or off SquaDD') {
+                                        'Anyone on or off Flock') {
                                       return 1;
                                     } else if (_model.radioButtonValue1 ==
                                         'Your Neighbourhood Only') {
@@ -160,7 +160,7 @@ class _CompViewAccessWidgetState extends State<CompViewAccessWidget> {
                                     _model.radioButtonValueController1 ??=
                                         FormFieldController<String>(() {
                                   if (FFAppState().postControl == 1) {
-                                    return 'Anyone on or off SquaDD';
+                                    return 'Anyone on or off Flock';
                                   } else if (FFAppState().postControl == 2) {
                                     return 'Your Neighbourhood Only';
                                   } else {
@@ -171,7 +171,7 @@ class _CompViewAccessWidgetState extends State<CompViewAccessWidget> {
                                 textStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      font: GoogleFonts.inter(
+                                      font: GoogleFonts.manrope(
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .fontWeight,
@@ -251,13 +251,12 @@ class _CompViewAccessWidgetState extends State<CompViewAccessWidget> {
                             Align(
                               alignment: AlignmentDirectional(-1.0, 0.0),
                               child: FlutterFlowRadioButton(
-                                options:
-                                    ['Anyone on SquaDD', 'No One'].toList(),
+                                options: ['Anyone on Flock', 'No One'].toList(),
                                 onChanged: (val) async {
                                   safeSetState(() {});
                                   FFAppState().commentControl = () {
                                     if (_model.radioButtonValue2 ==
-                                        'Anyone on SquaDD') {
+                                        'Anyone on Flock') {
                                       return 1;
                                     } else if (_model.radioButtonValue2 ==
                                         'Your Neighbourhood Only') {
@@ -275,7 +274,7 @@ class _CompViewAccessWidgetState extends State<CompViewAccessWidget> {
                                     _model.radioButtonValueController2 ??=
                                         FormFieldController<String>(() {
                                   if (FFAppState().commentControl == 1) {
-                                    return 'Anyone on SquaDD';
+                                    return 'Anyone on Flock';
                                   } else if (FFAppState().commentControl == 2) {
                                     return 'Your Neighbourhood Only';
                                   } else if (FFAppState().commentControl == 3) {
@@ -288,7 +287,7 @@ class _CompViewAccessWidgetState extends State<CompViewAccessWidget> {
                                 textStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      font: GoogleFonts.inter(
+                                      font: GoogleFonts.manrope(
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .fontWeight,

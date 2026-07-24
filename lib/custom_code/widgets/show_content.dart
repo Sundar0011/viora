@@ -203,7 +203,7 @@ class _ShowContentState extends State<ShowContent> {
     }
 
     TextStyle normalStyle = TextStyle(
-      color: Color(0xFF0C0C0C),
+      color: FlutterFlowTheme.of(context).primaryText,
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w500,
@@ -212,7 +212,7 @@ class _ShowContentState extends State<ShowContent> {
     );
 
     TextStyle mentionStyle = TextStyle(
-      color: Color(0xFF264AFF),
+      color: FlutterFlowTheme.of(context).primary,
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w500,
@@ -293,18 +293,18 @@ class _ShowContentState extends State<ShowContent> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFFFAFBFF),
-            Color(0xFFF4F7FF),
+            FlutterFlowTheme.of(context).secondaryBackground,
+            FlutterFlowTheme.of(context).alternate,
           ],
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Color(0xFFE8EFFF),
+          color: FlutterFlowTheme.of(context).alternate,
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF264AFF).withOpacity(0.04),
+            color: FlutterFlowTheme.of(context).secondary.withOpacity(0.04),
             offset: Offset(0, 2),
             blurRadius: 8,
             spreadRadius: 0,
@@ -325,14 +325,16 @@ class _ShowContentState extends State<ShowContent> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Color(0xFF264AFF),
-                        Color(0xFF1E3BCC),
+                        FlutterFlowTheme.of(context).secondary,
+                        FlutterFlowTheme.of(context).primaryD3,
                       ],
                     ),
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: Color(0xFF264AFF).withOpacity(0.25),
+                        color: FlutterFlowTheme.of(context)
+                            .secondary
+                            .withOpacity(0.25),
                         offset: Offset(0, 2),
                         blurRadius: 4,
                         spreadRadius: 0,
@@ -353,7 +355,7 @@ class _ShowContentState extends State<ShowContent> {
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Manrope',
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.8,
                         ),
@@ -370,8 +372,12 @@ class _ShowContentState extends State<ShowContent> {
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [
-                          Color(0xFF264AFF).withOpacity(0.4),
-                          Color(0xFF264AFF).withOpacity(0.08),
+                          FlutterFlowTheme.of(context)
+                              .secondary
+                              .withOpacity(0.4),
+                          FlutterFlowTheme.of(context)
+                              .secondary
+                              .withOpacity(0.08),
                           Colors.transparent,
                         ],
                       ),
@@ -386,7 +392,7 @@ class _ShowContentState extends State<ShowContent> {
               child: Text(
                 widget.tldrContent!,
                 style: TextStyle(
-                  color: Color(0xFF1A1A1A),
+                  color: FlutterFlowTheme.of(context).primaryText,
                   fontFamily: 'Manrope',
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -437,7 +443,7 @@ class _ShowContentState extends State<ShowContent> {
                           child: Text(
                             'Read less',
                             style: TextStyle(
-                              color: Color(0xFF979797),
+                              color: FlutterFlowTheme.of(context).secondaryText,
                               fontFamily: 'Manrope',
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -476,7 +482,7 @@ class _ShowContentState extends State<ShowContent> {
                         child: Text(
                           'Read More',
                           style: TextStyle(
-                            color: Color(0xFF979797),
+                            color: FlutterFlowTheme.of(context).secondaryText,
                             fontFamily: 'Manrope',
                             fontSize: 12,
                             fontWeight: FontWeight.w500,

@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -51,6 +52,14 @@ class FinalStepsPhonePageModel
 
   // Stores action output result for [Backend Call - API (CheckUserExist)] action in TextField widget.
   ApiCallResponse? apiResultzlj;
+  // OTP BYPASS (2026-07-21): account-creation results, moved here from verify_page
+  // because phone signup now completes on this page instead of after an OTP step.
+  ApiCallResponse? phoneSignUp;
+  String? phoneLogin;
+  UserRow? user;
+  UserRolesRow? role;
+  PublicUserProfileRow? profile;
+  ApiCallResponse? locationResult3;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;

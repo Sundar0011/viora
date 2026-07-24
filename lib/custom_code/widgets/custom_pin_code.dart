@@ -131,18 +131,18 @@ class _CustomPinCodeState extends State<CustomPinCode> {
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     maxLength: 1,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Manrope',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF0C0C0C),
+                      color: FlutterFlowTheme.of(context).primaryText,
                       height: 1, // 140%
                       letterSpacing: 0.08,
                     ),
                     textInputAction:
                         index < 3 ? TextInputAction.next : TextInputAction.done,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    cursorColor: Color(0xFF0C0C0C),
+                    cursorColor: FlutterFlowTheme.of(context).primaryText,
                     onChanged: (value) => _onOtpChanged(index, value),
                     onSubmitted: (value) {
                       if (index == 3) {
@@ -158,7 +158,8 @@ class _CustomPinCodeState extends State<CustomPinCode> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF0C0C0C)),
+                        borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText),
                       ),
                       filled: true,
                       fillColor:

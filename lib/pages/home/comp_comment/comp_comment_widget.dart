@@ -1,3 +1,5 @@
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -149,20 +151,19 @@ class _CompCommentWidgetState extends State<CompCommentWidget> {
                         children: [
                           Align(
                             alignment: AlignmentDirectional(0.0, -1.0),
-                            child: Container(
+                            child: AppNetworkImage(
+                              url: getJsonField(
+                                _model.commentJson,
+                                r'''$.profile''',
+                              ).toString(),
                               width: 24.0,
                               height: 24.0,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.network(
-                                getJsonField(
-                                  _model.commentJson,
-                                  r'''$.profile''',
-                                ).toString(),
-                                fit: BoxFit.cover,
-                              ),
+                              fit: BoxFit.cover,
+                              isAvatar: true,
+                              semanticLabel: 'Profile photo of ' +
+                                  getJsonField(
+                                          _model.commentJson, r'''$.name''')
+                                      .toString(),
                             ),
                           ),
                           Expanded(
@@ -232,11 +233,15 @@ class _CompCommentWidgetState extends State<CompCommentWidget> {
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
+                                    AppIconButton(
+                                      semanticLabel: 'Like, ' +
+                                          valueOrDefault<String>(
+                                              columnPostCommentRow?.likesCount
+                                                  ?.toString(),
+                                              '0') +
+                                          ' likes',
+                                      minTapTarget: 44.0,
+                                      enableHaptic: false,
                                       onTap: () async {
                                         _model.apiResultn64 =
                                             await AddCommentLikeCall.call(
@@ -263,118 +268,125 @@ class _CompCommentWidgetState extends State<CompCommentWidget> {
 
                                         safeSetState(() {});
                                       },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              Icon(
-                                                Icons.favorite_border_outlined,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .greyL4,
-                                                size: 16.0,
-                                              ),
-                                              FutureBuilder<
-                                                  List<PostCommentLikesRow>>(
-                                                future: (_model
-                                                            .requestCompleter2 ??=
-                                                        Completer<
-                                                            List<
-                                                                PostCommentLikesRow>>()
-                                                          ..complete(
-                                                              PostCommentLikesTable()
-                                                                  .querySingleRow(
-                                                            queryFn: (q) => q
-                                                                .eqOrNull(
-                                                                  'comment_id',
-                                                                  widget!
-                                                                      .commentId
-                                                                      ?.toString(),
-                                                                )
-                                                                .eqOrNull(
-                                                                  'user_id',
-                                                                  currentUserUid,
-                                                                ),
-                                                          )))
-                                                    .future,
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 50.0,
-                                                        height: 50.0,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          valueColor:
-                                                              AlwaysStoppedAnimation<
-                                                                  Color>(
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
+                                      iconWidget: ExcludeSemantics(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Stack(
+                                              children: [
+                                                Icon(
+                                                  Icons
+                                                      .favorite_border_outlined,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .greyL4,
+                                                  size: 16.0,
+                                                ),
+                                                FutureBuilder<
+                                                    List<PostCommentLikesRow>>(
+                                                  future: (_model
+                                                              .requestCompleter2 ??=
+                                                          Completer<
+                                                              List<
+                                                                  PostCommentLikesRow>>()
+                                                            ..complete(
+                                                                PostCommentLikesTable()
+                                                                    .querySingleRow(
+                                                              queryFn: (q) => q
+                                                                  .eqOrNull(
+                                                                    'comment_id',
+                                                                    widget!
+                                                                        .commentId
+                                                                        ?.toString(),
+                                                                  )
+                                                                  .eqOrNull(
+                                                                    'user_id',
+                                                                    currentUserUid,
+                                                                  ),
+                                                            )))
+                                                      .future,
+                                                  builder: (context, snapshot) {
+                                                    // Customize what your widget looks like when it's loading.
+                                                    if (!snapshot.hasData) {
+                                                      return Center(
+                                                        child: SizedBox(
+                                                          width: 50.0,
+                                                          height: 50.0,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            valueColor:
+                                                                AlwaysStoppedAnimation<
+                                                                    Color>(
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primary,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                      );
+                                                    }
+                                                    List<PostCommentLikesRow>
+                                                        iconPostCommentLikesRowList =
+                                                        snapshot.data!;
+
+                                                    // Return an empty Container when the item does not exist.
+                                                    if (snapshot
+                                                        .data!.isEmpty) {
+                                                      return Container();
+                                                    }
+                                                    final iconPostCommentLikesRow =
+                                                        iconPostCommentLikesRowList
+                                                                .isNotEmpty
+                                                            ? iconPostCommentLikesRowList
+                                                                .first
+                                                            : null;
+
+                                                    return Icon(
+                                                      Icons.favorite,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .redColor2,
+                                                      size: 16.0,
                                                     );
-                                                  }
-                                                  List<PostCommentLikesRow>
-                                                      iconPostCommentLikesRowList =
-                                                      snapshot.data!;
-
-                                                  // Return an empty Container when the item does not exist.
-                                                  if (snapshot.data!.isEmpty) {
-                                                    return Container();
-                                                  }
-                                                  final iconPostCommentLikesRow =
-                                                      iconPostCommentLikesRowList
-                                                              .isNotEmpty
-                                                          ? iconPostCommentLikesRowList
-                                                              .first
-                                                          : null;
-
-                                                  return Icon(
-                                                    Icons.favorite,
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              valueOrDefault<String>(
+                                                columnPostCommentRow?.likesCount
+                                                    ?.toString(),
+                                                '0',
+                                              ),
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    font: GoogleFonts.manrope(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .redColor2,
-                                                    size: 16.0,
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                          Text(
-                                            valueOrDefault<String>(
-                                              columnPostCommentRow?.likesCount
-                                                  ?.toString(),
-                                              '0',
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.manrope(
+                                                        .greyL4,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
                                                             .bodyMedium
                                                             .fontStyle,
+                                                    lineHeight: 1.0,
                                                   ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .greyL4,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                  lineHeight: 1.0,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(width: 4.0)),
+                                            ),
+                                          ].divide(SizedBox(width: 4.0)),
+                                        ),
                                       ),
                                     ),
                                     Row(
@@ -429,11 +441,10 @@ class _CompCommentWidgetState extends State<CompCommentWidget> {
                                           r'''$.replied''',
                                         ).toString())) ==
                                         true)
-                                      InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
+                                      AppIconButton(
+                                        semanticLabel: 'Add reply',
+                                        minTapTarget: 44.0,
+                                        enableHaptic: false,
                                         onTap: () async {
                                           FFAppState().showReply = true;
                                           FFAppState().postCommentUserName =
@@ -447,31 +458,34 @@ class _CompCommentWidgetState extends State<CompCommentWidget> {
                                               columnPostCommentRow!.id;
                                           FFAppState().update(() {});
                                         },
-                                        child: Text(
-                                          'Add reply',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.manrope(
+                                        iconWidget: ExcludeSemantics(
+                                          child: Text(
+                                            'Add reply',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.manrope(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .greyL4,
+                                                  fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
                                                           .bodyMedium
                                                           .fontStyle,
+                                                  lineHeight: 1.0,
                                                 ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .greyL4,
-                                                fontSize: 12.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                                lineHeight: 1.0,
-                                              ),
+                                          ),
                                         ),
                                       ),
                                   ].divide(SizedBox(width: 12.0)),
@@ -582,20 +596,19 @@ class _CompCommentWidgetState extends State<CompCommentWidget> {
                                       Align(
                                         alignment:
                                             AlignmentDirectional(0.0, -1.0),
-                                        child: Container(
+                                        child: AppNetworkImage(
+                                          url: getJsonField(
+                                            _model.commentJson,
+                                            r'''$.profile''',
+                                          ).toString(),
                                           width: 24.0,
                                           height: 24.0,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Image.network(
-                                            getJsonField(
-                                              _model.commentJson,
-                                              r'''$.profile''',
-                                            ).toString(),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          fit: BoxFit.cover,
+                                          isAvatar: true,
+                                          semanticLabel: 'Profile photo of ' +
+                                              getJsonField(_model.commentJson,
+                                                      r'''$.name''')
+                                                  .toString(),
                                         ),
                                       ),
                                       Column(

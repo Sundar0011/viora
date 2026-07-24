@@ -50,6 +50,7 @@ class _GroupsWidgetState extends State<GroupsWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -123,7 +124,9 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                         scrollDirection: Axis.vertical,
                         children: [
                           InkWell(
-                            splashColor: Colors.transparent,
+                            splashColor: FlutterFlowTheme.of(context)
+                                .primary
+                                .withAlpha(0x14),
                             focusColor: Colors.transparent,
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
@@ -140,7 +143,7 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                             },
                             child: Container(
                               width: double.infinity,
-                              height: 56.0,
+                              constraints: BoxConstraints(minHeight: 56.0),
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -226,7 +229,7 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .greyL4,
-                                                        fontSize: 10.0,
+                                                        fontSize: 12.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -490,7 +493,9 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                             ),
                           ),
                           InkWell(
-                            splashColor: Colors.transparent,
+                            splashColor: FlutterFlowTheme.of(context)
+                                .primary
+                                .withAlpha(0x14),
                             focusColor: Colors.transparent,
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
@@ -507,7 +512,7 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                             },
                             child: Container(
                               width: double.infinity,
-                              height: 56.0,
+                              constraints: BoxConstraints(minHeight: 56.0),
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -593,7 +598,7 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .greyL4,
-                                                        fontSize: 10.0,
+                                                        fontSize: 12.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -857,7 +862,9 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                             ),
                           ),
                           InkWell(
-                            splashColor: Colors.transparent,
+                            splashColor: FlutterFlowTheme.of(context)
+                                .primary
+                                .withAlpha(0x14),
                             focusColor: Colors.transparent,
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
@@ -874,7 +881,7 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                             },
                             child: Container(
                               width: double.infinity,
-                              height: 56.0,
+                              constraints: BoxConstraints(minHeight: 56.0),
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -960,7 +967,7 @@ class _GroupsWidgetState extends State<GroupsWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .greyL4,
-                                                        fontSize: 10.0,
+                                                        fontSize: 12.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,

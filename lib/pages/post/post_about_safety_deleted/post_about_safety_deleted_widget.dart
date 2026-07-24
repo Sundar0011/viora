@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -58,6 +59,7 @@ class _PostAboutSafetyDeletedWidgetState
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -88,14 +90,13 @@ class _PostAboutSafetyDeletedWidgetState
                                 context.safePop();
                               },
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(24.0),
-                              child: Image.network(
-                                FFAppState().AsProfilePicture,
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.cover,
-                              ),
+                            AppNetworkImage(
+                              url: FFAppState().AsProfilePicture,
+                              width: 40.0,
+                              height: 40.0,
+                              fit: BoxFit.cover,
+                              isAvatar: true,
+                              semanticLabel: 'Your profile photo',
                             ),
                             FlutterFlowDropDown<String>(
                               controller: _model.dropDownValueController ??=
@@ -108,7 +109,7 @@ class _PostAboutSafetyDeletedWidgetState
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    font: GoogleFonts.inter(
+                                    font: GoogleFonts.manrope(
                                       fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -166,7 +167,7 @@ class _PostAboutSafetyDeletedWidgetState
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        font: GoogleFonts.inter(
+                                        font: GoogleFonts.manrope(
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -244,14 +245,14 @@ class _PostAboutSafetyDeletedWidgetState
                                 ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Colors.transparent,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Colors.transparent,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),

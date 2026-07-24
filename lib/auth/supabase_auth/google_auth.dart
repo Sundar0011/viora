@@ -7,8 +7,9 @@ import '../../flutter_flow/flutter_flow_util.dart';
 
 Future<User?> googleSignInFunc() async {
   if (kIsWeb) {
-    final success =
-        await SupaFlow.client.auth.signInWithOAuth(OAuthProvider.google);
+    final success = await SupaFlow.client.auth.signInWithOAuth(
+      OAuthProvider.google,
+    );
     return success ? SupaFlow.client.auth.currentUser : null;
   }
 
@@ -16,9 +17,9 @@ Future<User?> googleSignInFunc() async {
     scopes: ['profile', 'email'],
     clientId: isAndroid
         ? null
-        : '129801406213-8hcdqec01vuuiptod536clhsu5ralp48.apps.googleusercontent.com',
+        : '227687828358-idhevrt5idtu6hr9ed03kf1tr7ou1l8d.apps.googleusercontent.com',
     serverClientId:
-        '129801406213-elk3mmker6li87chon056tberb23v9kr.apps.googleusercontent.com',
+        '227687828358-d31670bp7mv46pmhtlpfh4jmpptstot4.apps.googleusercontent.com',
   );
 
   await googleSignIn.signOut().catchError((_) => null);

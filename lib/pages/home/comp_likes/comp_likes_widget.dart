@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -164,20 +165,19 @@ class _CompLikesWidgetState extends State<CompLikesWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Container(
+                                        AppNetworkImage(
+                                          url: getJsonField(
+                                            likedUsersItem,
+                                            r'''$.profile_picture''',
+                                          ).toString(),
                                           width: 32.0,
                                           height: 32.0,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Image.network(
-                                            getJsonField(
-                                              likedUsersItem,
-                                              r'''$.profile_picture''',
-                                            ).toString(),
-                                            fit: BoxFit.cover,
-                                          ),
+                                          fit: BoxFit.cover,
+                                          isAvatar: true,
+                                          semanticLabel: 'Profile photo of ' +
+                                              getJsonField(likedUsersItem,
+                                                      r'''$.name''')
+                                                  .toString(),
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -237,7 +237,7 @@ class _CompLikesWidgetState extends State<CompLikesWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .greyL4,
-                                                    fontSize: 10.0,
+                                                    fontSize: 12.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                     fontStyle:
@@ -253,7 +253,9 @@ class _CompLikesWidgetState extends State<CompLikesWidget> {
                                       ].divide(SizedBox(width: 8.0)),
                                     ),
                                     InkWell(
-                                      splashColor: Colors.transparent,
+                                      splashColor: FlutterFlowTheme.of(context)
+                                          .primary
+                                          .withAlpha(0x14),
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:async';
+import '/flutter_flow/app_log.dart';
 
 Future<void> cancelMessageSubscription(String chatId) async {
   try {
@@ -30,11 +31,11 @@ Future<void> cancelMessageSubscription(String chatId) async {
         FFAppState().chatSubscriptions = currentSubscriptions;
       });
 
-      print('Subscription cancelled for chat: $chatId');
+      appLog('Subscription cancelled for chat: $chatId');
     } else {
-      print('No active subscription found for chat: $chatId');
+      appLog('No active subscription found for chat: $chatId');
     }
   } catch (e) {
-    print('Error cancelling subscription: $e');
+    appLog('Error cancelling subscription: $e');
   }
 }

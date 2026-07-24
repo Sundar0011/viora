@@ -73,7 +73,7 @@ class _DummyWidgetState extends State<DummyWidget> {
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        font: GoogleFonts.interTight(
+                        font: GoogleFonts.manrope(
                           fontWeight: FlutterFlowTheme.of(context)
                               .titleSmall
                               .fontWeight,

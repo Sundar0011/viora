@@ -1,4 +1,5 @@
 import '/backend/supabase/supabase.dart';
+import '/components/async_state_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -71,6 +72,7 @@ class _PromoteBusinessWidgetState extends State<PromoteBusinessWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -135,7 +137,7 @@ class _PromoteBusinessWidgetState extends State<PromoteBusinessWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Reach more local customers by featuring your business on SquaDD. Choose a plan that suits you',
+                              'Reach more local customers by featuring your business on Flock. Choose a plan that suits you',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -161,131 +163,137 @@ class _PromoteBusinessWidgetState extends State<PromoteBusinessWidget> {
                                     q.order('price', ascending: true),
                               ),
                               builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<BusinessPromotePlansRow>
-                                    listViewBusinessPromotePlansRowList =
-                                    snapshot.data!;
-
-                                return ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: listViewBusinessPromotePlansRowList
-                                      .length,
-                                  separatorBuilder: (_, __) =>
-                                      SizedBox(height: 12.0),
-                                  itemBuilder: (context, listViewIndex) {
-                                    final listViewBusinessPromotePlansRow =
-                                        listViewBusinessPromotePlansRowList[
-                                            listViewIndex];
-                                    return InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        _model.radiobtn = listViewIndex;
-                                        _model.plan =
-                                            '${listViewBusinessPromotePlansRow.currency}${listViewBusinessPromotePlansRow.price.toString()}';
-                                        _model.planid =
-                                            listViewBusinessPromotePlansRow.id;
-                                        safeSetState(() {});
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 4.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Container(
-                                                width: 20.0,
-                                                height: 20.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                    color: _model.radiobtn !=
-                                                            listViewIndex
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .greyL4
-                                                        : FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary,
-                                                  ),
-                                                ),
-                                                alignment: AlignmentDirectional(
-                                                    0.0, 0.0),
-                                                child: Visibility(
-                                                  visible: _model.radiobtn ==
-                                                      listViewIndex,
-                                                  child: Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
+                                // One shared treatment for loading (shimmer),
+                                // failure (retry) and "no plans" instead of a
+                                // bare spinner and a blank list.
+                                return AsyncStateView.fromSnapshot<
+                                    List<BusinessPromotePlansRow>>(
+                                  snapshot: snapshot,
+                                  skeletonItemCount: 3,
+                                  skeletonHasAvatar: false,
+                                  onRetry: () => safeSetState(() {}),
+                                  emptyIcon: Icons.campaign_outlined,
+                                  emptyTitle: 'No promotions available',
+                                  emptyBody:
+                                      'There are no promotion plans on offer right now. Please check back soon.',
+                                  builder: (context,
+                                      listViewBusinessPromotePlansRowList) {
+                                    return ListView.separated(
+                                      padding: EdgeInsets.zero,
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount:
+                                          listViewBusinessPromotePlansRowList
+                                              .length,
+                                      separatorBuilder: (_, __) =>
+                                          SizedBox(height: 12.0),
+                                      itemBuilder: (context, listViewIndex) {
+                                        final listViewBusinessPromotePlansRow =
+                                            listViewBusinessPromotePlansRowList[
+                                                listViewIndex];
+                                        return InkWell(
+                                          splashColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary
+                                                  .withAlpha(0x14),
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            _model.radiobtn = listViewIndex;
+                                            _model.plan =
+                                                '${listViewBusinessPromotePlansRow.currency}${listViewBusinessPromotePlansRow.price.toString()}';
+                                            _model.planid =
+                                                listViewBusinessPromotePlansRow
+                                                    .id;
+                                            safeSetState(() {});
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 4.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Container(
+                                                    width: 20.0,
+                                                    height: 20.0,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
                                                       shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                        color: _model
+                                                                    .radiobtn !=
+                                                                listViewIndex
+                                                            ? FlutterFlowTheme
+                                                                    .of(context)
+                                                                .greyL4
+                                                            : FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
+                                                      ),
+                                                    ),
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.0, 0.0),
+                                                    child: Visibility(
+                                                      visible:
+                                                          _model.radiobtn ==
+                                                              listViewIndex,
+                                                      child: Container(
+                                                        width: 12.0,
+                                                        height: 12.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                              Text(
-                                                '${listViewBusinessPromotePlansRow.daysCount.toString()}-Day Promotion – ${listViewBusinessPromotePlansRow.currency}${listViewBusinessPromotePlansRow.price.toString()}',
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      font: GoogleFonts.manrope(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                  Text(
+                                                    '${listViewBusinessPromotePlansRow.daysCount.toString()}-Day Promotion – ${listViewBusinessPromotePlansRow.currency}${listViewBusinessPromotePlansRow.price.toString()}',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          font: GoogleFonts
+                                                              .manrope(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .greyD1,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .fontStyle,
-                                                      lineHeight: 1.4,
-                                                    ),
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                          lineHeight: 1.4,
+                                                        ),
+                                                  ),
+                                                ].divide(SizedBox(width: 8.0)),
                                               ),
-                                            ].divide(SizedBox(width: 8.0)),
+                                            ),
                                           ),
-                                        ),
-                                      ),
+                                        );
+                                      },
                                     );
                                   },
                                 );

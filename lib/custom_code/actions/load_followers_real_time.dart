@@ -29,8 +29,7 @@ Future<void> loadFollowersRealTime(String searchQuery) async {
   await fetchFollowers();
 
   // Subscribe to real-time changes on follows and user profile
-  final channel = supabase
-      .channel('followers_subscription')
+  final channel = freshRealtimeChannel(supabase, 'followers_subscription')
       .onPostgresChanges(
         event: PostgresChangeEvent.all,
         schema: 'public',

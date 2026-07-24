@@ -16,6 +16,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart';
+import '/flutter_flow/app_log.dart';
 
 final FlutterLocalNotificationsPlugin _fln = FlutterLocalNotificationsPlugin();
 
@@ -44,26 +45,26 @@ StreamSubscription<String>? _tokenSub;
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('🔔 Background message received: ${message.data}');
+  appLog('🔔 Background message received: ${message.data}');
 
   // Handle background notification tap with URL (app not open)
   if (message.data.containsKey('url') && message.data['url']!.isNotEmpty) {
     final url = message.data['url']!;
-    print('🌐 Background: Should open URL (app not open): $url');
+    appLog('🌐 Background: Should open URL (app not open): $url');
     // Note: Background handler can't launch URLs directly
     // This will be handled when app is opened
   }
 }
 
 Future<String> setupNotifications() async {
-  print('🔔 setupNotifications() started');
+  appLog('🔔 setupNotifications() started');
   try {
     // 1) Firebase init
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp();
-      print('✅ Firebase initialized');
+      appLog('✅ Firebase initialized');
     } else {
-      print('ℹ️ Firebase already initialized');
+      appLog('ℹ️ Firebase already initialized');
     }
 
     // 2) Set background message handler
@@ -71,7 +72,7 @@ Future<String> setupNotifications() async {
 
     // 3) Force FCM auto init (sometimes disabled)
     await FirebaseMessaging.instance.setAutoInitEnabled(true);
-    print('✅ FCM autoInit enabled');
+    appLog('✅ FCM autoInit enabled');
 
     // 4) Request permissions (especially important for iOS)
     await _requestNotificationPermissions();
@@ -91,7 +92,7 @@ Future<String> setupNotifications() async {
     await _fln.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        print(
+        appLog(
             '🔔 Local notification tapped (app is open): ${response.payload}');
         await _handleNotificationTap(response.payload, isAppOpen: true);
       },
@@ -102,17 +103,17 @@ Future<String> setupNotifications() async {
       final androidPlugin = _fln.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>();
       await androidPlugin?.createNotificationChannel(_channel);
-      print('✅ Android notification channel created');
+      appLog('✅ Android notification channel created');
     }
 
-    print('✅ Local notifications initialized');
+    appLog('✅ Local notifications initialized');
 
     // 6) Log current token + listen for refresh
     final token = await FirebaseMessaging.instance.getToken();
-    print('🎯 CURRENT TOKEN: $token');
+    appLog('🎯 CURRENT TOKEN: $token');
     _tokenSub?.cancel();
     _tokenSub = FirebaseMessaging.instance.onTokenRefresh.listen((t) {
-      print('🔄 TOKEN REFRESHED: $t');
+      appLog('🔄 TOKEN REFRESHED: $t');
     });
 
     // 7) Foreground handler → local banner with URL support
@@ -120,7 +121,7 @@ Future<String> setupNotifications() async {
       _wired = true;
       await _fgSub?.cancel();
       _fgSub = FirebaseMessaging.onMessage.listen((RemoteMessage m) async {
-        print('📩 onMessage ARRIVED: '
+        appLog('📩 onMessage ARRIVED: '
             'title=${m.notification?.title} body=${m.notification?.body} data=${m.data}');
 
         final title = m.notification?.title ??
@@ -154,14 +155,14 @@ Future<String> setupNotifications() async {
           notificationDetails,
           payload: payload,
         );
-        print(
+        appLog(
             '✅ Foreground local notification shown with URL payload: $payload');
       });
-      print('✅ Foreground listener wired');
+      appLog('✅ Foreground listener wired');
 
       // Background → foreground (app was in background, user tapped notification)
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage m) async {
-        print('🟢 onMessageOpenedApp (app was in background): ${m.data} '
+        appLog('🟢 onMessageOpenedApp (app was in background): ${m.data} '
             '(title=${m.notification?.title}, body=${m.notification?.body})');
 
         // Handle URL opening when notification is tapped from background
@@ -175,7 +176,7 @@ Future<String> setupNotifications() async {
       final initialMessage =
           await FirebaseMessaging.instance.getInitialMessage();
       if (initialMessage != null) {
-        print('🟢 App opened from terminated state: ${initialMessage.data}');
+        appLog('🟢 App opened from terminated state: ${initialMessage.data}');
 
         // Handle URL opening when app is opened from terminated state
         if (initialMessage.data.containsKey('url') &&
@@ -189,10 +190,10 @@ Future<String> setupNotifications() async {
       }
     }
 
-    print('🔔 setupNotifications() completed successfully');
+    appLog('🔔 setupNotifications() completed successfully');
     return 'ok';
   } catch (e, st) {
-    print('❌ setupNotifications() failed: $e\n$st');
+    appLog('❌ setupNotifications() failed: $e\n$st');
     return 'error: $e';
   }
 }
@@ -200,7 +201,7 @@ Future<String> setupNotifications() async {
 // Request notification permissions (especially important for iOS)
 Future<void> _requestNotificationPermissions() async {
   try {
-    print('🔐 Requesting notification permissions...');
+    appLog('🔐 Requesting notification permissions...');
 
     final messaging = FirebaseMessaging.instance;
 
@@ -214,18 +215,19 @@ Future<void> _requestNotificationPermissions() async {
       sound: true,
     );
 
-    print('📱 Notification permission status: ${settings.authorizationStatus}');
+    appLog(
+        '📱 Notification permission status: ${settings.authorizationStatus}');
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('✅ Notification permissions granted');
+      appLog('✅ Notification permissions granted');
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('⚠️ Provisional notification permissions granted');
+      appLog('⚠️ Provisional notification permissions granted');
     } else {
-      print('❌ Notification permissions denied');
+      appLog('❌ Notification permissions denied');
     }
   } catch (e) {
-    print('❌ Error requesting permissions: $e');
+    appLog('❌ Error requesting permissions: $e');
   }
 }
 
@@ -233,7 +235,8 @@ Future<void> _requestNotificationPermissions() async {
 Future<void> _handleNotificationTap(String? payload,
     {required bool isAppOpen}) async {
   if (payload != null && payload.isNotEmpty) {
-    print('🔔 Handling notification tap - App Open: $isAppOpen, URL: $payload');
+    appLog(
+        '🔔 Handling notification tap - App Open: $isAppOpen, URL: $payload');
     await _handleUrl(payload, isAppOpen: isAppOpen);
   }
 }
@@ -241,7 +244,7 @@ Future<void> _handleNotificationTap(String? payload,
 // Handle URL - modify based on app state and launch directly
 Future<void> _handleUrl(String url, {required bool isAppOpen}) async {
   try {
-    print('🌐 Processing URL - App Open: $isAppOpen, Original URL: $url');
+    appLog('🌐 Processing URL - App Open: $isAppOpen, Original URL: $url');
 
     // Check if it's your app's deep link
     if (url.startsWith('squadd://')) {
@@ -250,10 +253,10 @@ Future<void> _handleUrl(String url, {required bool isAppOpen}) async {
       if (isAppOpen && url.contains('/loadingPage?')) {
         // App is open, change loadingPage to loading
         finalUrl = url.replaceAll('/loadingPage?', '/loading?');
-        print('🔄 Modified URL for open app: $finalUrl');
+        appLog('🔄 Modified URL for open app: $finalUrl');
       } else {
         // App is not open, use original URL
-        print('📱 Using original URL (app not open): $finalUrl');
+        appLog('📱 Using original URL (app not open): $finalUrl');
       }
 
       // Launch the deep link URL with platform-specific handling
@@ -263,29 +266,29 @@ Future<void> _handleUrl(String url, {required bool isAppOpen}) async {
       await _openUrlInBrowser(url);
     }
   } catch (e) {
-    print('❌ Error handling URL: $e');
+    appLog('❌ Error handling URL: $e');
   }
 }
 
 // Launch deep link URL with platform-specific handling
 Future<void> _launchDeepLink(String url, {required bool isAppOpen}) async {
   try {
-    print('🔗 Launching deep link: $url (App Open: $isAppOpen)');
+    appLog('🔗 Launching deep link: $url (App Open: $isAppOpen)');
 
     final uri = Uri.parse(url);
 
     // Check if URL can be launched
     final canLaunch = await canLaunchUrl(uri);
-    print('🔍 Can launch URL: $canLaunch');
+    appLog('🔍 Can launch URL: $canLaunch');
 
     if (!canLaunch) {
-      print('❌ Cannot launch URL: $url');
+      appLog('❌ Cannot launch URL: $url');
       return;
     }
 
     // Platform-specific launch strategy
     if (Platform.isIOS) {
-      print('🍎 iOS detected - using iOS-specific launch strategy');
+      appLog('🍎 iOS detected - using iOS-specific launch strategy');
 
       if (isAppOpen) {
         // For iOS when app is open, try platformDefault first
@@ -294,19 +297,19 @@ Future<void> _launchDeepLink(String url, {required bool isAppOpen}) async {
             uri,
             mode: LaunchMode.platformDefault,
           );
-          print('✅ iOS deep link launched successfully (platformDefault)');
+          appLog('✅ iOS deep link launched successfully (platformDefault)');
         } catch (e) {
-          print(
+          appLog(
               '⚠️ iOS platformDefault failed, trying externalApplication: $e');
           try {
             await launchUrl(
               uri,
               mode: LaunchMode.externalApplication,
             );
-            print(
+            appLog(
                 '✅ iOS deep link launched successfully (externalApplication)');
           } catch (e2) {
-            print('❌ iOS all launch modes failed: $e2');
+            appLog('❌ iOS all launch modes failed: $e2');
           }
         }
       } else {
@@ -315,36 +318,36 @@ Future<void> _launchDeepLink(String url, {required bool isAppOpen}) async {
           uri,
           mode: LaunchMode.externalApplication,
         );
-        print('✅ iOS deep link launched successfully (app was closed)');
+        appLog('✅ iOS deep link launched successfully (app was closed)');
       }
     } else if (Platform.isAndroid) {
-      print('🤖 Android detected - using Android-specific launch strategy');
+      appLog('🤖 Android detected - using Android-specific launch strategy');
 
       // For Android, use externalApplication mode
       await launchUrl(
         uri,
         mode: LaunchMode.externalApplication,
       );
-      print('✅ Android deep link launched successfully');
+      appLog('✅ Android deep link launched successfully');
     } else {
       // Fallback for other platforms
-      print('🖥️ Other platform detected - using platformDefault');
+      appLog('🖥️ Other platform detected - using platformDefault');
       await launchUrl(
         uri,
         mode: LaunchMode.platformDefault,
       );
-      print('✅ Deep link launched successfully (other platform)');
+      appLog('✅ Deep link launched successfully (other platform)');
     }
   } catch (e, stackTrace) {
-    print('❌ Error launching deep link: $e');
-    print('📍 Stack trace: $stackTrace');
+    appLog('❌ Error launching deep link: $e');
+    appLog('📍 Stack trace: $stackTrace');
   }
 }
 
 // Open URL in browser
 Future<void> _openUrlInBrowser(String url) async {
   try {
-    print('🌐 Opening URL in browser: $url');
+    appLog('🌐 Opening URL in browser: $url');
 
     final uri = Uri.parse(url);
 
@@ -353,11 +356,11 @@ Future<void> _openUrlInBrowser(String url) async {
         uri,
         mode: LaunchMode.externalApplication, // Force external browser
       );
-      print('✅ URL opened in browser successfully');
+      appLog('✅ URL opened in browser successfully');
     } else {
-      print('❌ Cannot launch URL: $url');
+      appLog('❌ Cannot launch URL: $url');
     }
   } catch (e) {
-    print('❌ Error opening URL: $e');
+    appLog('❌ Error opening URL: $e');
   }
 }

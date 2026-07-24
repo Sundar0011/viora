@@ -82,7 +82,8 @@ class _CompGroup1WidgetState extends State<CompGroup1Widget> {
               children: [
                 if (widget!.userStatus != 'admin')
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -143,7 +144,8 @@ class _CompGroup1WidgetState extends State<CompGroup1Widget> {
                   ),
                 if (widget!.userStatus == 'admin')
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -204,7 +206,8 @@ class _CompGroup1WidgetState extends State<CompGroup1Widget> {
                   ),
                 if (widget!.userStatus == 'admin')
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -268,7 +271,8 @@ class _CompGroup1WidgetState extends State<CompGroup1Widget> {
                     ),
                   ),
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -333,7 +337,8 @@ class _CompGroup1WidgetState extends State<CompGroup1Widget> {
                 ),
                 if (widget!.userStatus != 'admin')
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -398,7 +403,8 @@ class _CompGroup1WidgetState extends State<CompGroup1Widget> {
                     ),
                   ),
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -463,7 +469,8 @@ class _CompGroup1WidgetState extends State<CompGroup1Widget> {
                 ),
                 if (widget!.userStatus == 'admin')
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,

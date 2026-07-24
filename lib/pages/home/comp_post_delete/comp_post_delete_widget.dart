@@ -93,7 +93,7 @@ class _CompPostDeleteWidgetState extends State<CompPostDeleteWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
                     child: Text(
-                      'Are you sure you want to permanently remove this post from SquadDD?',
+                      'Are you sure you want to permanently remove this post from Flock?',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             font: GoogleFonts.manrope(
                               fontWeight: FontWeight.w500,
@@ -119,7 +119,9 @@ class _CompPostDeleteWidgetState extends State<CompPostDeleteWidget> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                          splashColor: Colors.transparent,
+                          splashColor: FlutterFlowTheme.of(context)
+                              .primary
+                              .withAlpha(0x14),
                           focusColor: Colors.transparent,
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
@@ -148,7 +150,9 @@ class _CompPostDeleteWidgetState extends State<CompPostDeleteWidget> {
                           ),
                         ),
                         InkWell(
-                          splashColor: Colors.transparent,
+                          splashColor: FlutterFlowTheme.of(context)
+                              .primary
+                              .withAlpha(0x14),
                           focusColor: Colors.transparent,
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,

@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/components/app_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -79,15 +79,14 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                FlutterFlowIconButton(
-                                  borderRadius: 100.0,
-                                  icon: Icon(
-                                    Icons.arrow_back,
-                                    color:
-                                        FlutterFlowTheme.of(context).extraBlack,
-                                    size: 24.0,
-                                  ),
-                                  onPressed: () async {
+                                AppIconButton(
+                                  icon: Icons.arrow_back,
+                                  semanticLabel: 'Back',
+                                  tooltip: 'Back',
+                                  iconSize: 24.0,
+                                  color:
+                                      FlutterFlowTheme.of(context).extraBlack,
+                                  onTap: () async {
                                     context.safePop();
                                   },
                                 ),
@@ -181,7 +180,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          font: GoogleFonts.inter(
+                                          font: GoogleFonts.manrope(
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
@@ -338,7 +337,9 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 12.0, 16.0),

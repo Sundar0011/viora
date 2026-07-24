@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -51,15 +52,15 @@ Future updateGoogleProfileData() async {
       });
 
       // Debug prints
-      print('Google profile data updated successfully:');
-      print('First Name: $finalFirstName');
-      print('Last Name: $finalLastName');
-      print('Profile Picture: $profilePictureUrl');
+      appLog('Google profile data updated successfully:');
+      appLog('First Name: $finalFirstName');
+      appLog('Last Name: $finalLastName');
+      appLog('Profile Picture: $profilePictureUrl');
     } else {
-      print('Error: No user is currently logged in.');
+      appLog('Error: No user is currently logged in.');
     }
   } catch (error) {
-    print('Error updating Google profile data: $error');
+    appLog('Error updating Google profile data: $error');
     // Optionally show error to user
     // ScaffoldMessenger.of(context).showSnackBar(
     //   SnackBar(content: Text('Failed to update profile: $error')),

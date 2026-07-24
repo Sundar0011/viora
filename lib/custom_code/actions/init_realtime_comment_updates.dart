@@ -6,12 +6,13 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 Future initRealtimeCommentUpdates() async {
   final client = Supabase.instance.client;
-  final channel = client.channel('public:post_comment');
+  final channel = freshRealtimeChannel(client, 'public:post_comment');
 
   channel
       .onPostgresChanges(
@@ -23,13 +24,13 @@ Future initRealtimeCommentUpdates() async {
           final newRow = payload.newRecord;
           final oldRow = payload.oldRecord;
 
-          print('📡 Comment Realtime Event Type: ${eventType}');
-          print('🆕 New record: $newRow');
-          print('🗑 Old record: $oldRow');
+          appLog('📡 Comment Realtime Event Type: ${eventType}');
+          appLog('🆕 New record: $newRow');
+          appLog('🗑 Old record: $oldRow');
 
           // Check if newRow is valid
           if (newRow == null || newRow['id'] == null) {
-            print('❌ Invalid payload: newRow or ID is null');
+            appLog('❌ Invalid payload: newRow or ID is null');
             return;
           }
 
@@ -45,7 +46,7 @@ Future initRealtimeCommentUpdates() async {
               final userId = newRow['user_id'];
               final communityId = newRow['community_id'];
 
-              print(
+              appLog(
                   '👤 Fetching user profile for user_id: $userId, community_id: $communityId');
 
               final userProfileResponse = await client
@@ -55,7 +56,7 @@ Future initRealtimeCommentUpdates() async {
                   .eq('community_id', communityId)
                   .single();
 
-              print('📋 User profile response: $userProfileResponse');
+              appLog('📋 User profile response: $userProfileResponse');
 
               // Add user profile data to enriched row
               enrichedRow['user_name'] =
@@ -64,10 +65,10 @@ Future initRealtimeCommentUpdates() async {
                   userProfileResponse['profile_picture'];
               enrichedRow['user_city'] = userProfileResponse['city'];
 
-              print('✅ User profile data merged successfully');
-              print('🔍 Enriched row: $enrichedRow');
+              appLog('✅ User profile data merged successfully');
+              appLog('🔍 Enriched row: $enrichedRow');
             } catch (e) {
-              print('❌ Error fetching user profile: $e');
+              appLog('❌ Error fetching user profile: $e');
               // Set default values if profile fetch fails
               enrichedRow['user_name'] = 'Unknown User';
               enrichedRow['profile_picture'] = null;
@@ -87,18 +88,18 @@ Future initRealtimeCommentUpdates() async {
                 comments.indexWhere((item) => item['id'] == commentId);
 
             if (eventType == PostgresChangeEvent.insert) {
-              print(
+              appLog(
                   '➕ Inserting new ${isReply ? 'reply' : 'comment'} with ID: $commentId');
               // Remove if already exists to avoid duplicates, then add to top
               if (existingIndex != -1) {
                 comments.removeAt(existingIndex);
-                print('🔄 Removed duplicate before adding to top');
+                appLog('🔄 Removed duplicate before adding to top');
               }
               // Always insert at top (index 0) for new records
               comments.insert(0, enrichedRow);
-              print('✅ Added enriched comment to TOP of list');
+              appLog('✅ Added enriched comment to TOP of list');
             } else if (eventType == PostgresChangeEvent.update) {
-              print(
+              appLog(
                   '🔄 Updating ${isReply ? 'reply' : 'comment'} with ID: $commentId');
               if (existingIndex != -1) {
                 final existingComment =
@@ -118,19 +119,19 @@ Future initRealtimeCommentUpdates() async {
                 }
 
                 comments[existingIndex] = existingComment;
-                print('✅ Updated existing comment with enriched data');
+                appLog('✅ Updated existing comment with enriched data');
               } else {
                 // If comment not found, add it to the TOP
                 comments.insert(0, enrichedRow);
-                print(
+                appLog(
                     '✅ Added new enriched comment to TOP (not found in existing list)');
               }
             } else if (eventType == PostgresChangeEvent.delete) {
-              print(
+              appLog(
                   '🗑 Deleting ${isReply ? 'reply' : 'comment'} with ID: $commentId');
               if (existingIndex != -1) {
                 comments.removeAt(existingIndex);
-                print('✅ Comment deleted successfully');
+                appLog('✅ Comment deleted successfully');
               }
             }
 
@@ -150,7 +151,7 @@ Future initRealtimeCommentUpdates() async {
                 return bDate
                     .compareTo(aDate); // Descending order (newest first)
               } catch (e) {
-                print('⚠️ Error parsing dates for sorting: $e');
+                appLog('⚠️ Error parsing dates for sorting: $e');
                 return 0;
               }
             });
@@ -162,14 +163,14 @@ Future initRealtimeCommentUpdates() async {
               FFAppState().AsComments = comments;
             }
 
-            print(
+            appLog(
                 '✅ Updated ${isReply ? 'AsCommentReplies' : 'AsComments'} with ${comments.length} items');
-            print(
+            appLog(
                 '📊 Final comment data: ${comments.isEmpty ? 'Empty' : comments[0]}');
           });
         },
       )
       .subscribe();
 
-  print('🎧 Realtime subscription initialized for post_comment table');
+  appLog('🎧 Realtime subscription initialized for post_comment table');
 }

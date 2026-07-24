@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -77,6 +78,7 @@ class _CompEventAttendingBtnWidgetState
       children: [
         FFButtonWidget(
           onPressed: () async {
+            HapticFeedback.lightImpact();
             await EventAttendingTable().insert({
               'community_id': widget!.parameter1,
               'event_id': widget!.eventId,
@@ -88,6 +90,7 @@ class _CompEventAttendingBtnWidgetState
           text: 'Attend',
           icon: Icon(
             Icons.edit_calendar_outlined,
+            color: FlutterFlowTheme.of(context).primaryD3,
             size: 15.0,
           ),
           options: FFButtonOptions(
@@ -97,7 +100,7 @@ class _CompEventAttendingBtnWidgetState
             iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
             color: FlutterFlowTheme.of(context).white,
             textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                  font: GoogleFonts.interTight(
+                  font: GoogleFonts.manrope(
                     fontWeight:
                         FlutterFlowTheme.of(context).titleSmall.fontWeight,
                     fontStyle:
@@ -171,6 +174,7 @@ class _CompEventAttendingBtnWidgetState
 
             return FFButtonWidget(
               onPressed: () async {
+                HapticFeedback.lightImpact();
                 await EventAttendingTable().update(
                   data: {
                     'is_attending': true,
@@ -193,6 +197,7 @@ class _CompEventAttendingBtnWidgetState
               text: 'Attend',
               icon: Icon(
                 Icons.edit_calendar_outlined,
+                color: FlutterFlowTheme.of(context).primaryD3,
                 size: 15.0,
               ),
               options: FFButtonOptions(
@@ -202,7 +207,7 @@ class _CompEventAttendingBtnWidgetState
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: FlutterFlowTheme.of(context).white,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      font: GoogleFonts.interTight(
+                      font: GoogleFonts.manrope(
                         fontWeight:
                             FlutterFlowTheme.of(context).titleSmall.fontWeight,
                         fontStyle:
@@ -279,6 +284,7 @@ class _CompEventAttendingBtnWidgetState
 
             return FFButtonWidget(
               onPressed: () async {
+                HapticFeedback.lightImpact();
                 await EventAttendingTable().update(
                   data: {
                     'is_attending': false,
@@ -301,6 +307,7 @@ class _CompEventAttendingBtnWidgetState
               text: 'Attending',
               icon: Icon(
                 Icons.edit_calendar_outlined,
+                color: FlutterFlowTheme.of(context).greyL4,
                 size: 15.0,
               ),
               options: FFButtonOptions(
@@ -310,7 +317,7 @@ class _CompEventAttendingBtnWidgetState
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: FlutterFlowTheme.of(context).white,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      font: GoogleFonts.interTight(
+                      font: GoogleFonts.manrope(
                         fontWeight:
                             FlutterFlowTheme.of(context).titleSmall.fontWeight,
                         fontStyle:

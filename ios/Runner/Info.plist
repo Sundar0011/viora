@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>squaDD</string>
+    <string>Flock</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>squaDD</string>
+    <string>Flock</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -22,12 +22,23 @@
     <string>????</string>
     <key>CFBundleURLTypes</key>
     <array>
+      <!-- Flock deep link: shared links open the app directly (see AndroidManifest) -->
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>app.flock.deeplink</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>flock</string>
+        </array>
+      </dict>
       <dict>
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.googleusercontent.apps.129801406213-8hcdqec01vuuiptod536clhsu5ralp48</string>
+          <string>com.googleusercontent.apps.227687828358-idhevrt5idtu6hr9ed03kf1tr7ou1l8d</string>
         </array>
       </dict>
       <dict>

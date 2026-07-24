@@ -1,5 +1,6 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -81,13 +82,17 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).white,
-            body: Center(
-              child: SizedBox(
-                width: 50.0,
-                height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).primary,
+            body: SafeArea(
+              top: true,
+              bottom: true,
+              child: Center(
+                child: SizedBox(
+                  width: 50.0,
+                  height: 50.0,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      FlutterFlowTheme.of(context).primary,
+                    ),
                   ),
                 ),
               ),
@@ -111,6 +116,7 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
             backgroundColor: FlutterFlowTheme.of(context).white,
             body: SafeArea(
               top: true,
+              bottom: true,
               child: Container(
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).pageBack,
@@ -193,17 +199,15 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 60.0),
-                                  child: ClipRRect(
+                                  child: AppNetworkImage(
+                                    url: widget!.pageType == 'create'
+                                        ? FFAppState().AsBusinessCover
+                                        : createPageBusinessPageRow!.coverImage,
+                                    width: double.infinity,
+                                    height: 240.0,
+                                    fit: BoxFit.cover,
                                     borderRadius: BorderRadius.circular(0.0),
-                                    child: Image.network(
-                                      widget!.pageType == 'create'
-                                          ? FFAppState().AsBusinessCover
-                                          : createPageBusinessPageRow!
-                                              .coverImage!,
-                                      width: double.infinity,
-                                      height: 240.0,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    semanticLabel: 'Business cover photo',
                                   ),
                                 ),
                                 if (_model.uploadedLocalFile_uploadData8rh !=
@@ -306,18 +310,19 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                     alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Stack(
                                       children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100.0),
-                                          child: Image.network(
-                                            widget!.pageType == 'create'
-                                                ? FFAppState().AsBusinessProfile
-                                                : createPageBusinessPageRow!
-                                                    .profilePicture!,
-                                            width: 120.0,
-                                            height: 120.0,
-                                            fit: BoxFit.cover,
-                                          ),
+                                        AppNetworkImage(
+                                          url: widget!.pageType == 'create'
+                                              ? FFAppState().AsBusinessProfile
+                                              : createPageBusinessPageRow!
+                                                  .profilePicture,
+                                          width: 120.0,
+                                          height: 120.0,
+                                          fit: BoxFit.cover,
+                                          isAvatar: true,
+                                          fallbackIcon:
+                                              Icons.storefront_rounded,
+                                          semanticLabel:
+                                              'Business profile photo',
                                         ),
                                         if (_model.uploadedLocalFile_uploadDataProfile !=
                                                 null &&
@@ -344,7 +349,9 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       100.0, 0.0, 0.0, 0.0),
                                   child: InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
@@ -433,7 +440,7 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                font: GoogleFonts.inter(
+                                                font: GoogleFonts.manrope(
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -579,7 +586,9 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -632,7 +641,7 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                font: GoogleFonts.inter(
+                                                font: GoogleFonts.manrope(
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -829,7 +838,9 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                           4.0),
                                                 ),
                                                 filled: true,
-                                                fillColor: Color(0xFFF7F9FC),
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
                                                 contentPadding:
                                                     EdgeInsetsDirectional
                                                         .fromSTEB(12.0, 16.0,
@@ -885,7 +896,7 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                font: GoogleFonts.inter(
+                                                font: GoogleFonts.manrope(
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -1031,7 +1042,9 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -1082,7 +1095,7 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              font: GoogleFonts.inter(
+                                              font: GoogleFonts.manrope(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -1230,7 +1243,9 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -1395,7 +1410,9 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -1562,7 +1579,9 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -1677,14 +1696,15 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                             activeColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primary,
-                                            checkColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .info,
+                                            checkColor: Colors.white,
                                           ),
                                         ),
                                         Flexible(
                                           child: InkWell(
-                                            splashColor: Colors.transparent,
+                                            splashColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary
+                                                    .withAlpha(0x14),
                                             focusColor: Colors.transparent,
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
@@ -1705,8 +1725,8 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                             context)
                                                         .bodyMedium
                                                         .override(
-                                                          font:
-                                                              GoogleFonts.inter(
+                                                          font: GoogleFonts
+                                                              .manrope(
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontStyle:
@@ -1730,7 +1750,7 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                   ),
                                                   TextSpan(
                                                     text:
-                                                        'SquaDD’s business policy.',
+                                                        'Flock’s business policy.',
                                                     style: TextStyle(
                                                       color:
                                                           FlutterFlowTheme.of(
@@ -1742,35 +1762,34 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
                                                     ),
                                                   )
                                                 ],
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      font: GoogleFonts.manrope(
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
                                               ),
                                             ),
                                           ),

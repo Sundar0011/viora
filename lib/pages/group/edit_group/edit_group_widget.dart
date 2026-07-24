@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
@@ -64,6 +65,7 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).pageBack,
@@ -114,17 +116,21 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              FlutterFlowIconButton(
-                                borderRadius: 100.0,
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color:
-                                      FlutterFlowTheme.of(context).extraBlack,
-                                  size: 24.0,
+                              Semantics(
+                                button: true,
+                                label: 'Back',
+                                child: FlutterFlowIconButton(
+                                  borderRadius: 100.0,
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    color:
+                                        FlutterFlowTheme.of(context).extraBlack,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    context.safePop();
+                                  },
                                 ),
-                                onPressed: () async {
-                                  context.safePop();
-                                },
                               ),
                               Text(
                                 'Edit Group',
@@ -162,14 +168,12 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                                   (_model.uploadedLocalFile_uploadDataC04.bytes
                                           ?.isEmpty ??
                                       true))
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(0.0),
-                                  child: Image.network(
-                                    columnGroupRow!.profilePicture!,
-                                    width: double.infinity,
-                                    height: 240.0,
-                                    fit: BoxFit.cover,
-                                  ),
+                                AppNetworkImage(
+                                  url: columnGroupRow!.profilePicture!,
+                                  width: double.infinity,
+                                  height: 240.0,
+                                  fit: BoxFit.cover,
+                                  semanticLabel: 'Group cover photo',
                                 ),
                               if (_model.uploadedLocalFile_uploadDataC04 !=
                                       null &&
@@ -193,7 +197,9 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 16.0, 16.0),
                             child: InkWell(
-                              splashColor: Colors.transparent,
+                              splashColor: FlutterFlowTheme.of(context)
+                                  .primary
+                                  .withAlpha(0x14),
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
@@ -422,7 +428,9 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                                                   BorderRadius.circular(4.0),
                                             ),
                                             filled: true,
-                                            fillColor: Color(0xFFF7F9FC),
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .alternate,
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 16.0, 12.0, 16.0),
@@ -612,7 +620,9 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                                                   BorderRadius.circular(4.0),
                                             ),
                                             filled: true,
-                                            fillColor: Color(0xFFF7F9FC),
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .alternate,
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 16.0, 12.0, 16.0),
@@ -734,7 +744,7 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                                           'Very Local (within 5 miles)',
                                           'Local Area (within 30 miles)',
                                           'Wider Region (within 300 miles)',
-                                          'All SquaDD Members'
+                                          'All Flock Members'
                                         ].toList(),
                                         onChanged: (val) => safeSetState(() {}),
                                         controller: _model
@@ -745,7 +755,7 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              font: GoogleFonts.inter(
+                                              font: GoogleFonts.manrope(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -873,7 +883,7 @@ class _EditGroupWidgetState extends State<EditGroupWidget> {
                                                     functions
                                                         .getCurrentUtcTime()),
                                                 'profile_picture':
-                                                    'https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_group_image/default_group_image.png',
+                                                    'https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_group_image/default_group_image.png',
                                                 'location': _model
                                                     .locationRadioButtonValue,
                                               },

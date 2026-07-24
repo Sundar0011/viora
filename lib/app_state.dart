@@ -5,6 +5,7 @@ import 'backend/supabase/supabase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'dart:convert';
+import '/flutter_flow/app_log.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -41,19 +42,22 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _ChoosedEventDate = prefs.containsKey('ff_ChoosedEventDate')
           ? DateTime.fromMillisecondsSinceEpoch(
-              prefs.getInt('ff_ChoosedEventDate')!)
+              prefs.getInt('ff_ChoosedEventDate')!,
+            )
           : _ChoosedEventDate;
     });
     _safeInit(() {
       _ChoosedStartEventDate = prefs.containsKey('ff_ChoosedStartEventDate')
           ? DateTime.fromMillisecondsSinceEpoch(
-              prefs.getInt('ff_ChoosedStartEventDate')!)
+              prefs.getInt('ff_ChoosedStartEventDate')!,
+            )
           : _ChoosedStartEventDate;
     });
     _safeInit(() {
       _ChoosedEndEventDate = prefs.containsKey('ff_ChoosedEndEventDate')
           ? DateTime.fromMillisecondsSinceEpoch(
-              prefs.getInt('ff_ChoosedEndEventDate')!)
+              prefs.getInt('ff_ChoosedEndEventDate')!,
+            )
           : _ChoosedEndEventDate;
     });
     _safeInit(() {
@@ -65,10 +69,11 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       if (prefs.containsKey('ff_AsCommentReplies')) {
         try {
-          _AsCommentReplies =
-              jsonDecode(prefs.getString('ff_AsCommentReplies') ?? '');
+          _AsCommentReplies = jsonDecode(
+            prefs.getString('ff_AsCommentReplies') ?? '',
+          );
         } catch (e) {
-          print("Can't decode persisted json. Error: $e.");
+          appLog("Can't decode persisted json. Error: $e.");
         }
       }
     });
@@ -77,27 +82,29 @@ class FFAppState extends ChangeNotifier {
         try {
           _SearchData = jsonDecode(prefs.getString('ff_SearchData') ?? '');
         } catch (e) {
-          print("Can't decode persisted json. Error: $e.");
+          appLog("Can't decode persisted json. Error: $e.");
         }
       }
     });
     _safeInit(() {
       if (prefs.containsKey('ff_neighbourhoodUsers')) {
         try {
-          _neighbourhoodUsers =
-              jsonDecode(prefs.getString('ff_neighbourhoodUsers') ?? '');
+          _neighbourhoodUsers = jsonDecode(
+            prefs.getString('ff_neighbourhoodUsers') ?? '',
+          );
         } catch (e) {
-          print("Can't decode persisted json. Error: $e.");
+          appLog("Can't decode persisted json. Error: $e.");
         }
       }
     });
     _safeInit(() {
       if (prefs.containsKey('ff_notifications')) {
         try {
-          _notifications =
-              jsonDecode(prefs.getString('ff_notifications') ?? '');
+          _notifications = jsonDecode(
+            prefs.getString('ff_notifications') ?? '',
+          );
         } catch (e) {
-          print("Can't decode persisted json. Error: $e.");
+          appLog("Can't decode persisted json. Error: $e.");
         }
       }
     });
@@ -171,7 +178,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   String _AsProfilePicture =
-      'https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_profile/file_0000000035b061f896bf60c815a83ceb.png';
+      'https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_profile/default_profile.png';
   String get AsProfilePicture => _AsProfilePicture;
   set AsProfilePicture(String value) {
     _AsProfilePicture = value;
@@ -238,10 +245,7 @@ class FFAppState extends ChangeNotifier {
     userIds.removeAt(index);
   }
 
-  void updateUserIdsAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateUserIdsAtIndex(int index, String Function(String) updateFn) {
     userIds[index] = updateFn(_userIds[index]);
   }
 
@@ -268,7 +272,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   String _AsCoverImage =
-      'https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_cover_image/Header_(1).webp';
+      'https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_cover_image/Header_(1).webp';
   String get AsCoverImage => _AsCoverImage;
   set AsCoverImage(String value) {
     _AsCoverImage = value;
@@ -306,7 +310,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   String _AsGroupCover =
-      'https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_cover_image/Header_(1).webp';
+      'https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_cover_image/Header_(1).webp';
   String get AsGroupCover => _AsGroupCover;
   set AsGroupCover(String value) {
     _AsGroupCover = value;
@@ -314,7 +318,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   String _AsBusinessCover =
-      'https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_cover_image/Header_(1).webp';
+      'https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_cover_image/Header_(1).webp';
   String get AsBusinessCover => _AsBusinessCover;
   set AsBusinessCover(String value) {
     _AsBusinessCover = value;
@@ -322,7 +326,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   String _AsBusinessProfile =
-      'https://wgcqstmmkcdjnnpuvspr.supabase.co/storage/v1/object/public/squadd/default_business_profile/Frame%20629749.webp';
+      'https://hlmymmlkgirafodcnkgg.supabase.co/storage/v1/object/public/squadd/default_business_profile/Frame%20629749.webp';
   String get AsBusinessProfile => _AsBusinessProfile;
   set AsBusinessProfile(String value) {
     _AsBusinessProfile = value;
@@ -520,7 +524,7 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_SearchData', jsonEncode(value));
   }
 
-  String _URL = 'https://app.closefuture.io/share_redirect_squadd?';
+  String _URL = 'flock://flock.app/loadingPage?';
   String get URL => _URL;
   set URL(String value) {
     _URL = value;
@@ -630,10 +634,7 @@ class FFAppState extends ChangeNotifier {
     taggedUserId.removeAt(index);
   }
 
-  void updateTaggedUserIdAtIndex(
-    int index,
-    String Function(String) updateFn,
-  ) {
+  void updateTaggedUserIdAtIndex(int index, String Function(String) updateFn) {
     taggedUserId[index] = updateFn(_taggedUserId[index]);
   }
 
@@ -690,7 +691,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   String _AsPlayStoreLink =
-      'https://play.google.com/store/apps/details?id=com.company.squaDD';
+      'https://play.google.com/store/apps/details?id=com.viora.app';
   String get AsPlayStoreLink => _AsPlayStoreLink;
   set AsPlayStoreLink(String value) {
     _AsPlayStoreLink = value;

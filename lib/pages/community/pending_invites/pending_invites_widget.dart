@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -72,16 +73,23 @@ class _PendingInvitesWidgetState extends State<PendingInvitesWidget> {
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            FlutterFlowIconButton(
-                              borderRadius: 100.0,
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: FlutterFlowTheme.of(context).extraBlack,
-                                size: 24.0,
+                            MergeSemantics(
+                              child: Semantics(
+                                button: true,
+                                label: 'Go back',
+                                child: FlutterFlowIconButton(
+                                  borderRadius: 100.0,
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    color:
+                                        FlutterFlowTheme.of(context).extraBlack,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    context.safePop();
+                                  },
+                                ),
                               ),
-                              onPressed: () async {
-                                context.safePop();
-                              },
                             ),
                             Text(
                               'Pending Invites (4)',
@@ -140,11 +148,13 @@ class _PendingInvitesWidgetState extends State<PendingInvitesWidget> {
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(2.0),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/112/600',
+                                        child: AppNetworkImage(
+                                          url:
+                                              'https://picsum.photos/seed/112/600',
                                           width: 64.0,
                                           height: 64.0,
                                           fit: BoxFit.cover,
+                                          semanticLabel: 'Page photo',
                                         ),
                                       ),
                                     ),
@@ -168,9 +178,12 @@ class _PendingInvitesWidgetState extends State<PendingInvitesWidget> {
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                   ),
-                                                  child: Image.network(
-                                                    'https://picsum.photos/seed/569/600',
+                                                  child: AppNetworkImage(
+                                                    url:
+                                                        'https://picsum.photos/seed/569/600',
                                                     fit: BoxFit.cover,
+                                                    fallbackIcon:
+                                                        Icons.person_rounded,
                                                   ),
                                                 ),
                                                 Text(
@@ -194,7 +207,7 @@ class _PendingInvitesWidgetState extends State<PendingInvitesWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .greyL4,
-                                                        fontSize: 10.0,
+                                                        fontSize: 12.0,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -245,9 +258,7 @@ class _PendingInvitesWidgetState extends State<PendingInvitesWidget> {
                                           children: [
                                             Expanded(
                                               child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
+                                                onPressed: () {},
                                                 text: 'Contact',
                                                 icon: Icon(
                                                   Icons.arrow_drop_down_sharp,
@@ -264,10 +275,7 @@ class _PendingInvitesWidgetState extends State<PendingInvitesWidget> {
                                                       EdgeInsetsDirectional
                                                           .fromSTEB(0.0, 0.0,
                                                               0.0, 0.0),
-                                                  iconColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .white,
+                                                  iconColor: Colors.white,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
@@ -310,9 +318,7 @@ class _PendingInvitesWidgetState extends State<PendingInvitesWidget> {
                                             ),
                                             Expanded(
                                               child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
+                                                onPressed: () {},
                                                 text: 'Contact',
                                                 options: FFButtonOptions(
                                                   width: 164.0,

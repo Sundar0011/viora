@@ -77,7 +77,7 @@ Future<String> setFCMTokenAndUpdateDatabase(String anonKey) async {
 
     // Call Supabase RPC function to upsert device info
     final url = Uri.parse(
-        'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/upsert_user_device_fcm');
+        'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/upsert_user_device_fcm');
 
     final response = await http.post(
       url,

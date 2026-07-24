@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -13,7 +14,7 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
   final client = Supabase.instance.client;
 
   // Use a unique channel name to avoid conflicts with other subscriptions
-  final channel = client.channel('neighbourhood_post_updates');
+  final channel = freshRealtimeChannel(client, 'neighbourhood_post_updates');
 
   channel
       .onPostgresChanges(
@@ -26,21 +27,21 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
             final newRow = payload.newRecord;
             final oldRow = payload.oldRecord;
 
-            print('📡 Realtime Event Type: ${eventType}');
-            print('🆕 New record: $newRow');
-            print('🗑️ Old record: $oldRow');
+            appLog('📡 Realtime Event Type: ${eventType}');
+            appLog('🆕 New record: $newRow');
+            appLog('🗑️ Old record: $oldRow');
 
             // Check if newRow is valid for INSERT/UPDATE
             if (eventType != PostgresChangeEvent.delete &&
                 (newRow == null || newRow['id'] == null)) {
-              print('❌ Invalid payload: newRow or ID is null');
+              appLog('❌ Invalid payload: newRow or ID is null');
               return;
             }
 
             // Check if oldRow is valid for DELETE
             if (eventType == PostgresChangeEvent.delete &&
                 (oldRow == null || oldRow['id'] == null)) {
-              print('❌ Invalid DELETE payload: oldRow or ID is null');
+              appLog('❌ Invalid DELETE payload: oldRow or ID is null');
               return;
             }
 
@@ -51,7 +52,7 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
               if (eventType == PostgresChangeEvent.insert ||
                   eventType == PostgresChangeEvent.update) {
                 final postId = newRow['id'];
-                print(
+                appLog(
                     '🔄 Processing ${eventType.name.toUpperCase()} for post ID: $postId');
 
                 final existingIndex =
@@ -62,9 +63,9 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
                   final existingPost =
                       Map<String, dynamic>.from(posts[existingIndex]);
 
-                  print('📋 BEFORE MERGING:');
-                  print('   Post ID: $postId');
-                  print('   Existing data: $existingPost');
+                  appLog('📋 BEFORE MERGING:');
+                  appLog('   Post ID: $postId');
+                  appLog('   Existing data: $existingPost');
 
                   // Smart merge - Update only the fields that exist in newRow
                   for (final key in newRow.keys) {
@@ -72,7 +73,7 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
 
                     // Skip null values to preserve existing enriched data
                     if (newValue == null) {
-                      print('⏭️ Skipping null value for key: $key');
+                      appLog('⏭️ Skipping null value for key: $key');
                       continue;
                     }
 
@@ -86,7 +87,7 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
 
                       // Don't overwrite positive counts with 0 (prevents race conditions)
                       if (newCount == 0 && existingCount > 0) {
-                        print(
+                        appLog(
                             '⏭️ Preserving existing count for $mappedKey: $existingCount (new was 0)');
                         continue;
                       }
@@ -97,32 +98,32 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
 
                   posts[existingIndex] = existingPost;
 
-                  print('📋 AFTER MERGING:');
-                  print('   Post ID: $postId');
-                  print('   Updated data: $existingPost');
-                  print('✅ Merged data for existing post: $postId');
+                  appLog('📋 AFTER MERGING:');
+                  appLog('   Post ID: $postId');
+                  appLog('   Updated data: $existingPost');
+                  appLog('✅ Merged data for existing post: $postId');
                 } else {
                   // Post not found in app state - ignore the update
-                  print(
+                  appLog(
                       '⏭️ Post $postId not found in app state, ignoring ${eventType.name.toUpperCase()}');
                 }
               } else if (eventType == PostgresChangeEvent.delete) {
                 final postId = oldRow['id'];
-                print('🗑️ Deleting post with ID: $postId');
+                appLog('🗑️ Deleting post with ID: $postId');
 
                 final existingIndex =
                     posts.indexWhere((p) => p['post_id'] == postId);
 
                 if (existingIndex != -1) {
                   posts.removeAt(existingIndex);
-                  print('✅ Deleted post: $postId');
+                  appLog('✅ Deleted post: $postId');
                 } else {
-                  print('⚠️ Post $postId not found for deletion');
+                  appLog('⚠️ Post $postId not found for deletion');
                 }
               }
 
               FFAppState().NeighbourHoodPost = posts;
-              print('✅ Updated NeighbourHoodPost with ${posts.length} posts');
+              appLog('✅ Updated NeighbourHoodPost with ${posts.length} posts');
             });
 
             // 🔥 CRITICAL: Force UI to rebuild after state change
@@ -132,15 +133,15 @@ Future initRealtimeNeighbourhoodPostUpdates() async {
               FFAppState().notifyListeners();
             });
 
-            print('🔄 UI refresh triggered');
+            appLog('🔄 UI refresh triggered');
           } catch (e) {
-            print('❌ Error in realtime callback: $e');
+            appLog('❌ Error in realtime callback: $e');
           }
         },
       )
       .subscribe();
 
-  print(
+  appLog(
       '🎧 Realtime subscription initialized for post table with channel: neighbourhood_post_updates');
 }
 

@@ -6,13 +6,14 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import '/flutter_flow/app_log.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 Future initRealtimeUserLocations() async {
   final client = Supabase.instance.client;
 
-  final channel = client.channel('public:user_locations');
+  final channel = freshRealtimeChannel(client, 'public:user_locations');
 
   channel
       .onPostgresChanges(
@@ -21,9 +22,9 @@ Future initRealtimeUserLocations() async {
         table: 'user_locations',
         callback: (payload) {
           // ✅ Debug logs
-          print('Realtime event: ${payload.eventType}');
-          print('New record: ${payload.newRecord}');
-          print('Old record: ${payload.oldRecord}');
+          appLog('Realtime event: ${payload.eventType}');
+          appLog('New record: ${payload.newRecord}');
+          appLog('Old record: ${payload.oldRecord}');
 
           final eventType = payload.eventType;
           final newRow = payload.newRecord;
@@ -52,7 +53,7 @@ Future initRealtimeUserLocations() async {
             }
           }
 
-          print('Updated userLocationsList: $currentList');
+          appLog('Updated userLocationsList: $currentList');
           FFAppState().update(() {
             List<dynamic> currentList = FFAppState().userLocationsList.toList();
 
@@ -67,7 +68,7 @@ Future initRealtimeUserLocations() async {
 
             FFAppState().userLocationsList = currentList;
 
-            print(
+            appLog(
                 '✅ Final userLocationsList: ${FFAppState().userLocationsList}');
           });
         },

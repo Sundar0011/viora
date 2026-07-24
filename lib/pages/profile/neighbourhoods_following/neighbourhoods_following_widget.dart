@@ -1,7 +1,9 @@
+import '/components/async_state_view.dart';
+import '/components/empty_state.dart';
+import '/components/app_icon_button.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/comp_no_data_found_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -31,6 +33,9 @@ class _NeighbourhoodsFollowingWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  /// Non-null when the page load failed; drives the error state.
+  Object? _loadError;
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +43,14 @@ class _NeighbourhoodsFollowingWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await _loadPage();
+    });
+  }
+
+  /// Runs the page load, recording any failure so the UI can surface it.
+  Future<void> _loadPage() async {
+    try {
+      _loadError = null;
       _model.showData = false;
       safeSetState(() {});
       _model.userdata = await GetNeighborhoodPeoplesCall.call(
@@ -50,7 +63,17 @@ class _NeighbourhoodsFollowingWidgetState
       safeSetState(() {});
       _model.showData = true;
       safeSetState(() {});
-    });
+    } catch (e) {
+      _loadError = e;
+      safeSetState(() {});
+    }
+  }
+
+  /// Retry handler for the error state.
+  Future<void> _retryLoad() async {
+    _loadError = null;
+    safeSetState(() {});
+    await _loadPage();
   }
 
   @override
@@ -90,14 +113,13 @@ class _NeighbourhoodsFollowingWidgetState
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        FlutterFlowIconButton(
-                          borderRadius: 100.0,
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: FlutterFlowTheme.of(context).extraBlack,
-                            size: 24.0,
-                          ),
-                          onPressed: () async {
+                        AppIconButton(
+                          icon: Icons.arrow_back,
+                          semanticLabel: 'Back',
+                          tooltip: 'Back',
+                          iconSize: 24.0,
+                          color: FlutterFlowTheme.of(context).extraBlack,
+                          onTap: () async {
                             context.safePop();
                           },
                         ),
@@ -315,7 +337,7 @@ class _NeighbourhoodsFollowingWidgetState
                                                                               context)
                                                                           .greyL4,
                                                                       fontSize:
-                                                                          10.0,
+                                                                          12.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -364,7 +386,7 @@ class _NeighbourhoodsFollowingWidgetState
                                                                               context)
                                                                           .greyL4,
                                                                       fontSize:
-                                                                          10.0,
+                                                                          12.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -384,7 +406,11 @@ class _NeighbourhoodsFollowingWidgetState
                                                       ),
                                                       InkWell(
                                                         splashColor:
-                                                            Colors.transparent,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary
+                                                                .withAlpha(
+                                                                    0x14),
                                                         focusColor:
                                                             Colors.transparent,
                                                         hoverColor:
@@ -671,7 +697,7 @@ class _NeighbourhoodsFollowingWidgetState
                                                                               context)
                                                                           .greyL4,
                                                                       fontSize:
-                                                                          10.0,
+                                                                          12.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -720,7 +746,7 @@ class _NeighbourhoodsFollowingWidgetState
                                                                               context)
                                                                           .greyL4,
                                                                       fontSize:
-                                                                          10.0,
+                                                                          12.0,
                                                                       letterSpacing:
                                                                           0.0,
                                                                       fontWeight:
@@ -740,7 +766,11 @@ class _NeighbourhoodsFollowingWidgetState
                                                       ),
                                                       InkWell(
                                                         splashColor:
-                                                            Colors.transparent,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary
+                                                                .withAlpha(
+                                                                    0x14),
                                                         focusColor:
                                                             Colors.transparent,
                                                         hoverColor:
@@ -870,18 +900,25 @@ class _NeighbourhoodsFollowingWidgetState
                         ),
                     ],
                   ),
-                if (!_model.showData)
+                if (_loadError != null)
                   Expanded(
-                    child: Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
-                      child: Container(
-                        width: 50.0,
-                        height: 50.0,
-                        child: custom_widgets.SimpleLoader(
-                          width: 50.0,
-                          height: 50.0,
-                        ),
-                      ),
+                    child: EmptyState(
+                      icon: Icons.error_outline_rounded,
+                      iconColor: FlutterFlowTheme.of(context).error,
+                      iconBackgroundColor:
+                          FlutterFlowTheme.of(context).error.withAlpha(0x1F),
+                      title: 'Something went wrong',
+                      body: AsyncStateView.describeError(_loadError!),
+                      actionLabel: 'Retry',
+                      onAction: _retryLoad,
+                    ),
+                  ),
+                if (_loadError == null && !_model.showData)
+                  Expanded(
+                    child: Semantics(
+                      label: 'Loading neighbourhoods',
+                      liveRegion: true,
+                      child: const AppSkeletonList(),
                     ),
                   ),
                 if (_model.showData &&

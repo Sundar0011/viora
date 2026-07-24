@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -61,6 +62,7 @@ class _CreatePollDeletedWidgetState extends State<CreatePollDeletedWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -91,14 +93,13 @@ class _CreatePollDeletedWidgetState extends State<CreatePollDeletedWidget> {
                                 context.safePop();
                               },
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(24.0),
-                              child: Image.network(
-                                'https://picsum.photos/seed/647/600',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.cover,
-                              ),
+                            AppNetworkImage(
+                              url: 'https://picsum.photos/seed/647/600',
+                              width: 40.0,
+                              height: 40.0,
+                              fit: BoxFit.cover,
+                              isAvatar: true,
+                              semanticLabel: 'Your profile photo',
                             ),
                             FlutterFlowDropDown<String>(
                               controller: _model.dropDownValueController ??=
@@ -111,7 +112,7 @@ class _CreatePollDeletedWidgetState extends State<CreatePollDeletedWidget> {
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    font: GoogleFonts.inter(
+                                    font: GoogleFonts.manrope(
                                       fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -169,7 +170,7 @@ class _CreatePollDeletedWidgetState extends State<CreatePollDeletedWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        font: GoogleFonts.inter(
+                                        font: GoogleFonts.manrope(
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -246,14 +247,14 @@ class _CreatePollDeletedWidgetState extends State<CreatePollDeletedWidget> {
                                 ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Colors.transparent,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Colors.transparent,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
@@ -417,7 +418,8 @@ class _CreatePollDeletedWidgetState extends State<CreatePollDeletedWidget> {
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     filled: true,
-                                    fillColor: Color(0xFFF7F9FC),
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             12.0, 16.0, 12.0, 16.0),
@@ -560,7 +562,8 @@ class _CreatePollDeletedWidgetState extends State<CreatePollDeletedWidget> {
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     filled: true,
-                                    fillColor: Color(0xFFF7F9FC),
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             12.0, 16.0, 12.0, 16.0),

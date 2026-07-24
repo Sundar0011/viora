@@ -201,7 +201,7 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
           Text(
             'Date',
             style: TextStyle(
-              color: Color(0xFF0C0C0C),
+              color: FlutterFlowTheme.of(context).primaryText,
               fontFamily: 'Manrope',
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -227,7 +227,7 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
               Text(
                 DateFormat('MMMM yyyy').format(currentMonth),
                 style: TextStyle(
-                  color: Color(0xFF264AFF),
+                  color: FlutterFlowTheme.of(context).primary,
                   fontFamily: 'Manrope',
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -281,12 +281,14 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
                     padding: EdgeInsets.all(4),
                     margin: EdgeInsets.symmetric(horizontal: 6),
                     decoration: BoxDecoration(
-                      color:
-                          isSelected ? Color(0xFF516EFF) : Colors.transparent,
+                      color: isSelected
+                          ? FlutterFlowTheme.of(context).primary
+                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(
-                        color:
-                            isSelected ? Colors.transparent : Color(0xFFE9EDFF),
+                        color: isSelected
+                            ? Colors.transparent
+                            : FlutterFlowTheme.of(context).primaryL1,
                         width: 1,
                       ),
                     ),
@@ -300,7 +302,8 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
                                 ? Colors.white
                                 : isDisabled
                                     ? Colors.grey.shade400
-                                    : Color(0xFF676767),
+                                    : FlutterFlowTheme.of(context)
+                                        .secondaryText,
                             fontFamily: 'Manrope',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -316,7 +319,8 @@ class _HorizontalDatePickerState extends State<HorizontalDatePicker> {
                                 ? Colors.white
                                 : isDisabled
                                     ? Colors.grey.shade400
-                                    : Color(0xFF676767),
+                                    : FlutterFlowTheme.of(context)
+                                        .secondaryText,
                             fontFamily: 'Manrope',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,

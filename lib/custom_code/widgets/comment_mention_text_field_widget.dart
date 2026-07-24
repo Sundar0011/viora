@@ -65,12 +65,12 @@ class _CommentMentionTextFieldWidgetState
   // Rich Text Content - Component managed
   Map<String, dynamic>? _richTextContent;
 
-  // Constants
-  static const Color _primaryColor = Color(0xFF264AFF);
-  static const Color _backgroundColor = Color(0xFFF7F9FC);
-  static const Color _textColor = Color(0xFF333333);
-  static const Color _hintColor = Color(0xFF999999);
-  static const Color _borderColor = Color(0xFFE8E8E8);
+  // Theme-driven colors (resolved per-build so light/dark mode both work).
+  Color get _primaryColor => FlutterFlowTheme.of(context).secondary;
+  Color get _backgroundColor => FlutterFlowTheme.of(context).alternate;
+  Color get _textColor => FlutterFlowTheme.of(context).primaryText;
+  Color get _hintColor => FlutterFlowTheme.of(context).secondaryText;
+  Color get _borderColor => FlutterFlowTheme.of(context).alternate;
 
   @override
   void initState() {
@@ -284,7 +284,7 @@ class _CommentMentionTextFieldWidgetState
       final response = await http
           .post(
             Uri.parse(
-                'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/search_profiles'),
+                'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/search_profiles'),
             headers: {
               'Content-Type': 'application/json',
               'apikey': widget.apiKey,
@@ -474,7 +474,7 @@ class _CommentMentionTextFieldWidgetState
     final response = await http
         .post(
           Uri.parse(
-              'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/post_comment'),
+              'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/post_comment'),
           headers: {
             'Content-Type': 'application/json',
             'apikey': widget.apiKey,
@@ -509,7 +509,7 @@ class _CommentMentionTextFieldWidgetState
       final response = await http
           .post(
             Uri.parse(
-                'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/generate-tldr'),
+                'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/generate-tldr'),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ${widget.token}',
@@ -546,7 +546,7 @@ class _CommentMentionTextFieldWidgetState
 
       await http
           .post(
-            Uri.parse('https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/tag'),
+            Uri.parse('https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/tag'),
             headers: {
               'Content-Type': 'application/json',
               'apikey': widget.apiKey,
@@ -566,7 +566,7 @@ class _CommentMentionTextFieldWidgetState
       await http
           .post(
             Uri.parse(
-                'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/count_comment'),
+                'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/count_comment'),
             headers: {
               'Content-Type': 'application/json',
               'apikey': widget.apiKey,
@@ -585,7 +585,7 @@ class _CommentMentionTextFieldWidgetState
       await http
           .post(
             Uri.parse(
-                'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/count_likes'),
+                'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/count_likes'),
             headers: {
               'Content-Type': 'application/json',
               'apikey': widget.apiKey,
@@ -719,7 +719,7 @@ class _CommentMentionTextFieldWidgetState
   }
 
   TextStyle _getBaseTextStyle() {
-    return const TextStyle(
+    return TextStyle(
       color: _textColor,
       fontFamily: 'Manrope',
       fontSize: 14,
@@ -730,7 +730,7 @@ class _CommentMentionTextFieldWidgetState
   }
 
   TextStyle _getMentionTextStyle() {
-    return const TextStyle(
+    return TextStyle(
       color: _primaryColor,
       fontFamily: 'Manrope',
       fontSize: 14,
@@ -779,7 +779,7 @@ class _CommentMentionTextFieldWidgetState
               Expanded(
                 child: Text(
                   name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: _textColor,
                     fontFamily: 'Manrope',
                     fontSize: 14,
@@ -910,7 +910,7 @@ class _CommentMentionTextFieldWidgetState
                     hintText: FFAppState().showReply == true
                         ? "Write a reply..."
                         : "Write a comment...",
-                    hintStyle: const TextStyle(
+                    hintStyle: TextStyle(
                       color: _hintColor,
                       fontFamily: 'Manrope',
                       fontSize: 14,

@@ -1,6 +1,6 @@
+import '/components/app_icon_button.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -82,14 +82,13 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        FlutterFlowIconButton(
-                          borderRadius: 100.0,
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: FlutterFlowTheme.of(context).extraBlack,
-                            size: 24.0,
-                          ),
-                          onPressed: () async {
+                        AppIconButton(
+                          icon: Icons.arrow_back,
+                          semanticLabel: 'Back',
+                          tooltip: 'Back',
+                          iconSize: 24.0,
+                          color: FlutterFlowTheme.of(context).extraBlack,
+                          onTap: () async {
                             context.safePop();
                           },
                         ),
@@ -352,7 +351,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                                             4.0),
                                                   ),
                                                   filled: true,
-                                                  fillColor: Color(0xFFF7F9FC),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
                                                   contentPadding:
                                                       EdgeInsetsDirectional
                                                           .fromSTEB(12.0, 16.0,
@@ -609,28 +611,35 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                                             4.0),
                                                   ),
                                                   filled: true,
-                                                  fillColor: Color(0xFFF7F9FC),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
                                                   contentPadding:
                                                       EdgeInsetsDirectional
                                                           .fromSTEB(12.0, 16.0,
                                                               12.0, 16.0),
-                                                  suffixIcon: InkWell(
-                                                    onTap: () async {
+                                                  suffixIcon: AppIconButton(
+                                                    icon: _model
+                                                            .passwordVisibility1
+                                                        ? Icons
+                                                            .visibility_outlined
+                                                        : Icons
+                                                            .visibility_off_outlined,
+                                                    semanticLabel: _model
+                                                            .passwordVisibility1
+                                                        ? 'Hide password'
+                                                        : 'Show password',
+                                                    iconSize: 22.0,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    onTap: () {
                                                       safeSetState(() => _model
                                                               .passwordVisibility1 =
                                                           !_model
                                                               .passwordVisibility1);
                                                     },
-                                                    focusNode: FocusNode(
-                                                        skipTraversal: true),
-                                                    child: Icon(
-                                                      _model.passwordVisibility1
-                                                          ? Icons
-                                                              .visibility_outlined
-                                                          : Icons
-                                                              .visibility_off_outlined,
-                                                      size: 22,
-                                                    ),
                                                   ),
                                                 ),
                                                 style: FlutterFlowTheme.of(
@@ -849,28 +858,35 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                                             4.0),
                                                   ),
                                                   filled: true,
-                                                  fillColor: Color(0xFFF7F9FC),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
                                                   contentPadding:
                                                       EdgeInsetsDirectional
                                                           .fromSTEB(12.0, 16.0,
                                                               12.0, 16.0),
-                                                  suffixIcon: InkWell(
-                                                    onTap: () async {
+                                                  suffixIcon: AppIconButton(
+                                                    icon: _model
+                                                            .passwordVisibility2
+                                                        ? Icons
+                                                            .visibility_outlined
+                                                        : Icons
+                                                            .visibility_off_outlined,
+                                                    semanticLabel: _model
+                                                            .passwordVisibility2
+                                                        ? 'Hide password'
+                                                        : 'Show password',
+                                                    iconSize: 22.0,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    onTap: () {
                                                       safeSetState(() => _model
                                                               .passwordVisibility2 =
                                                           !_model
                                                               .passwordVisibility2);
                                                     },
-                                                    focusNode: FocusNode(
-                                                        skipTraversal: true),
-                                                    child: Icon(
-                                                      _model.passwordVisibility2
-                                                          ? Icons
-                                                              .visibility_outlined
-                                                          : Icons
-                                                              .visibility_off_outlined,
-                                                      size: 22,
-                                                    ),
                                                   ),
                                                 ),
                                                 style: FlutterFlowTheme.of(
@@ -950,7 +966,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                         alignment:
                                             AlignmentDirectional(1.0, 0.0),
                                         child: InkWell(
-                                          splashColor: Colors.transparent,
+                                          splashColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary
+                                                  .withAlpha(0x14),
                                           focusColor: Colors.transparent,
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,

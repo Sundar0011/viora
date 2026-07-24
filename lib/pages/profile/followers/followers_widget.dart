@@ -1,9 +1,12 @@
+import '/components/async_state_view.dart';
+import '/components/empty_state.dart';
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/comp_no_data_found_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -14,6 +17,7 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +42,9 @@ class _FollowersWidgetState extends State<FollowersWidget>
 
   final animationsMap = <String, AnimationInfo>{};
 
+  /// Non-null when the followers fetch failed; drives the error state.
+  Object? _loadError;
+
   @override
   void initState() {
     super.initState();
@@ -45,11 +52,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.loadFollowersRealTime(
-        ' ',
-      );
-      _model.show = true;
-      safeSetState(() {});
+      await _loadFollowers();
     });
 
     _model.textController ??= TextEditingController();
@@ -63,7 +66,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -75,7 +78,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -87,7 +90,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -99,7 +102,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -111,7 +114,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -123,7 +126,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -135,7 +138,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -147,7 +150,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
@@ -159,12 +162,34 @@ class _FollowersWidgetState extends State<FollowersWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 600.0.ms,
-            color: Color(0xB2FFFFFF),
+            color: FlutterFlowTheme.of(context).shimmerHighlight,
             angle: 0.524,
           ),
         ],
       ),
     });
+  }
+
+  /// Loads the followers list, recording any failure so the UI can show it.
+  Future<void> _loadFollowers() async {
+    try {
+      _loadError = null;
+      await actions.loadFollowersRealTime(
+        ' ',
+      );
+    } catch (e) {
+      _loadError = e;
+    }
+    _model.show = true;
+    safeSetState(() {});
+  }
+
+  /// Retry handler for the error state: re-shows the skeleton, then re-fetches.
+  Future<void> _retryLoad() async {
+    _loadError = null;
+    _model.show = false;
+    safeSetState(() {});
+    await _loadFollowers();
   }
 
   @override
@@ -215,15 +240,14 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    FlutterFlowIconButton(
-                                      borderRadius: 100.0,
-                                      icon: Icon(
-                                        Icons.arrow_back,
-                                        color: FlutterFlowTheme.of(context)
-                                            .extraBlack,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () async {
+                                    AppIconButton(
+                                      icon: Icons.arrow_back,
+                                      semanticLabel: 'Back',
+                                      tooltip: 'Back',
+                                      iconSize: 24.0,
+                                      color: FlutterFlowTheme.of(context)
+                                          .extraBlack,
+                                      onTap: () async {
                                         context.safePop();
                                       },
                                     ),
@@ -394,7 +418,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                           ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Color(0x00000000),
+                                          color: Colors.transparent,
                                           width: 1.0,
                                         ),
                                         borderRadius:
@@ -428,7 +452,8 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 8.0, 12.0, 8.0),
@@ -472,7 +497,21 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                 .addToEnd(SizedBox(height: 12.0)),
                           ),
                         ),
-                        if (_model.show)
+                        if (_loadError != null)
+                          Expanded(
+                            child: EmptyState(
+                              icon: Icons.error_outline_rounded,
+                              iconColor: FlutterFlowTheme.of(context).error,
+                              iconBackgroundColor: FlutterFlowTheme.of(context)
+                                  .error
+                                  .withAlpha(0x1F),
+                              title: 'Something went wrong',
+                              body: AsyncStateView.describeError(_loadError!),
+                              actionLabel: 'Retry',
+                              onAction: _retryLoad,
+                            ),
+                          ),
+                        if (_loadError == null && _model.show)
                           Expanded(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -541,13 +580,23 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                                                     .circle,
                                                               ),
                                                               child:
-                                                                  Image.network(
-                                                                getJsonField(
+                                                                  AppNetworkImage(
+                                                                url:
+                                                                    getJsonField(
                                                                   followersItem,
                                                                   r'''$.profile_picture''',
                                                                 ).toString(),
+                                                                width: 32.0,
+                                                                height: 32.0,
                                                                 fit: BoxFit
                                                                     .cover,
+                                                                fallbackIcon: Icons
+                                                                    .person_rounded,
+                                                                semanticLabel:
+                                                                    '${getJsonField(
+                                                                  followersItem,
+                                                                  r'''$.name''',
+                                                                ).toString()} profile photo',
                                                               ),
                                                             ),
                                                             Column(
@@ -610,7 +659,7 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .greyL4,
                                                                         fontSize:
-                                                                            10.0,
+                                                                            12.0,
                                                                         letterSpacing:
                                                                             0.0,
                                                                         fontWeight:
@@ -674,9 +723,11 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                                                             ?.id ==
                                                                         '')
                                                                   InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
+                                                                    splashColor: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary
+                                                                        .withAlpha(
+                                                                            0x14),
                                                                     focusColor:
                                                                         Colors
                                                                             .transparent,
@@ -688,6 +739,8 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                                                             .transparent,
                                                                     onTap:
                                                                         () async {
+                                                                      HapticFeedback
+                                                                          .lightImpact();
                                                                       await AddFollowCall
                                                                           .call(
                                                                         pFollowerid:
@@ -745,9 +798,11 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                                                             ?.id !=
                                                                         '')
                                                                   InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
+                                                                    splashColor: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary
+                                                                        .withAlpha(
+                                                                            0x14),
                                                                     focusColor:
                                                                         Colors
                                                                             .transparent,
@@ -759,6 +814,8 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                                                             .transparent,
                                                                     onTap:
                                                                         () async {
+                                                                      HapticFeedback
+                                                                          .lightImpact();
                                                                       await AddFollowCall
                                                                           .call(
                                                                         pFollowerid:
@@ -834,7 +891,19 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                                 ],
                                               ),
                                             ),
-                                          );
+                                          )
+                                              .animate()
+                                              .fadeIn(
+                                                duration: 260.ms,
+                                                delay:
+                                                    (40 * (followersIndex % 8))
+                                                        .ms,
+                                              )
+                                              .slideY(
+                                                begin: 0.06,
+                                                end: 0,
+                                                curve: Curves.easeOutCubic,
+                                              );
                                         },
                                       );
                                     },
@@ -857,13 +926,20 @@ class _FollowersWidgetState extends State<FollowersWidget>
                                           text2:
                                               'Once someone follows you, they\'ll show up here.',
                                         ),
-                                      ),
+                                      )
+                                          .animate()
+                                          .fadeIn(duration: 400.ms)
+                                          .scale(
+                                            begin: Offset(0.92, 0.92),
+                                            end: Offset(1, 1),
+                                            curve: Curves.easeOutBack,
+                                          ),
                                     ),
                                   ),
                               ],
                             ),
                           ),
-                        if (!_model.show)
+                        if (_loadError == null && !_model.show)
                           Align(
                             alignment: AlignmentDirectional(0.0, 0.0),
                             child: Column(

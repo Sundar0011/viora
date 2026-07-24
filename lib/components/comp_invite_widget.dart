@@ -96,17 +96,17 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.manrope(
                                 fontWeight: FontWeight.w600,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
                               ),
                               color: FlutterFlowTheme.of(context).extraBlack,
                               fontSize: 18.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
+                              fontStyle: FlutterFlowTheme.of(
+                                context,
+                              ).bodyMedium.fontStyle,
                               lineHeight: 1.4,
                             ),
                       ),
@@ -117,8 +117,12 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                   key: _model.formKey,
                   autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      20.0,
+                      0.0,
+                      20.0,
+                      0.0,
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -146,17 +150,18 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                                     .override(
                                       font: GoogleFonts.manrope(
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
+                                        fontStyle: FlutterFlowTheme.of(
+                                          context,
+                                        ).labelMedium.fontStyle,
                                       ),
-                                      color:
-                                          FlutterFlowTheme.of(context).greyL4,
+                                      color: FlutterFlowTheme.of(
+                                        context,
+                                      ).greyL4,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                       lineHeight: 1.3,
                                     ),
                                 hintText: 'Enter email Address',
@@ -165,17 +170,18 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                                     .override(
                                       font: GoogleFonts.manrope(
                                         fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .fontStyle,
+                                        fontStyle: FlutterFlowTheme.of(
+                                          context,
+                                        ).labelMedium.fontStyle,
                                       ),
-                                      color:
-                                          FlutterFlowTheme.of(context).greyL4,
+                                      color: FlutterFlowTheme.of(
+                                        context,
+                                      ).greyL4,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).labelMedium.fontStyle,
                                       lineHeight: 1.3,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -207,30 +213,37 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                                   borderRadius: BorderRadius.circular(4.0),
                                 ),
                                 filled: true,
-                                fillColor: Color(0xFFF7F9FC),
+                                fillColor:
+                                    FlutterFlowTheme.of(context).alternate,
                                 contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 16.0, 12.0, 16.0),
+                                  12.0,
+                                  16.0,
+                                  12.0,
+                                  16.0,
+                                ),
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     font: GoogleFonts.manrope(
                                       fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
+                                      fontStyle: FlutterFlowTheme.of(
+                                        context,
+                                      ).bodyMedium.fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                    color: FlutterFlowTheme.of(
+                                      context,
+                                    ).primaryText,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).bodyMedium.fontStyle,
                                     lineHeight: 1.3,
                                   ),
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
+                              cursorColor: FlutterFlowTheme.of(
+                                context,
+                              ).primaryText,
                               validator: _model.textControllerValidator
                                   .asValidator(context),
                             ),
@@ -244,33 +257,43 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                             }
                             _model.ostype = await actions.findOsAction();
                             if (_model.ostype == 'iOS') {
-                              await launchUrl(Uri(
+                              await launchUrl(
+                                Uri(
                                   scheme: 'mailto',
                                   path: _model.textController.text,
                                   query: {
                                     'subject':
-                                        'hey ,I found this amazing application called SquaDD',
+                                        'hey ,I found this amazing application called Flock',
                                     'body':
                                         'Here , is the download link . https://apps.apple.com/app/squadd/id6752684914',
                                   }
                                       .entries
-                                      .map((MapEntry<String, String> e) =>
-                                          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-                                      .join('&')));
+                                      .map(
+                                        (MapEntry<String, String> e) =>
+                                            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+                                      )
+                                      .join('&'),
+                                ),
+                              );
                             } else {
-                              await launchUrl(Uri(
+                              await launchUrl(
+                                Uri(
                                   scheme: 'mailto',
                                   path: _model.textController.text,
                                   query: {
                                     'subject':
-                                        'hey ,I found this amazing application called SquaDD',
+                                        'hey ,I found this amazing application called Flock',
                                     'body':
-                                        'Here , is the download link . https://play.google.com/store/apps/details?id=com.company.squaDD',
+                                        'Here , is the download link . https://play.google.com/store/apps/details?id=com.viora.app',
                                   }
                                       .entries
-                                      .map((MapEntry<String, String> e) =>
-                                          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-                                      .join('&')));
+                                      .map(
+                                        (MapEntry<String, String> e) =>
+                                            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+                                      )
+                                      .join('&'),
+                                ),
+                              );
                             }
 
                             safeSetState(() {});
@@ -279,29 +302,37 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                           options: FFButtonOptions(
                             height: 40.0,
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 12.0, 16.0, 12.0),
+                              16.0,
+                              12.0,
+                              16.0,
+                              12.0,
+                            ),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
+                              0.0,
+                              0.0,
+                              0.0,
+                              0.0,
+                            ),
                             color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
                                   font: GoogleFonts.manrope(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
+                                    fontWeight: FlutterFlowTheme.of(
+                                      context,
+                                    ).titleSmall.fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(
+                                      context,
+                                    ).titleSmall.fontStyle,
                                   ),
                                   color: Colors.white,
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).titleSmall.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).titleSmall.fontStyle,
                                   lineHeight: 1.4,
                                 ),
                             elevation: 0.0,
@@ -330,16 +361,16 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.manrope(
                                 fontWeight: FontWeight.w500,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).bodyMedium.fontStyle,
                               ),
                               color: FlutterFlowTheme.of(context).greyD1,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
+                              fontStyle: FlutterFlowTheme.of(
+                                context,
+                              ).bodyMedium.fontStyle,
                               lineHeight: 1.4,
                             ),
                       ),
@@ -361,7 +392,7 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                       await Share.share(
                         _model.findos4 == 'iOS'
                             ? 'https://apps.apple.com/app/squadd/id6752684914'
-                            : 'https://play.google.com/store/apps/details?id=com.company.squaDD',
+                            : 'https://play.google.com/store/apps/details?id=com.viora.app',
                         sharePositionOrigin: getWidgetBoundingBox(context),
                       );
 
@@ -370,29 +401,37 @@ class _CompInviteWidgetState extends State<CompInviteWidget> {
                     text: 'Share via',
                     options: FFButtonOptions(
                       height: 40.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        16.0,
+                        0.0,
+                        16.0,
+                        0.0,
+                      ),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                      ),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 font: GoogleFonts.manrope(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
+                                  fontWeight: FlutterFlowTheme.of(
+                                    context,
+                                  ).titleSmall.fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(
+                                    context,
+                                  ).titleSmall.fontStyle,
                                 ),
                                 color: Colors.white,
                                 letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .fontStyle,
+                                fontWeight: FlutterFlowTheme.of(
+                                  context,
+                                ).titleSmall.fontWeight,
+                                fontStyle: FlutterFlowTheme.of(
+                                  context,
+                                ).titleSmall.fontStyle,
                                 lineHeight: 1.4,
                               ),
                       elevation: 0.0,

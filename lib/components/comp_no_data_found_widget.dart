@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comp_no_data_found_model.dart';
@@ -59,6 +60,26 @@ class _CompNoDataFoundWidgetState extends State<CompNoDataFoundWidget> {
           children: [
             Stack(
               children: [
+                if (widget!.pageName == 'no')
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      'assets/images/empty_feed.png',
+                      width: 160.0,
+                      height: 160.0,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                if (widget!.pageName == 'events')
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      'assets/images/empty_events.png',
+                      width: 160.0,
+                      height: 160.0,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 if (widget!.pageName == 'group')
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
@@ -93,7 +114,7 @@ class _CompNoDataFoundWidgetState extends State<CompNoDataFoundWidget> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
-                      'assets/images/Layer_1.webp',
+                      'assets/images/empty_market.png',
                       width: 160.0,
                       height: 160.0,
                       fit: BoxFit.cover,
@@ -123,7 +144,7 @@ class _CompNoDataFoundWidgetState extends State<CompNoDataFoundWidget> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
-                      'assets/images/Frame_(1).webp',
+                      'assets/images/empty_market.png',
                       width: 160.0,
                       height: 160.0,
                       fit: BoxFit.cover,
@@ -133,7 +154,7 @@ class _CompNoDataFoundWidgetState extends State<CompNoDataFoundWidget> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
-                      'assets/images/Layer_1.webp',
+                      'assets/images/empty_market.png',
                       width: 160.0,
                       height: 160.0,
                       fit: BoxFit.cover,
@@ -170,7 +191,11 @@ class _CompNoDataFoundWidgetState extends State<CompNoDataFoundWidget> {
                     ),
                   ),
               ],
-            ),
+            ).animate().fadeIn(duration: 400.ms).scale(
+                  begin: Offset(0.92, 0.92),
+                  end: Offset(1, 1),
+                  curve: Curves.easeOutBack,
+                ),
             Column(
               mainAxisSize: MainAxisSize.max,
               children: [

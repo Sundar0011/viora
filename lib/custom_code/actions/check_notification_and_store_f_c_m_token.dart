@@ -15,6 +15,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/flutter_flow/app_log.dart';
 
 Future<String> checkNotificationAndStoreFCMToken(String anonKey) async {
   try {
@@ -92,7 +93,7 @@ Future<String> checkNotificationAndStoreFCMToken(String anonKey) async {
 
     // Call Supabase RPC function to upsert device info
     final url = Uri.parse(
-        'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/upsert_user_device_fcm');
+        'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/upsert_user_device_fcm');
 
     final response = await http.post(
       url,
@@ -139,7 +140,7 @@ Future<void> _updateTokenInBackground(
     if (jwt == null) return;
 
     final url = Uri.parse(
-        'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/upsert_user_device_fcm');
+        'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/upsert_user_device_fcm');
 
     await http.post(
       url,
@@ -152,6 +153,6 @@ Future<void> _updateTokenInBackground(
     );
   } catch (e) {
     // Silent fail for background updates
-    print('Background token update failed: $e');
+    appLog('Background token update failed: $e');
   }
 }

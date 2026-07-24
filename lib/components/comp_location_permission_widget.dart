@@ -101,7 +101,7 @@ class _CompLocationPermissionWidgetState
                       'Your home address is used to place you in the right neighbourhood. We won\'t share it without your permission.',
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            font: GoogleFonts.inter(
+                            font: GoogleFonts.manrope(
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .fontWeight,

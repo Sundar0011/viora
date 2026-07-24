@@ -127,7 +127,7 @@ class _CompBlockWidgetState extends State<CompBlockWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'They won\'t be able to message you or find your profile or content on SquaDD.',
+                          'They won\'t be able to message you or find your profile or content on Flock.',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     font: GoogleFonts.manrope(
@@ -344,7 +344,7 @@ class _CompBlockWidgetState extends State<CompBlockWidget> {
                                   16.0, 12.0, 16.0, 12.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: Color(0xFFFF4C4C),
+                              color: FlutterFlowTheme.of(context).redColor2,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -356,7 +356,7 @@ class _CompBlockWidgetState extends State<CompBlockWidget> {
                                           .titleSmall
                                           .fontStyle,
                                     ),
-                                    color: FlutterFlowTheme.of(context).white,
+                                    color: Colors.white,
                                     letterSpacing: 0.0,
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .titleSmall

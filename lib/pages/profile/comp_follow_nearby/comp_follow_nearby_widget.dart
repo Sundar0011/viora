@@ -1,6 +1,7 @@
+import '/components/app_icon_button.dart';
+import '/components/app_network_image.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -105,14 +106,13 @@ class _CompFollowNearbyWidgetState extends State<CompFollowNearbyWidget> {
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1.0, 0.0),
-                            child: FlutterFlowIconButton(
-                              borderRadius: 100.0,
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: FlutterFlowTheme.of(context).extraBlack,
-                                size: 24.0,
-                              ),
-                              onPressed: () async {
+                            child: AppIconButton(
+                              icon: Icons.arrow_back,
+                              semanticLabel: 'Back',
+                              tooltip: 'Back',
+                              iconSize: 24.0,
+                              color: FlutterFlowTheme.of(context).extraBlack,
+                              onTap: () async {
                                 context.safePop();
                               },
                             ),
@@ -204,12 +204,21 @@ class _CompFollowNearbyWidgetState extends State<CompFollowNearbyWidget> {
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                   ),
-                                                  child: Image.network(
-                                                    getJsonField(
+                                                  child: AppNetworkImage(
+                                                    url: getJsonField(
                                                       followersItem,
                                                       r'''$.profile_picture''',
                                                     ).toString(),
+                                                    width: 32.0,
+                                                    height: 32.0,
                                                     fit: BoxFit.cover,
+                                                    fallbackIcon:
+                                                        Icons.person_rounded,
+                                                    semanticLabel:
+                                                        '${getJsonField(
+                                                      followersItem,
+                                                      r'''$.name''',
+                                                    ).toString()} profile photo',
                                                   ),
                                                 ),
                                                 Column(
@@ -277,7 +286,7 @@ class _CompFollowNearbyWidgetState extends State<CompFollowNearbyWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .greyL4,
-                                                                fontSize: 10.0,
+                                                                fontSize: 12.0,
                                                                 letterSpacing:
                                                                     0.0,
                                                                 fontWeight:
@@ -295,7 +304,10 @@ class _CompFollowNearbyWidgetState extends State<CompFollowNearbyWidget> {
                                               ].divide(SizedBox(width: 8.0)),
                                             ),
                                             InkWell(
-                                              splashColor: Colors.transparent,
+                                              splashColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary
+                                                      .withAlpha(0x14),
                                               focusColor: Colors.transparent,
                                               hoverColor: Colors.transparent,
                                               highlightColor:

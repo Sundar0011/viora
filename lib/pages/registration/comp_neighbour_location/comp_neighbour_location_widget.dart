@@ -10,6 +10,7 @@ import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comp_neighbour_location_model.dart';
@@ -362,7 +363,8 @@ class _CompNeighbourLocationWidgetState
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),
@@ -402,7 +404,8 @@ class _CompNeighbourLocationWidgetState
                                     width: double.infinity,
                                     height: 200.0,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFF7F9FC),
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       border: Border.all(
                                         color:
                                             FlutterFlowTheme.of(context).greyL2,
@@ -434,7 +437,10 @@ class _CompNeighbourLocationWidgetState
                                                         shownPlacesIndex];
                                                 return InkWell(
                                                   splashColor:
-                                                      Colors.transparent,
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary
+                                                          .withAlpha(0x14),
                                                   focusColor:
                                                       Colors.transparent,
                                                   hoverColor:
@@ -442,6 +448,8 @@ class _CompNeighbourLocationWidgetState
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
+                                                    HapticFeedback
+                                                        .lightImpact();
                                                     _model.choosedPlace =
                                                         shownPlacesItem;
                                                     _model.choosedPlaceId = _model
@@ -581,7 +589,21 @@ class _CompNeighbourLocationWidgetState
                                                       ),
                                                     ),
                                                   ),
-                                                );
+                                                )
+                                                    .animate()
+                                                    .fadeIn(
+                                                      duration: 260.ms,
+                                                      delay: (40 *
+                                                              (shownPlacesIndex %
+                                                                  8))
+                                                          .ms,
+                                                    )
+                                                    .slideY(
+                                                      begin: 0.06,
+                                                      end: 0,
+                                                      curve:
+                                                          Curves.easeOutCubic,
+                                                    );
                                               }),
                                             ),
                                           );
@@ -728,7 +750,8 @@ class _CompNeighbourLocationWidgetState
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     filled: true,
-                                    fillColor: Color(0xFFF7F9FC),
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             12.0, 16.0, 12.0, 16.0),
@@ -893,7 +916,8 @@ class _CompNeighbourLocationWidgetState
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),
@@ -1059,7 +1083,8 @@ class _CompNeighbourLocationWidgetState
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),

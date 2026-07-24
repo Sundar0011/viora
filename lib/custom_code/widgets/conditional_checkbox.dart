@@ -49,9 +49,11 @@ class _ConditionalCheckboxState extends State<ConditionalCheckbox> {
         width: widget.width,
         height: widget.height,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border: Border.all(color: FlutterFlowTheme.of(context).alternate),
           borderRadius: BorderRadius.circular(4),
-          color: isChecked ? Color(0xFF00AF54) : Colors.transparent,
+          color: isChecked
+              ? FlutterFlowTheme.of(context).primary
+              : Colors.transparent,
         ),
         child: isChecked
             ? Icon(Icons.check, size: widget.width * 0.8, color: Colors.white)

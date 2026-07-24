@@ -83,7 +83,8 @@ class _CompThreeDotEditPostWidgetState
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -167,7 +168,8 @@ class _CompThreeDotEditPostWidgetState
                     ),
                   ),
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -232,7 +234,8 @@ class _CompThreeDotEditPostWidgetState
                     ),
                   ),
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
@@ -297,7 +300,8 @@ class _CompThreeDotEditPostWidgetState
                     ),
                   ),
                   InkWell(
-                    splashColor: Colors.transparent,
+                    splashColor:
+                        FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,

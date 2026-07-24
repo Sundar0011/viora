@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'terms_and_conditions_model.dart';
@@ -167,11 +168,14 @@ class _TermsAndConditionsWidgetState extends State<TermsAndConditionsWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       if (_model.name == 'term') {
                                         _model.name = null;
                                         safeSetState(() {});
@@ -249,7 +253,7 @@ class _TermsAndConditionsWidgetState extends State<TermsAndConditionsWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 4.0, 0.0, 0.0),
                                       child: Text(
-                                        'Welcome to SquaDD! By downloading, installing, or using the SquaDD mobile application (the “App”) provided by SquaDD Technologies Private Limited (“we”, “us”, “our”), you agree to be bound by these Terms & Conditions (“Terms”). If you do not agree to these Terms, please do not use the App.',
+                                        'Welcome to Flock! By downloading, installing, or using the Flock mobile application (the “App”) provided by Flock Technologies Private Limited (“we”, “us”, “our”), you agree to be bound by these Terms & Conditions (“Terms”). If you do not agree to these Terms, please do not use the App.',
                                         textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -286,11 +290,14 @@ class _TermsAndConditionsWidgetState extends State<TermsAndConditionsWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       if (_model.name == 'warrenty') {
                                         _model.name = null;
                                         safeSetState(() {});
@@ -405,11 +412,14 @@ class _TermsAndConditionsWidgetState extends State<TermsAndConditionsWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       if (_model.name == 'refund') {
                                         _model.name = null;
                                         safeSetState(() {});
@@ -524,11 +534,14 @@ class _TermsAndConditionsWidgetState extends State<TermsAndConditionsWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       if (_model.name == 'cookie') {
                                         _model.name = null;
                                         safeSetState(() {});
@@ -643,11 +656,14 @@ class _TermsAndConditionsWidgetState extends State<TermsAndConditionsWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       if (_model.name == 'gdpr') {
                                         _model.name = null;
                                         safeSetState(() {});
@@ -762,11 +778,14 @@ class _TermsAndConditionsWidgetState extends State<TermsAndConditionsWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       if (_model.name == 'grievence') {
                                         _model.name = null;
                                         safeSetState(() {});

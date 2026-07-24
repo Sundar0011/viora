@@ -92,118 +92,107 @@ class _CompThreeDotEditBusinessWidgetState
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed(
-                        CreatePageWidget.routeName,
-                        queryParameters: {
-                          'pageType': serializeParam(
-                            'edit',
-                            ParamType.String,
-                          ),
-                          'businessId': serializeParam(
-                            widget!.businessId,
-                            ParamType.String,
-                          ),
-                        }.withoutNulls,
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 7.0, 16.0, 7.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(0.0),
-                              child: Image.asset(
-                                'assets/images/border_color.webp',
-                                width: 20.0,
-                                height: 20.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Text(
-                              'Edit this page',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context).greyD1,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                    lineHeight: 1.4,
-                                  ),
-                            ),
-                          ].divide(SizedBox(width: 8.0)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      if (((String var1) {
-                            return var1 == "false";
-                          }(getJsonField(
-                            (_model.apiResulteyq?.jsonBody ?? ''),
-                            r'''$.plan''',
-                          ).toString())) ==
-                          true) {
+                  Semantics(
+                    button: true,
+                    label: 'Edit this page',
+                    child: InkWell(
+                      splashColor:
+                          FlutterFlowTheme.of(context).primary.withAlpha(0x14),
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
                         context.pushNamed(
-                          PromoteBusinessWidget.routeName,
+                          CreatePageWidget.routeName,
                           queryParameters: {
+                            'pageType': serializeParam(
+                              'edit',
+                              ParamType.String,
+                            ),
                             'businessId': serializeParam(
                               widget!.businessId,
                               ParamType.String,
                             ),
-                            'pagetype': serializeParam(
-                              'new',
-                              ParamType.String,
-                            ),
                           }.withoutNulls,
                         );
-                      } else {
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 7.0, 16.0, 7.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(0.0),
+                                child: Image.asset(
+                                  'assets/images/border_color.webp',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Text(
+                                'Edit this page',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.manrope(
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color:
+                                          FlutterFlowTheme.of(context).greyD1,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                      lineHeight: 1.4,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 8.0)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Semantics(
+                    button: true,
+                    label: 'Promote business',
+                    child: InkWell(
+                      splashColor:
+                          FlutterFlowTheme.of(context).primary.withAlpha(0x14),
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
                         if (((String var1) {
-                              return var1 == "under review";
+                              return var1 == "false";
                             }(getJsonField(
                               (_model.apiResulteyq?.jsonBody ?? ''),
                               r'''$.plan''',
                             ).toString())) ==
                             true) {
-                          await showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: MediaQuery.viewInsetsOf(context),
-                                child: CompUnderReviewWidget(
-                                  type: 'home',
-                                ),
-                              );
-                            },
-                          ).then((value) => safeSetState(() {}));
+                          context.pushNamed(
+                            PromoteBusinessWidget.routeName,
+                            queryParameters: {
+                              'businessId': serializeParam(
+                                widget!.businessId,
+                                ParamType.String,
+                              ),
+                              'pagetype': serializeParam(
+                                'new',
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
                         } else {
                           if (((String var1) {
-                                return var1 == "mismatch";
+                                return var1 == "under review";
                               }(getJsonField(
                                 (_model.apiResulteyq?.jsonBody ?? ''),
                                 r'''$.plan''',
@@ -216,15 +205,15 @@ class _CompThreeDotEditBusinessWidgetState
                               builder: (context) {
                                 return Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
-                                  child: CompMismatchWidget(
-                                    businessId: widget!.businessId!,
+                                  child: CompUnderReviewWidget(
+                                    type: 'home',
                                   ),
                                 );
                               },
                             ).then((value) => safeSetState(() {}));
                           } else {
                             if (((String var1) {
-                                  return var1 == "ended";
+                                  return var1 == "mismatch";
                                 }(getJsonField(
                                   (_model.apiResulteyq?.jsonBody ?? ''),
                                   r'''$.plan''',
@@ -237,8 +226,7 @@ class _CompThreeDotEditBusinessWidgetState
                                 builder: (context) {
                                   return Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
-                                    child: CompPromotionEndedWidget(
-                                      type: 'renew',
+                                    child: CompMismatchWidget(
                                       businessId: widget!.businessId!,
                                     ),
                                   );
@@ -246,7 +234,7 @@ class _CompThreeDotEditBusinessWidgetState
                               ).then((value) => safeSetState(() {}));
                             } else {
                               if (((String var1) {
-                                    return var1 == "live";
+                                    return var1 == "ended";
                                   }(getJsonField(
                                     (_model.apiResulteyq?.jsonBody ?? ''),
                                     r'''$.plan''',
@@ -259,21 +247,16 @@ class _CompThreeDotEditBusinessWidgetState
                                   builder: (context) {
                                     return Padding(
                                       padding: MediaQuery.viewInsetsOf(context),
-                                      child: CompPromotionIsLiveWidget(
-                                        type: 'review',
+                                      child: CompPromotionEndedWidget(
+                                        type: 'renew',
                                         businessId: widget!.businessId!,
-                                        planEndDate: functions
-                                            .returnPlanEndDate(getJsonField(
-                                          (_model.apiResulteyq?.jsonBody ?? ''),
-                                          r'''$.plan_end_date''',
-                                        ).toString()),
                                       ),
                                     );
                                   },
                                 ).then((value) => safeSetState(() {}));
                               } else {
                                 if (((String var1) {
-                                      return var1 == "rejected";
+                                      return var1 == "live";
                                     }(getJsonField(
                                       (_model.apiResulteyq?.jsonBody ?? ''),
                                       r'''$.plan''',
@@ -287,121 +270,158 @@ class _CompThreeDotEditBusinessWidgetState
                                       return Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
-                                        child: CompPromotionRejectedWidget(
-                                          type: 'renew',
+                                        child: CompPromotionIsLiveWidget(
+                                          type: 'review',
                                           businessId: widget!.businessId!,
+                                          planEndDate: functions
+                                              .returnPlanEndDate(getJsonField(
+                                            (_model.apiResulteyq?.jsonBody ??
+                                                ''),
+                                            r'''$.plan_end_date''',
+                                          ).toString()),
                                         ),
                                       );
                                     },
                                   ).then((value) => safeSetState(() {}));
+                                } else {
+                                  if (((String var1) {
+                                        return var1 == "rejected";
+                                      }(getJsonField(
+                                        (_model.apiResulteyq?.jsonBody ?? ''),
+                                        r'''$.plan''',
+                                      ).toString())) ==
+                                      true) {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: CompPromotionRejectedWidget(
+                                            type: 'renew',
+                                            businessId: widget!.businessId!,
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+                                  }
                                 }
                               }
                             }
                           }
                         }
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 7.0, 16.0, 7.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(0.0),
-                              child: Image.asset(
-                                'assets/images/campaign.webp',
-                                width: 20.0,
-                                height: 20.0,
-                                fit: BoxFit.cover,
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 7.0, 16.0, 7.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(0.0),
+                                child: Image.asset(
+                                  'assets/images/campaign.webp',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Promote business',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(
+                              Text(
+                                'Promote business',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.manrope(
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color:
+                                          FlutterFlowTheme.of(context).greyD1,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontStyle,
+                                      lineHeight: 1.4,
                                     ),
-                                    color: FlutterFlowTheme.of(context).greyD1,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                    lineHeight: 1.4,
-                                  ),
-                            ),
-                          ].divide(SizedBox(width: 8.0)),
+                              ),
+                            ].divide(SizedBox(width: 8.0)),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        enableDrag: false,
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.viewInsetsOf(context),
-                            child: CompDeleteBusinessWidget(
-                              businessId: widget!.businessId!,
-                            ),
-                          );
-                        },
-                      ).then((value) => safeSetState(() {}));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 7.0, 16.0, 7.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(0.0),
-                              child: Image.asset(
-                                'assets/images/delete_(1).webp',
-                                width: 20.0,
-                                height: 20.0,
-                                fit: BoxFit.cover,
+                  Semantics(
+                    button: true,
+                    label: 'Delete this page',
+                    child: InkWell(
+                      splashColor:
+                          FlutterFlowTheme.of(context).primary.withAlpha(0x14),
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: CompDeleteBusinessWidget(
+                                businessId: widget!.businessId!,
                               ),
-                            ),
-                            Text(
-                              'Delete this page',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 7.0, 16.0, 7.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(0.0),
+                                child: Image.asset(
+                                  'assets/images/delete_(1).webp',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Text(
+                                'Delete this page',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.manrope(
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color:
+                                          FlutterFlowTheme.of(context).greyD1,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontStyle,
+                                      lineHeight: 1.4,
                                     ),
-                                    color: FlutterFlowTheme.of(context).greyD1,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                    lineHeight: 1.4,
-                                  ),
-                            ),
-                          ].divide(SizedBox(width: 8.0)),
+                              ),
+                            ].divide(SizedBox(width: 8.0)),
+                          ),
                         ),
                       ),
                     ),

@@ -23,7 +23,7 @@ Future<List<dynamic>> getSaleHomePage(
   int pCommunityid,
 ) async {
   final url = Uri.parse(
-    'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_sales_home_data',
+    'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_sales_home_data',
   );
 
   final headers = {

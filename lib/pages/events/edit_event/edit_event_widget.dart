@@ -1,6 +1,7 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -114,6 +115,7 @@ class _EditEventWidgetState extends State<EditEventWidget> {
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: FutureBuilder<List<EventPageRow>>(
             future: EventPageTable().querySingleRow(
               queryFn: (q) => q.eqOrNull(
@@ -213,14 +215,13 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                               children: [
                                 Stack(
                                   children: [
-                                    ClipRRect(
+                                    AppNetworkImage(
+                                      url: containerEventPageRow!.coverImage,
+                                      width: double.infinity,
+                                      height: 240.0,
+                                      fit: BoxFit.cover,
                                       borderRadius: BorderRadius.circular(0.0),
-                                      child: Image.network(
-                                        containerEventPageRow!.coverImage,
-                                        width: double.infinity,
-                                        height: 240.0,
-                                        fit: BoxFit.cover,
-                                      ),
+                                      semanticLabel: 'Event cover photo',
                                     ),
                                     if (_model.uploadedLocalFile_editEventImage !=
                                             null &&
@@ -253,7 +254,9 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                       borderRadius: BorderRadius.circular(24.0),
                                     ),
                                     child: InkWell(
-                                      splashColor: Colors.transparent,
+                                      splashColor: FlutterFlowTheme.of(context)
+                                          .primary
+                                          .withAlpha(0x14),
                                       focusColor: Colors.transparent,
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
@@ -478,7 +481,9 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 12.0, 16.0),
@@ -561,7 +566,7 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                       textStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
-                                            font: GoogleFonts.inter(
+                                            font: GoogleFonts.manrope(
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .labelMedium
@@ -585,7 +590,7 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                               context)
                                           .bodyMedium
                                           .override(
-                                            font: GoogleFonts.inter(
+                                            font: GoogleFonts.manrope(
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -819,7 +824,9 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 12.0, 16.0),
@@ -1078,7 +1085,9 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                                     BorderRadius.circular(4.0),
                                               ),
                                               filled: true,
-                                              fillColor: Color(0xFFF7F9FC),
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,
@@ -1339,7 +1348,9 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                     ),
                                   ),
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
@@ -1370,7 +1381,8 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                       width: double.infinity,
                                       height: 50.0,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFF7F9FC),
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
                                         borderRadius:
                                             BorderRadius.circular(4.0),
                                         border: Border.all(
@@ -1486,7 +1498,9 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                     ),
                                   ),
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
@@ -1517,7 +1531,8 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                       width: double.infinity,
                                       height: 50.0,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFF7F9FC),
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
                                         borderRadius:
                                             BorderRadius.circular(4.0),
                                         border: Border.all(
@@ -1721,7 +1736,9 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                                 BorderRadius.circular(4.0),
                                           ),
                                           filled: true,
-                                          fillColor: Color(0xFFF7F9FC),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 16.0, 12.0, 16.0),
@@ -1817,13 +1834,15 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                         activeColor:
                                             FlutterFlowTheme.of(context)
                                                 .primary,
-                                        checkColor:
-                                            FlutterFlowTheme.of(context).info,
+                                        checkColor: Colors.white,
                                       ),
                                     ),
                                     Flexible(
                                       child: InkWell(
-                                        splashColor: Colors.transparent,
+                                        splashColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary
+                                                .withAlpha(0x14),
                                         focusColor: Colors.transparent,
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
@@ -1844,7 +1863,7 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                                         context)
                                                     .bodyMedium
                                                     .override(
-                                                      font: GoogleFonts.inter(
+                                                      font: GoogleFonts.manrope(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontStyle:
@@ -1868,7 +1887,7 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                                     ),
                                               ),
                                               TextSpan(
-                                                text: 'SquaDD’s event policy.',
+                                                text: 'Flock’s event policy.',
                                                 style: TextStyle(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -1881,7 +1900,7 @@ class _EditEventWidgetState extends State<EditEventWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  font: GoogleFonts.inter(
+                                                  font: GoogleFonts.manrope(
                                                     fontWeight:
                                                         FlutterFlowTheme.of(
                                                                 context)

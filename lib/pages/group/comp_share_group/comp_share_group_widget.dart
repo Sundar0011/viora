@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -75,16 +76,20 @@ class _CompShareGroupWidgetState extends State<CompShareGroupWidget> {
                     children: [
                       Align(
                         alignment: AlignmentDirectional(-1.0, 0.0),
-                        child: FlutterFlowIconButton(
-                          borderRadius: 100.0,
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: FlutterFlowTheme.of(context).extraBlack,
-                            size: 24.0,
+                        child: Semantics(
+                          button: true,
+                          label: 'Back',
+                          child: FlutterFlowIconButton(
+                            borderRadius: 100.0,
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: FlutterFlowTheme.of(context).extraBlack,
+                              size: 24.0,
+                            ),
+                            onPressed: () async {
+                              context.safePop();
+                            },
                           ),
-                          onPressed: () async {
-                            context.safePop();
-                          },
                         ),
                       ),
                       Text(
@@ -155,7 +160,7 @@ class _CompShareGroupWidgetState extends State<CompShareGroupWidget> {
                                 ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0x00000000),
+                            color: Colors.transparent,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(4.0),
@@ -182,7 +187,7 @@ class _CompShareGroupWidgetState extends State<CompShareGroupWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         filled: true,
-                        fillColor: Color(0xFFF7F9FC),
+                        fillColor: FlutterFlowTheme.of(context).alternate,
                         contentPadding: EdgeInsetsDirectional.fromSTEB(
                             12.0, 8.0, 12.0, 8.0),
                         prefixIcon: Icon(
@@ -231,17 +236,13 @@ class _CompShareGroupWidgetState extends State<CompShareGroupWidget> {
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
+                                AppNetworkImage(
+                                  url: 'https://picsum.photos/seed/500/600',
                                   width: 64.0,
                                   height: 64.0,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/500/600',
-                                    fit: BoxFit.cover,
-                                  ),
+                                  fit: BoxFit.cover,
+                                  isAvatar: true,
+                                  semanticLabel: 'Contact profile photo',
                                 ),
                                 Text(
                                   'Henry Bauckham',
@@ -279,17 +280,13 @@ class _CompShareGroupWidgetState extends State<CompShareGroupWidget> {
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
+                                AppNetworkImage(
+                                  url: 'https://picsum.photos/seed/500/600',
                                   width: 64.0,
                                   height: 64.0,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/500/600',
-                                    fit: BoxFit.cover,
-                                  ),
+                                  fit: BoxFit.cover,
+                                  isAvatar: true,
+                                  semanticLabel: 'Contact profile photo',
                                 ),
                                 Text(
                                   'Henry Bauckham',
@@ -327,17 +324,13 @@ class _CompShareGroupWidgetState extends State<CompShareGroupWidget> {
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
+                                AppNetworkImage(
+                                  url: 'https://picsum.photos/seed/500/600',
                                   width: 64.0,
                                   height: 64.0,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/500/600',
-                                    fit: BoxFit.cover,
-                                  ),
+                                  fit: BoxFit.cover,
+                                  isAvatar: true,
+                                  semanticLabel: 'Contact profile photo',
                                 ),
                                 Text(
                                   'Henry Bauckham',

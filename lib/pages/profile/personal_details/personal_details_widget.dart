@@ -1,7 +1,7 @@
+import '/components/app_icon_button.dart';
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -81,14 +81,13 @@ class _PersonalDetailsWidgetState extends State<PersonalDetailsWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        FlutterFlowIconButton(
-                          borderRadius: 100.0,
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: FlutterFlowTheme.of(context).extraBlack,
-                            size: 24.0,
-                          ),
-                          onPressed: () async {
+                        AppIconButton(
+                          icon: Icons.arrow_back,
+                          semanticLabel: 'Back',
+                          tooltip: 'Back',
+                          iconSize: 24.0,
+                          color: FlutterFlowTheme.of(context).extraBlack,
+                          onTap: () async {
                             context.safePop();
                           },
                         ),
@@ -388,7 +387,9 @@ class _PersonalDetailsWidgetState extends State<PersonalDetailsWidget> {
                                                         ),
                                                         filled: true,
                                                         fillColor:
-                                                            Color(0xFFF7F9FC),
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                         contentPadding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
@@ -634,7 +635,9 @@ class _PersonalDetailsWidgetState extends State<PersonalDetailsWidget> {
                                                         ),
                                                         filled: true,
                                                         fillColor:
-                                                            Color(0xFFF7F9FC),
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                         contentPadding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
@@ -887,7 +890,9 @@ class _PersonalDetailsWidgetState extends State<PersonalDetailsWidget> {
                                                         ),
                                                         filled: true,
                                                         fillColor:
-                                                            Color(0xFFF7F9FC),
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                         contentPadding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
@@ -1039,7 +1044,10 @@ class _PersonalDetailsWidgetState extends State<PersonalDetailsWidget> {
                                                         .greyL4,
                                                     size: 24.0,
                                                   ),
-                                                  fillColor: Color(0xFFF7F9FC),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
                                                   elevation: 2.0,
                                                   borderColor:
                                                       FlutterFlowTheme.of(
@@ -1159,7 +1167,10 @@ class _PersonalDetailsWidgetState extends State<PersonalDetailsWidget> {
                                                         .greyL4,
                                                     size: 24.0,
                                                   ),
-                                                  fillColor: Color(0xFFF7F9FC),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
                                                   elevation: 2.0,
                                                   borderColor:
                                                       FlutterFlowTheme.of(

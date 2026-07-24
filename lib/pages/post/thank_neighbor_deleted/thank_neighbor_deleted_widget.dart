@@ -1,3 +1,4 @@
+import '/components/app_network_image.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -7,6 +8,8 @@ import '/flutter_flow/form_field_controller.dart';
 import 'dart:ui';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +64,7 @@ class _ThankNeighborDeletedWidgetState
         backgroundColor: FlutterFlowTheme.of(context).white,
         body: SafeArea(
           top: true,
+          bottom: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -91,14 +95,13 @@ class _ThankNeighborDeletedWidgetState
                                 context.safePop();
                               },
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(24.0),
-                              child: Image.network(
-                                'https://picsum.photos/seed/647/600',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.cover,
-                              ),
+                            AppNetworkImage(
+                              url: 'https://picsum.photos/seed/647/600',
+                              width: 40.0,
+                              height: 40.0,
+                              fit: BoxFit.cover,
+                              isAvatar: true,
+                              semanticLabel: 'Your profile photo',
                             ),
                             FlutterFlowDropDown<String>(
                               controller: _model.dropDownValueController ??=
@@ -111,7 +114,7 @@ class _ThankNeighborDeletedWidgetState
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    font: GoogleFonts.inter(
+                                    font: GoogleFonts.manrope(
                                       fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -169,7 +172,7 @@ class _ThankNeighborDeletedWidgetState
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        font: GoogleFonts.inter(
+                                        font: GoogleFonts.manrope(
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -247,14 +250,14 @@ class _ThankNeighborDeletedWidgetState
                                 ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Colors.transparent,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Colors.transparent,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
@@ -343,19 +346,25 @@ class _ThankNeighborDeletedWidgetState
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       _model.option = '1';
                                       safeSetState(() {});
                                     },
-                                    child: Container(
+                                    child: AnimatedContainer(
+                                      duration: 180.ms,
+                                      curve: Curves.easeOut,
                                       height: 28.0,
                                       decoration: BoxDecoration(
                                         color: _model.option == '1'
-                                            ? Color(0xFF0F8849)
+                                            ? FlutterFlowTheme.of(context)
+                                                .primary
                                             : FlutterFlowTheme.of(context)
                                                 .white,
                                         borderRadius:
@@ -392,9 +401,7 @@ class _ThankNeighborDeletedWidgetState
                                                       ? FlutterFlowTheme.of(
                                                               context)
                                                           .greyL4
-                                                      : FlutterFlowTheme.of(
-                                                              context)
-                                                          .white,
+                                                      : Colors.white,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                   fontStyle:
@@ -410,11 +417,14 @@ class _ThankNeighborDeletedWidgetState
                                     ),
                                   ),
                                   InkWell(
-                                    splashColor: Colors.transparent,
+                                    splashColor: FlutterFlowTheme.of(context)
+                                        .primary
+                                        .withAlpha(0x14),
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      HapticFeedback.lightImpact();
                                       _model.option = '2';
                                       safeSetState(() {});
 
@@ -428,12 +438,15 @@ class _ThankNeighborDeletedWidgetState
                                         }.withoutNulls,
                                       );
                                     },
-                                    child: Container(
+                                    child: AnimatedContainer(
+                                      duration: 180.ms,
+                                      curve: Curves.easeOut,
                                       height: 28.0,
                                       decoration: BoxDecoration(
                                         color: _model.option == '2'
-                                            ? Color(0xFF0F8849)
-                                            : Color(0x00000000),
+                                            ? FlutterFlowTheme.of(context)
+                                                .primary
+                                            : Colors.transparent,
                                         borderRadius:
                                             BorderRadius.circular(24.0),
                                         border: Border.all(
@@ -468,9 +481,7 @@ class _ThankNeighborDeletedWidgetState
                                                       ? FlutterFlowTheme.of(
                                                               context)
                                                           .greyL4
-                                                      : FlutterFlowTheme.of(
-                                                              context)
-                                                          .white,
+                                                      : Colors.white,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w600,
                                                   fontStyle:
@@ -604,7 +615,8 @@ class _ThankNeighborDeletedWidgetState
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     filled: true,
-                                    fillColor: Color(0xFFF7F9FC),
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             12.0, 16.0, 12.0, 16.0),

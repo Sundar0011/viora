@@ -1,4 +1,5 @@
 import 'database.dart';
+import '/flutter_flow/app_log.dart';
 
 abstract class SupabaseTable<T extends SupabaseDataRow> {
   String get tableName;
@@ -23,7 +24,7 @@ abstract class SupabaseTable<T extends SupabaseDataRow> {
           .limit(1)
           .select()
           .maybeSingle()
-          .catchError((e) => print('Error querying row: $e'))
+          .catchError((e) => appLog('Error querying row: $e'))
           .then((r) => [if (r != null) createRow(r)]);
 
   Future<T> insert(Map<String, dynamic> data) => SupaFlow.client
@@ -62,13 +63,23 @@ abstract class SupabaseTable<T extends SupabaseDataRow> {
   }
 }
 
+/// True for a Dart null, and also for the literal string "null".
+///
+/// FlutterFlow's `valueOrDefault<String>(x, 'null')` idiom substitutes the TEXT
+/// "null" when a value is missing. Passing that into a uuid/int/bool filter makes
+/// Postgres raise `22P02 invalid input syntax for type uuid: "null"`, which surfaces
+/// as a repeated "Error querying row" in the logs and hides real failures.
+/// Treating it as absent makes the filter behave the way the caller intended.
+bool _isAbsent(dynamic value) =>
+    value == null || (value is String && value == 'null');
+
 extension NullSafePostgrestFilters on PostgrestFilterBuilder {
   PostgrestFilterBuilder eqOrNull(String column, dynamic value) {
-    return value != null ? eq(column, value) : this;
+    return !_isAbsent(value) ? eq(column, value) : this;
   }
 
   PostgrestFilterBuilder neqOrNull(String column, dynamic value) {
-    return value != null ? neq(column, value) : this;
+    return !_isAbsent(value) ? neq(column, value) : this;
   }
 
   PostgrestFilterBuilder ltOrNull(String column, dynamic value) {
@@ -101,12 +112,13 @@ extension NullSafePostgrestFilters on PostgrestFilterBuilder {
 }
 
 extension NullSafeSupabaseStreamFilters on SupabaseStreamFilterBuilder {
+  // Same "null"-as-text guard as the filter builder above.
   SupabaseStreamBuilder eqOrNull(String column, dynamic value) {
-    return value != null ? eq(column, value) : this;
+    return !_isAbsent(value) ? eq(column, value) : this;
   }
 
   SupabaseStreamBuilder neqOrNull(String column, dynamic value) {
-    return value != null ? neq(column, value) : this;
+    return !_isAbsent(value) ? neq(column, value) : this;
   }
 
   SupabaseStreamBuilder ltOrNull(String column, dynamic value) {

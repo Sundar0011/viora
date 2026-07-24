@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
+import '/flutter_flow/app_log.dart';
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
@@ -22,7 +23,7 @@ class SendOtpCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'SendOtp',
-      apiUrl: 'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/send-otp',
+      apiUrl: 'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/send-otp',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${anonKey}',
@@ -61,7 +62,7 @@ class VerifiOtpCall {
     return ApiManager.instance.makeApiCall(
       callName: 'VerifiOtp',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/verify_otp',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/verify_otp',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${anonKey}',
@@ -98,7 +99,7 @@ class VaildateUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'VaildateUser',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/authenticate-user',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/authenticate-user',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${anonKey}',
@@ -135,7 +136,7 @@ class CheckUserExistCall {
     return ApiManager.instance.makeApiCall(
       callName: 'CheckUserExist',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/check-user-exist',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/check-user-exist',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${anonKey}',
@@ -177,7 +178,7 @@ class CheckUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'CheckUser',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/check-user',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/check-user',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${anonKey}',
@@ -214,7 +215,7 @@ class FindCommonChatCall {
     return ApiManager.instance.makeApiCall(
       callName: 'FindCommonChat',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/find_common_chat',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/find_common_chat',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -267,7 +268,7 @@ class InsertImageUrlsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'InsertImageUrls',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/insert_post_image_rows',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/insert_post_image_rows',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -303,7 +304,7 @@ class AddChatUsersCall {
     return ApiManager.instance.makeApiCall(
       callName: 'AddChatUsers',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/add_chat_users',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/add_chat_users',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -339,7 +340,7 @@ class GetPostUserDataCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetPostUserData',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_post_user_data',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_post_user_data',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -423,7 +424,7 @@ class AddLikeCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'AddLike',
-      apiUrl: 'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/add_like',
+      apiUrl: 'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/add_like',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -457,7 +458,7 @@ class SoftdeletechatusersCall {
     return ApiManager.instance.makeApiCall(
       callName: 'softdeletechatusers',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/soft_delete_chat_users',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/soft_delete_chat_users',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -493,7 +494,7 @@ class GetPostCommentsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetPostComments',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_post_comments',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_post_comments',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -527,7 +528,7 @@ class RestoreChatUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'RestoreChatUser',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/restore_chat_user',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/restore_chat_user',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -567,7 +568,7 @@ class AddCommentLikeCall {
     return ApiManager.instance.makeApiCall(
       callName: 'AddCommentLike',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/add_comment_like',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/add_comment_like',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -601,7 +602,7 @@ class GetLikedUsersCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetLikedUsers',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_post_likes',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_post_likes',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -637,7 +638,7 @@ class GetlimitedPostLikesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetlimitedPostLikes',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_limited_post_likes',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_limited_post_likes',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -675,7 +676,7 @@ class AddFollowCall {
     return ApiManager.instance.makeApiCall(
       callName: 'AddFollow',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/user_follow',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/user_follow',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -709,7 +710,7 @@ class PostCountIncrementCall {
     return ApiManager.instance.makeApiCall(
       callName: 'PostCountIncrement',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/add_post_count',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/add_post_count',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -747,7 +748,7 @@ class CountLikesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'CountLikes',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/count_likes',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/count_likes',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -793,7 +794,7 @@ class UpdatePostCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdatePost',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.functions.supabase.co/update-user-post',
+          'https://hlmymmlkgirafodcnkgg.functions.supabase.co/update-user-post',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -832,7 +833,7 @@ class ResetPasswordCall {
     return ApiManager.instance.makeApiCall(
       callName: 'ResetPassword',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/reset-password',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/reset-password',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${anonKey}',
@@ -864,7 +865,7 @@ class ChangePasswordCall {
     return ApiManager.instance.makeApiCall(
       callName: 'ChangePassword',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/change-password',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/change-password',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${token}',
@@ -899,7 +900,7 @@ class GetMyBusinessCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetMyBusiness',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_my_business',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_my_business',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -935,7 +936,7 @@ class BusinessHomepageCall {
     return ApiManager.instance.makeApiCall(
       callName: 'BusinessHomepage',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_business_details',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_business_details',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -967,7 +968,7 @@ class UpdateTotalGroupMembersCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateTotalGroupMembers',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_total_group_members',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_total_group_members',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer${token}',
@@ -1001,7 +1002,7 @@ class GetPromotionplanCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetPromotionplan',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_promotion_plan',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_promotion_plan',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1037,7 +1038,7 @@ class GetBusinessCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetBusiness',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_all_business',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_all_business',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1073,7 +1074,7 @@ class InviteFriendsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'InviteFriends',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_available_users_to_invite',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_available_users_to_invite',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1113,7 +1114,7 @@ class UpdateContactedCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateContacted',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_contacted',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_contacted',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${token}',
@@ -1148,7 +1149,7 @@ class GetContactedCountCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetContactedCount',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_contact_count',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_contact_count',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1182,7 +1183,7 @@ class DeleteAdminCall {
     return ApiManager.instance.makeApiCall(
       callName: 'delete admin',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/delete_group_admin',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/delete_group_admin',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1216,7 +1217,7 @@ class GroupMembersCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GroupMembers',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_group_members_with_admin_status',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_group_members_with_admin_status',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1254,7 +1255,7 @@ class GetSpecifiBusinessCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetSpecifiBusiness',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_specific_business',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_specific_business',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1286,7 +1287,7 @@ class GetOtherUserFollowingGroupsrCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetOtherUserFollowingGroupsr',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_user_following_groups_with_status',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_user_following_groups_with_status',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1319,7 +1320,7 @@ class AddUserLocationCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'AddUserLocation',
-      apiUrl: 'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/user_locations',
+      apiUrl: 'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/user_locations',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1346,7 +1347,7 @@ class UpdateUserGroupCountCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateUserGroupCount',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_user_group_count',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_user_group_count',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1372,7 +1373,7 @@ class GetPostCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetPost',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_visible_posts',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_visible_posts',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1500,7 +1501,7 @@ class InsertUserLocationCall {
     return ApiManager.instance.makeApiCall(
       callName: 'InsertUserLocation',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_user_location',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_user_location',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1556,7 +1557,7 @@ class InsertSaleDetailsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'InsertSaleDetails',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/insert_sales_details',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/insert_sales_details',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1608,7 +1609,7 @@ class UpdateSaleWithoutImageCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateSaleWithoutImage',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_sale_without_image',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_sale_without_image',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1644,7 +1645,7 @@ class GetSalesDataCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetSalesData',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_yours_sales_details',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_yours_sales_details',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1680,7 +1681,7 @@ class GetSalesDetailsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetSalesDetails',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_sales_details',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_sales_details',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1718,7 +1719,7 @@ class UpdateEventLocationCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateEventLocation',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_event_location',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_event_location',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${anonKey}',
@@ -1754,7 +1755,7 @@ class GetNeighborhoodPeoplesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetNeighborhoodPeoples',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_followers_nearby',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_followers_nearby',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1790,7 +1791,7 @@ class GetneighbourhoodPostsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetneighbourhoodPosts',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_neighbourhood_post_data',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_neighbourhood_post_data',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1824,7 +1825,7 @@ class UpdateEventAttendeeCountCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateEventAttendeeCount',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_event_attendee_count',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_event_attendee_count',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -1858,7 +1859,7 @@ class GetPostAllCommentsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetPostAllComments',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_post_comments_with_user',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_post_comments_with_user',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1896,7 +1897,7 @@ class GetSaleHomePageSalesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetSaleHomePageSales',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_sales_homepage',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_sales_homepage',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -1944,7 +1945,7 @@ class GetAllSearchCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetAllSearch',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_search_all_data',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_search_all_data',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -2017,7 +2018,7 @@ class GetSpecifFilterSearchCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetSpecifFilterSearch',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_search_data',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_search_data',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -2085,7 +2086,7 @@ class SpecificGroupCall {
     return ApiManager.instance.makeApiCall(
       callName: 'SpecificGroup',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_specific_group_with_user_status',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_specific_group_with_user_status',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2165,7 +2166,7 @@ class UpdateSaleCountCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateSaleCount',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_sale_count',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_sale_count',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2199,7 +2200,7 @@ class GetSalesImagesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetSalesImages',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_sale_images',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_sale_images',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2233,7 +2234,7 @@ class InternalShareCall {
     return ApiManager.instance.makeApiCall(
       callName: 'InternalShare',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_internal_share',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_internal_share',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2269,7 +2270,7 @@ class CheckGroupMemberShareCall {
     return ApiManager.instance.makeApiCall(
       callName: 'CheckGroupMemberShare',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/check_group_member',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/check_group_member',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2310,7 +2311,7 @@ class UpdateUserProfileCountsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateUserProfileCounts',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_user_profile_counts',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_user_profile_counts',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2348,7 +2349,7 @@ class UpdatePostShareCountCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdatePostShareCount',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_post_share_count',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_post_share_count',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2380,7 +2381,7 @@ class GetFollowingUsersCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetFollowingUsers',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_following_users_not_attending_event',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_following_users_not_attending_event',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2414,7 +2415,7 @@ class InviteUserToEventCall {
     return ApiManager.instance.makeApiCall(
       callName: 'InviteUserToEvent',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/invite_user_to_event',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/invite_user_to_event',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2447,7 +2448,7 @@ class TagSearchCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'TagSearch',
-      apiUrl: 'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/tag_search',
+      apiUrl: 'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/tag_search',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -2481,7 +2482,7 @@ class NotificationCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Notification',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_notifications',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_notifications',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -2519,7 +2520,7 @@ class UpdateSearchHistoryCall {
     return ApiManager.instance.makeApiCall(
       callName: 'UpdateSearchHistory',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/update_search_data',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/update_search_data',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -2553,7 +2554,7 @@ class UpdateCommentCountCall {
     return ApiManager.instance.makeApiCall(
       callName: 'updateCommentCount',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/count_comment',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/count_comment',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apikey}',
@@ -2589,7 +2590,7 @@ class GetInvitedUsersForGroupCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetInvitedUsersForGroup',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_invited_users_for_group',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_invited_users_for_group',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2616,7 +2617,7 @@ class GetGroupsWithUserStatusCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetGroupsWithUserStatus',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_groups_with_user_status',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_groups_with_user_status',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2646,7 +2647,7 @@ class GetChatCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'GetChat',
-      apiUrl: 'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/get_chat',
+      apiUrl: 'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/get_chat',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2682,7 +2683,7 @@ class InsertTagsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'InsertTags',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/rest/v1/rpc/insert_tags',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/rest/v1/rpc/insert_tags',
       callType: ApiCallType.POST,
       headers: {
         'apikey': '${apiKey}',
@@ -2718,7 +2719,7 @@ class GenerateTLDRCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GenerateTLDR',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/generate-tldr',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/generate-tldr',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${token}',
@@ -2756,7 +2757,7 @@ class PhoneSignupCall {
     return ApiManager.instance.makeApiCall(
       callName: 'PhoneSignup',
       apiUrl:
-          'https://wgcqstmmkcdjnnpuvspr.supabase.co/functions/v1/phone-signup',
+          'https://hlmymmlkgirafodcnkgg.supabase.co/functions/v1/phone-signup',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${anonKey}',
@@ -2801,7 +2802,7 @@ String _serializeList(List? list) {
     return json.encode(list, toEncodable: _toEncodable);
   } catch (_) {
     if (kDebugMode) {
-      print("List serialization failed. Returning empty list.");
+      appLog("List serialization failed. Returning empty list.");
     }
     return '[]';
   }
@@ -2813,7 +2814,7 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     return json.encode(jsonVar, toEncodable: _toEncodable);
   } catch (_) {
     if (kDebugMode) {
-      print("Json serialization failed. Returning empty json.");
+      appLog("Json serialization failed. Returning empty json.");
     }
     return isList ? '[]' : '{}';
   }

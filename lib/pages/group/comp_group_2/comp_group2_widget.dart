@@ -82,7 +82,8 @@ class _CompGroup2WidgetState extends State<CompGroup2Widget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -142,7 +143,8 @@ class _CompGroup2WidgetState extends State<CompGroup2Widget> {
                   ),
                 ),
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -207,7 +209,8 @@ class _CompGroup2WidgetState extends State<CompGroup2Widget> {
                   ),
                 ),
                 InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,

@@ -61,7 +61,7 @@ class _CompPostLikeWidgetState extends State<CompPostLikeWidget> {
         Stack(
           children: [
             InkWell(
-              splashColor: Colors.transparent,
+              splashColor: FlutterFlowTheme.of(context).primary.withAlpha(0x14),
               focusColor: Colors.transparent,
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
@@ -124,7 +124,8 @@ class _CompPostLikeWidgetState extends State<CompPostLikeWidget> {
                     : null;
 
                 return InkWell(
-                  splashColor: Colors.transparent,
+                  splashColor:
+                      FlutterFlowTheme.of(context).primary.withAlpha(0x14),
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -151,7 +152,7 @@ class _CompPostLikeWidgetState extends State<CompPostLikeWidget> {
           ],
         ),
         InkWell(
-          splashColor: Colors.transparent,
+          splashColor: FlutterFlowTheme.of(context).primary.withAlpha(0x14),
           focusColor: Colors.transparent,
           hoverColor: Colors.transparent,
           highlightColor: Colors.transparent,

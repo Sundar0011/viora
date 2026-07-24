@@ -179,7 +179,7 @@ class _CompReportBlockWidgetState extends State<CompReportBlockWidget> {
                                 textStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      font: GoogleFonts.inter(
+                                      font: GoogleFonts.manrope(
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .fontWeight,
@@ -316,7 +316,8 @@ class _CompReportBlockWidgetState extends State<CompReportBlockWidget> {
                                             BorderRadius.circular(4.0),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFF7F9FC),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .alternate,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               12.0, 16.0, 12.0, 16.0),
@@ -467,7 +468,7 @@ class _CompReportBlockWidgetState extends State<CompReportBlockWidget> {
                                       16.0, 12.0, 16.0, 12.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0xFFFF4C4C),
+                                  color: FlutterFlowTheme.of(context).redColor2,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -481,8 +482,7 @@ class _CompReportBlockWidgetState extends State<CompReportBlockWidget> {
                                                   .titleSmall
                                                   .fontStyle,
                                         ),
-                                        color:
-                                            FlutterFlowTheme.of(context).white,
+                                        color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .titleSmall

@@ -76,66 +76,72 @@ class _CompThreeDotReportBusinessWidgetState
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      Navigator.pop(context);
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.viewInsetsOf(context),
-                            child: CompReportBusinessWidget(
-                              businessId: widget!.businessId!,
-                              reportuserId: widget!.reportUserId!,
-                            ),
-                          );
-                        },
-                      ).then((value) => safeSetState(() {}));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 7.0, 16.0, 7.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(0.0),
-                              child: Image.asset(
-                                'assets/images/flag_2.webp',
-                                width: 20.0,
-                                height: 20.0,
-                                fit: BoxFit.cover,
+                  Semantics(
+                    button: true,
+                    label: 'Report this business',
+                    child: InkWell(
+                      splashColor:
+                          FlutterFlowTheme.of(context).primary.withAlpha(0x14),
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        Navigator.pop(context);
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: CompReportBusinessWidget(
+                                businessId: widget!.businessId!,
+                                reportuserId: widget!.reportUserId!,
                               ),
-                            ),
-                            Text(
-                              'Report this business',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 7.0, 16.0, 7.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(0.0),
+                                child: Image.asset(
+                                  'assets/images/flag_2.webp',
+                                  width: 20.0,
+                                  height: 20.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Text(
+                                'Report this business',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.manrope(
+                                        fontWeight: FontWeight.w500,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      color:
+                                          FlutterFlowTheme.of(context).greyD1,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontStyle,
+                                      lineHeight: 1.4,
                                     ),
-                                    color: FlutterFlowTheme.of(context).greyD1,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                    lineHeight: 1.4,
-                                  ),
-                            ),
-                          ].divide(SizedBox(width: 8.0)),
+                              ),
+                            ].divide(SizedBox(width: 8.0)),
+                          ),
                         ),
                       ),
                     ),
